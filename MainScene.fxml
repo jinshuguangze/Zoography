@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="Main_BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <Pane fx:id="Main_Left_Pane" prefHeight="795.0" prefWidth="197.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane fx:id="Main_Left_Top_Pane" prefHeight="86.0" prefWidth="197.0" style="-fx-background-color: #23272b;" />
+            <Pane fx:id="Main_Left_Middle_Pane" layoutY="86.0" prefHeight="140.0" prefWidth="197.0" style="-fx-background-color: #292d30;" />
+            <Pane fx:id="Main_Left_Bottom_Pane" layoutY="226.0" prefHeight="574.0" prefWidth="197.0" style="-fx-background-color: #292d30;">
+               <children>
+                  <ListView fx:id="Main_Left_Bottom_ListView" fixedCellSize="64.0" prefHeight="574.0" prefWidth="198.0" style="-fx-background-color: #245630;" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </left>
+</BorderPane>
