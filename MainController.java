@@ -1,30 +1,34 @@
 package application;
 
-import javafx.collections.*;
-import javafx.fxml.*;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class MainController {
-
-    @FXML
-    private Pane Main_Left_Top_Pane;
 
     @FXML
     private BorderPane Main_BorderPane;
 
     @FXML
-    private Pane Main_Left_Pane;
+    private Label Main_BorderPane_VBox_HBox_Label;
 
     @FXML
-    private Pane Main_Left_Middle_Pane;
+    private ImageView Main_BorderPane_VBox_HBox_ImageView;
 
     @FXML
-    private Pane Main_Left_Bottom_Pane;
+    private HBox Main_BorderPane_VBox_HBox;
 
     @FXML
-    private ListView<String> Main_Left_Bottom_ListView;
-    
+    private ListView<?> Main_BorderPane_VBox_ListView;
+
+    @FXML
+    private VBox Main_BorderPane_VBox;
+
+    @FXML
+    private ImageView Main_BorderPane_VBox_ImageView;
 
 }
