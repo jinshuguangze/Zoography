@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -10,15 +14,45 @@
    <left>
       <VBox fx:id="Main_BorderPane_VBox" prefHeight="800.0" prefWidth="250.0" style="-fx-background-color: #565656;">
          <children>
-            <ImageView fx:id="Main_BorderPane_VBox_ImageView" fitHeight="100.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER" />
+            <ImageView fx:id="Main_BorderPane_VBox_ImageView" fitHeight="100.0" fitWidth="250.0" pickOnBounds="true" VBox.vgrow="NEVER">
+               <image>
+                  <Image url="@../../resource/logo.png" />
+               </image></ImageView>
             <HBox fx:id="Main_BorderPane_VBox_HBox" prefHeight="100.0" prefWidth="250.0" VBox.vgrow="NEVER">
                <children>
-                  <ImageView fx:id="Main_BorderPane_VBox_HBox_ImageView" fitHeight="100.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER" />
-                  <Label fx:id="Main_BorderPane_VBox_HBox_Label" prefHeight="100.0" prefWidth="125.0" text="介绍" />
+                  <StackPane prefHeight="128.0" prefWidth="128.0">
+                     <children>
+                        <ImageView fx:id="Main_BorderPane_VBox_HBox_ImageView" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../../resource/head.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resource/headBackGround.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <Label fx:id="Main_BorderPane_VBox_HBox_Label" prefHeight="128.0" prefWidth="122.0" style="-fx-background-color: #232323;" text="   姓名:张三丰&#10;   性别:男&#10;   积分:10&#10;   权限:VIP用户" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <textFill>
+                        <RadialGradient centerX="0.5" centerY="0.8714285714285714" radius="0.5">
+                           <stops>
+                              <Stop color="#c34141" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </textFill></Label>
                </children>
             </HBox>
-            <ListView fx:id="Main_BorderPane_VBox_ListView" fixedCellSize="50.0" prefHeight="600.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="Main_BorderPane_VBox_ListView" fixedCellSize="50.0" prefHeight="572.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </left>
+   <center>
+      <TilePane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>
