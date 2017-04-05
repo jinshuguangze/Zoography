@@ -1,5 +1,6 @@
 package application;
-	
+
+import java.util.*;
 import javafx.application.*;
 import javafx.beans.value.*;
 import javafx.collections.*;
@@ -10,6 +11,8 @@ import javafx.scene.control.*;
 
 
 public class Main extends Application {
+	
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -27,10 +30,11 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			//primaryStage.initStyle(StageStyle.TRANSPARENT);
-						
-			//左侧ListView加标签
-			ListView Main_BorderPane_VBox_ListView=(ListView)root.lookup("#Main_BorderPane_VBox_ListView");			
-			ObservableList<String> Main_BorderPane_VBox_ListView_Item =FXCollections.observableArrayList ("分层查看", "搜索模式", "随机页面", "个性设置");	
+									
+			//从配置读取项目并添加到左侧ListView
+			String[] ListViewItems=ConfigHandle.getConfigStringData("ListViewItems","Option.cfg");
+			ListView Main_BorderPane_VBox_ListView=(ListView)root.lookup("#Main_BorderPane_VBox_ListView");
+			ObservableList<String> Main_BorderPane_VBox_ListView_Item =FXCollections.observableArrayList(ListViewItems);
 			Main_BorderPane_VBox_ListView.setItems(Main_BorderPane_VBox_ListView_Item);			
 								
 			//primaryStage.heightProperty().addListener((ov,t,t1)->{});
@@ -45,5 +49,6 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+		
 	}
 }

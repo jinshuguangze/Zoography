@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="Main_BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="Main_BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <left>
       <VBox fx:id="Main_BorderPane_VBox" prefHeight="800.0" prefWidth="250.0" style="-fx-background-color: #565656;">
          <children>
@@ -34,25 +34,14 @@
                         </ImageView>
                      </children>
                   </StackPane>
-                  <Label fx:id="Main_BorderPane_VBox_HBox_Label" prefHeight="128.0" prefWidth="122.0" style="-fx-background-color: #232323;" text="   姓名:张三丰&#10;   性别:男&#10;   积分:10&#10;   权限:VIP用户" textAlignment="CENTER">
+                  <Label fx:id="Main_BorderPane_VBox_HBox_Label" prefHeight="128.0" prefWidth="122.0" style="-fx-background-color: #232323;" text="   姓名:张三丰&#10;   性别:男&#10;   积分:10&#10;   权限:VIP用户" textAlignment="CENTER" textFill="#116d6d">
                      <font>
                         <Font size="18.0" />
-                     </font>
-                     <textFill>
-                        <RadialGradient centerX="0.5" centerY="0.8714285714285714" radius="0.5">
-                           <stops>
-                              <Stop color="#c34141" />
-                              <Stop color="WHITE" offset="1.0" />
-                           </stops>
-                        </RadialGradient>
-                     </textFill></Label>
+                     </font></Label>
                </children>
             </HBox>
-            <ListView fx:id="Main_BorderPane_VBox_ListView" fixedCellSize="50.0" prefHeight="572.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="Main_BorderPane_VBox_ListView" fixedCellSize="50.0" onMouseClicked="#Main_BorderPane_VBox_ListView_MouseClicked" prefHeight="572.0" prefWidth="250.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </left>
-   <center>
-      <TilePane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </center>
 </BorderPane>
