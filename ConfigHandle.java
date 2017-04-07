@@ -49,5 +49,22 @@ public class ConfigHandle {
         
         //返回
         return array;
-    }   
+    }
+    
+    public static int[] getConfigIntData(String item,String fileName) throws IOException, ClassNotFoundException {
+    	
+    	//调用字符串读取函数
+		String[] Data=getConfigStringData(item, fileName);
+		
+		//设置新数组长度
+		int[] NewData=new int[Data.length];
+		
+		//强制转化为整形
+		for (int i=0;i<Data.length;i++) {
+			NewData[i]=Integer.parseInt(Data[i]);
+		}
+		
+		//返回
+		return NewData;
+	}
 }

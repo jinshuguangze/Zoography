@@ -33,9 +33,9 @@ public class Main extends Application {
 									
 			//从配置读取项目并添加到左侧ListView
 			String[] ListViewItems=ConfigHandle.getConfigStringData("ListViewItems","Option.cfg");
-			ListView Main_BorderPane_VBox_ListView=(ListView)root.lookup("#Main_BorderPane_VBox_ListView");
-			ObservableList<String> Main_BorderPane_VBox_ListView_Item =FXCollections.observableArrayList(ListViewItems);
-			Main_BorderPane_VBox_ListView.setItems(Main_BorderPane_VBox_ListView_Item);			
+			ListView Main_ListView1=(ListView)root.lookup("#Main_ListView1");
+			ObservableList<String> Main_ListView1_Item =FXCollections.observableArrayList(ListViewItems);
+			Main_ListView1.setItems(Main_ListView1_Item);			
 								
 			//primaryStage.heightProperty().addListener((ov,t,t1)->{});
 			
