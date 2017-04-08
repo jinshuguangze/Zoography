@@ -57,7 +57,7 @@ public class MainController {
     @FXML
     private ScrollPane Main_ScrollPane4;
 
-    @FXML//未完成版
+    @FXML
     void Main_ListView1_MouseClicked(MouseEvent event) throws ClassNotFoundException, IOException {
     	Object item=Main_ListView1.getSelectionModel().getSelectedItem();
     	
@@ -65,6 +65,8 @@ public class MainController {
     	int[] ListViewEventSequence=ConfigHandle.getConfigIntData("ListViewEventSequence","Option.cfg");
     	int a=ListViewItems.length;
     	int b=ListViewEventSequence.length;
+    	
+
     	
     	//日后放进Main加载!
     	if(a>b){
@@ -81,13 +83,24 @@ public class MainController {
 			}
     		ListViewItems=addonListViewItems;
     	}
-    	
+    	       	    	
     	HashMap hashMap=new HashMap();
     	for (int i : ListViewEventSequence) {
 			hashMap.put(ListViewEventSequence[i], ListViewItems[i]);
 		}
     	
-    	//可能存在BUG!:当程序里面的scrollpane比设置里面的少时,会崩溃!
+    	//增加健壮性
+    	int paneCount=Main_StackPane2.getChildren().toArray().length;
+    	
+    	if(paneCount<a){
+    		for(int i=0;i<a-paneCount;i++){
+    			ScrollPane addonScrollPane=new ScrollPane();
+    			Main_StackPane2.getChildren().add(addonScrollPane);
+    			System.out.println(paneCount+i+1);
+    			addonScrollPane.setId("Main_ScrollPane"+(paneCount+i+1));   			
+    		}    		
+    	}
+
     	for (int i=0;i<a;i++) {
 			if(item.equals(hashMap.get(i))){
 				for(int j=0;j<a;j++){
