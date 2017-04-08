@@ -60,57 +60,27 @@ public class MainController {
     @FXML
     void Main_ListView1_MouseClicked(MouseEvent event) throws ClassNotFoundException, IOException {
     	Object item=Main_ListView1.getSelectionModel().getSelectedItem();
-    	
-    	String[] ListViewItems=ConfigHandle.getConfigStringData("ListViewItems","Option.cfg");
-    	int[] ListViewEventSequence=ConfigHandle.getConfigIntData("ListViewEventSequence","Option.cfg");
-    	int a=ListViewItems.length;
-    	int b=ListViewEventSequence.length;
-    	
+    	AutoHandle.autoItemCountConformity();       	
 
-    	
-    	//日后放进Main加载!
-    	if(a>b){
-    		int[] addonListViewEventSequence=new int[a];
-    		for (int i=0;i<a;i++) {
-    			addonListViewEventSequence[i]=i<b?ListViewEventSequence[i]:i;    			
-			}
-    		ListViewEventSequence=addonListViewEventSequence;
-    	}
-    	else if(a<b){
-    		String[] addonListViewItems=new String[b];
-    		for (int i=0;i<b;i++) {
-    			addonListViewItems[i]=i<a?ListViewItems[i]:"暂无名称";    			
-			}
-    		ListViewItems=addonListViewItems;
-    	}
-    	       	    	
+  /*  	       	    	
     	HashMap hashMap=new HashMap();
     	for (int i : ListViewEventSequence) {
 			hashMap.put(ListViewEventSequence[i], ListViewItems[i]);
 		}
     	
-    	//增加健壮性
-    	int paneCount=Main_StackPane2.getChildren().toArray().length;
-    	
-    	if(paneCount<a){
-    		for(int i=0;i<a-paneCount;i++){
-    			ScrollPane addonScrollPane=new ScrollPane();
-    			Main_StackPane2.getChildren().add(addonScrollPane);
-    			System.out.println(paneCount+i+1);
-    			addonScrollPane.setId("Main_ScrollPane"+(paneCount+i+1));   			
-    		}    		
-    	}
 
-    	for (int i=0;i<a;i++) {
+    	
+
+    	for (int i=0;i<namedCount;i++) {
 			if(item.equals(hashMap.get(i))){
-				for(int j=0;j<a;j++){
+				for(int j=0;j<namedCount;j++){
 					ScrollPane AllPane=(ScrollPane)Main_StackPane2.lookup("#Main_ScrollPane"+(j+1));
 					AllPane.setVisible(false);
 				}
 				ScrollPane ActivityPane=(ScrollPane)Main_StackPane2.lookup("#Main_ScrollPane"+(i+1));
 				ActivityPane.setVisible(true);
 			}
-		}
+		}*/
     }
 
 }

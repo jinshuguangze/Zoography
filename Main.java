@@ -32,7 +32,7 @@ public class Main extends Application {
 			//primaryStage.initStyle(StageStyle.TRANSPARENT);
 									
 			//从配置读取项目并添加到左侧ListView
-			String[] ListViewItems=ConfigHandle.getConfigStringData("ListViewItems","Option.cfg");
+			String[] ListViewItems=ConfigHandle.getConfigStringData("Option.cfg","ListViewItems");
 			ListView Main_ListView1=(ListView)root.lookup("#Main_ListView1");
 			ObservableList<String> Main_ListView1_Item =FXCollections.observableArrayList(ListViewItems);
 			Main_ListView1.setItems(Main_ListView1_Item);
