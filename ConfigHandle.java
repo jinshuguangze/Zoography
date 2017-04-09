@@ -10,21 +10,13 @@ public class ConfigHandle {
 	public ConfigHandle() {
 	}
 
-	/**
-	 * ÉèÖÃÄ³¸öÅäÖÃÎÄ¼ş±äÁ¿ÃûµÄÊôĞÔÁĞ±í
-	 * 
-	 * @param item
-	 *            ĞèÒªÉèÖÃÄ¬ÈÏÖµµÄÅäÖÃÎÄ¼ş±äÁ¿Ãû
-	 * @return ·µ»ØÒ»¸ö°üº¬ËùÓĞÅäÖÃ±äÁ¿µÄ¶¯Ì¬Êı×é
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	public static ArrayList<String> setConfigInitialization(String fileName, String item)
+
+	public static HashMap setConfigInitialization(String fileName, String item)
 			throws ClassNotFoundException, IOException {
 
 		ArrayList<String> keys = new ArrayList<String>() {
 			{
-				add("");
+				add(null);
 				add("ListViewItems");
 				add("ListViewEventSequence");
 			}
@@ -32,74 +24,75 @@ public class ConfigHandle {
 
 		HashMap configLib = new HashMap();
 		int i = 0;
-		// Ìí¼ÓÊı¾İ
+		{
+			configLib.put(keys.get(i), null);
+			i++;
+		}
+		
 		{
 			configLib.put(keys.get(i), new ArrayList<String>() {
 				{
-					add("");
-					add("");
+					add("åˆ—è¡¨é¡¹ç›®");
+					add("åˆ†å±‚æŸ¥çœ‹,æœç´¢æ¨¡å¼,éšæœºé¡µé¢,ä¸ªæ€§è®¾ç½®");
 					add("");
 				}
 			});
 			i++;
 		}
-		;
+		
 		{
 			configLib.put(keys.get(i), new ArrayList<String>() {
 				{
-					add("ÁĞ±íÏîÄ¿");
-					add("·Ö²ã²é¿´,ËÑË÷Ä£Ê½,Ëæ»úÒ³Ãæ,¸öĞÔÉèÖÃ");
+					add("åˆ—è¡¨äº‹ä»¶é¡ºåº");
+					add("0,1,2,3");
 					add("");
 				}
 			});
 			i++;
 		}
-		;
-		{
-			configLib.put(keys.get(i), new ArrayList<String>() {
-				{
-					add("ÁĞ±íÊÂ¼şË³Ğò");
-					add("0,1,2,3,4");
-					add("");
-				}
-			});
-			i++;
-		}
-		;
+		
 
 		setConfigData(fileName, item, ((ArrayList<String>) configLib.get(item)).get(1));
 
-		return keys;
+		return configLib;
+
 	}
 
 	public static void setAllConfigInitialization(String fileName) throws ClassNotFoundException, IOException {
-		ArrayList<String> keys = setConfigInitialization(fileName, "");
-		// Î´Íê³É!
+		
+		HashMap configLib = setConfigInitialization(fileName, null);
+		String fileString = Class.forName(new Throwable().getStackTrace()[0].getClassName()).getResource(fileName)
+				.getFile();
+		File file = new File(fileString);
+		if(file.exists())file.delete();
+		file.createNewFile();
+		try (BufferedWriter aWriter = new BufferedWriter(new FileWriter(file, true))){
+			aWriter.write("#"+fileName.substring(0,fileName.indexOf("."))+"\r\n");
+			configLib.forEach((key,value)->{
+				if(!(key==null)){
+					ArrayList<String> Data=(ArrayList<String>)value;
+					try {
+						aWriter.write("\r\n");
+						aWriter.write("#"+Data.get(0)+"(é»˜è®¤:"+Data.get(1)+")"+"\r\n");
+						aWriter.write(key.toString()+"="+Data.get(1)+"\r\n");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		} 						
 	}
 
-	/**
-	 * Í¨ÓÃÎÄ¼ş¶ÁÈ¡
-	 * 
-	 * @param fileName
-	 *            ÅäÖÃÎÄ¼şÎÄ¼şÃû
-	 * @param item
-	 *            ÅäÖÃÎÄ¼şÖĞµÄ±äÁ¿Ãû
-	 * @return ¶ÁÈ¡³É¹¦ºóµÄÎÄ¼ş,ÒÔ×Ö·û´®¶¯Ì¬Êı×éĞÎÊ½·µ»Ø
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
+
 	private static ArrayList<String> generalReader(String fileName, String item)
 			throws IOException, ClassNotFoundException {
 
-		// µÃµ½ÅäÖÃÎÄ¼şµÄ¾ø¶ÔÂ·¾¶,ÀûÓÃThrowableµÄ·½·¨
 		String fileString = Class.forName(new Throwable().getStackTrace()[0].getClassName()).getResource(fileName)
 				.getFile();
 
-		// ³õÊ¼»¯Êı¾İ
 		ArrayList<String> aArrayList = new ArrayList<String>();
 		String s = "";
 
-		// ÖğĞĞ¶ÁÈ¡,²»º¬ÓĞStringBuilder
 		try (BufferedReader aReader = new BufferedReader(new FileReader(fileString))) {
 			while ((s = aReader.readLine()) != null) {
 				if (!s.equals("") && !s.startsWith("#")) {
@@ -108,30 +101,17 @@ public class ConfigHandle {
 			}
 		}
 
-		// ·µ»Ø
 		return aArrayList;
 	}
 
-	/**
-	 * µÃµ½ÅäÖÃÎÄ¼şÖĞµÄ×Ö·û´®Êı¾İ
-	 * 
-	 * @param fileName
-	 *            ÅäÖÃÎÄ¼şÎÄ¼şÃû
-	 * @param item
-	 *            ÅäÖÃÎÄ¼şÖĞµÄ±äÁ¿Ãû
-	 * @return ±äÁ¿µÄÖµ,ÒÔ×Ö·û´®Êı×éµÄĞÎÊ½·µ»Ø
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
+
 	public static String[] getConfigStringData(String fileName, String item)
 			throws IOException, ClassNotFoundException {
 
-		// ³õÊ¼»¯±äÁ¿
 		ArrayList<String> aArrayList = generalReader(fileName, item);
 		int size = aArrayList.size();
 		String[] array = null;
 
-		// ÌáÈ¡·µ»ØĞÅÏ¢
 		for (int i = 0; i < size; i++) {
 			String atempString = aArrayList.get(i);
 			if (item.equals(atempString.substring(0, atempString.indexOf("=")))) {
@@ -139,59 +119,31 @@ public class ConfigHandle {
 			}
 		}
 
-		// ·µ»Ø
 		return array;
 	}
 
-	/**
-	 * µÃµ½ÅäÖÃÎÄ¼şÖĞµÄÕûĞÎÊı¾İ
-	 * 
-	 * @param fileName
-	 *            ÅäÖÃÎÄ¼şÎÄ¼şÃû
-	 * @param item
-	 *            ÅäÖÃÎÄ¼şÖĞµÄ±äÁ¿Ãû
-	 * @return ±äÁ¿µÄÖµ,ÒÔÕûĞÎÊı×éµÄĞÎÊ½·µ»Ø
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
+
 	public static int[] getConfigIntData(String fileName, String item) throws IOException, ClassNotFoundException {
 
-		// µ÷ÓÃ×Ö·û´®¶ÁÈ¡º¯Êı
 		String[] Data = getConfigStringData(fileName, item);
 
-		// ÉèÖÃĞÂÊı×é³¤¶È
 		int[] NewData = new int[Data.length];
 
-		// Ç¿ÖÆ×ª»¯ÎªÕûĞÎ
 		for (int i = 0; i < Data.length; i++) {
 			NewData[i] = Integer.parseInt(Data[i]);
 		}
 
-		// ·µ»Ø
 		return NewData;
 	}
 
-	/**
-	 * ¸ü¸ÄÄ¿±êÅäÖÃµÄÖµ
-	 * 
-	 * @param fileName
-	 *            ÅäÖÃÎÄ¼şÎÄ¼şÃû
-	 * @param item
-	 *            ÅäÖÃÎÄ¼şÖĞµÄ±äÁ¿Ãû
-	 * @param modifyArray
-	 *            ÉèÖÃ¸ü¸ÄµÄ×Ö·û´®
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
+
 	public static void setConfigData(String fileName, String item, String modifyArray)
 			throws IOException, ClassNotFoundException {
 
-		// µÃµ½ÅäÖÃÎÄ¼şµÄ¾ø¶ÔÂ·¾¶,ÀûÓÃThrowableµÄ·½·¨
 		String fileString = Class.forName(new Throwable().getStackTrace()[0].getClassName()).getResource(fileName)
 				.getFile();
 		StringBuilder aBuilder = new StringBuilder();
 
-		// ÖğĞĞ¶ÁÈ¡,Ê¹ÓÃStringBuilder
 		try (BufferedReader aReader = new BufferedReader(new FileReader(fileString))) {
 			while (!aReader.ready()) {
 				aBuilder.append(aReader.readLine());
@@ -199,7 +151,6 @@ public class ConfigHandle {
 			}
 			int position = aBuilder.indexOf(item);
 
-			// Ìæ»»
 			if (position != -1) {
 				aBuilder.delete(position, aBuilder.length());
 				aBuilder.append(modifyArray);

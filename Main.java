@@ -38,7 +38,7 @@ public class Main extends Application {
 			Main_ListView1.setItems(Main_ListView1_Item);
 								
 			//primaryStage.heightProperty().addListener((ov,t,t1)->{});
-			
+			ConfigHandle.setAllConfigInitialization("Option.cfg");
 			//œ‘ æ
 			primaryStage.show();
 			
