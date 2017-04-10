@@ -60,16 +60,10 @@ public class MainController {
     @FXML
     void Main_ListView1_MouseClicked(MouseEvent event) throws ClassNotFoundException, IOException {
     	Object item=Main_ListView1.getSelectionModel().getSelectedItem();
-    	AutoHandle.autoItemCountConformity();       	
-
-  /*  	       	    	
-    	HashMap hashMap=new HashMap();
-    	for (int i : ListViewEventSequence) {
-			hashMap.put(ListViewEventSequence[i], ListViewItems[i]);
-		}
-    	
-
-    	
+    	AutoHandle aHandle=new AutoHandle();
+    	aHandle.autoItemCountConformity();       	
+    	       	    	
+   	 /* 	
 
     	for (int i=0;i<namedCount;i++) {
 			if(item.equals(hashMap.get(i))){

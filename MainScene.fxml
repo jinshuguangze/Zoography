@@ -12,21 +12,31 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="Main_BorderPane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<BorderPane fx:id="Main_BorderPane1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <left>
       <VBox fx:id="Main_VBox1" prefHeight="800.0" prefWidth="250.0" style="-fx-background-color: #565656;">
          <children>
-            <ImageView fx:id="Main_ImageView1" fitHeight="100.0" fitWidth="250.0" pickOnBounds="true" VBox.vgrow="NEVER">
-               <image>
-                  <Image url="@../../resource/logo.png" />
-               </image></ImageView>
+            <StackPane prefHeight="100.0" prefWidth="250.0">
+               <children>
+                  <ImageView fx:id="Main_ImageView1" fitHeight="100.0" fitWidth="250.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../resource/logo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="Main_ImageView11" fitHeight="100.0" fitWidth="250.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../resource/logoFrame.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
             <HBox fx:id="Main_HBox1" prefHeight="100.0" prefWidth="250.0" VBox.vgrow="NEVER">
                <children>
                   <StackPane fx:id="Main_StackPane1" prefHeight="128.0" prefWidth="128.0">
                      <children>
                         <ImageView fx:id="Main_ImageView2" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../../resource/head.png" />
+                              <Image url="@../../resource/head1.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="Main_ImageView3" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">

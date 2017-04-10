@@ -7,10 +7,18 @@ import javafx.fxml.*;
 import javafx.scene.control.*;
 
 public class ConfigHandle {
-	public ConfigHandle() {
-	}
 
-
+	/**
+	 * Reset a configuration option to default 设置某个选项至默认
+	 * 
+	 * @param fileName
+	 *            Profile name
+	 * @param item
+	 *            Option name
+	 * @return A hashMap that stores the default data for the option
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public static HashMap setConfigInitialization(String fileName, String item)
 			throws ClassNotFoundException, IOException {
 
@@ -28,7 +36,7 @@ public class ConfigHandle {
 			configLib.put(keys.get(i), null);
 			i++;
 		}
-		
+
 		{
 			configLib.put(keys.get(i), new ArrayList<String>() {
 				{
@@ -39,7 +47,7 @@ public class ConfigHandle {
 			});
 			i++;
 		}
-		
+
 		{
 			configLib.put(keys.get(i), new ArrayList<String>() {
 				{
@@ -50,40 +58,62 @@ public class ConfigHandle {
 			});
 			i++;
 		}
-		
 
-		setConfigData(fileName, item, ((ArrayList<String>) configLib.get(item)).get(1));
+		if (item != null) {
+			setConfigData(fileName, item, ((ArrayList<String>) configLib.get(item)).get(1));
+		}
 
 		return configLib;
 
 	}
 
+	/**
+	 * Reset all configuration options to default 设置所有选项至默认
+	 * 
+	 * @param fileName
+	 *            Profile name
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public static void setAllConfigInitialization(String fileName) throws ClassNotFoundException, IOException {
-		
+
 		HashMap configLib = setConfigInitialization(fileName, null);
 		String fileString = Class.forName(new Throwable().getStackTrace()[0].getClassName()).getResource(fileName)
 				.getFile();
 		File file = new File(fileString);
-		if(file.exists())file.delete();
+
+		if (file.exists())
+			file.delete();
 		file.createNewFile();
-		try (BufferedWriter aWriter = new BufferedWriter(new FileWriter(file, true))){
-			aWriter.write("#"+fileName.substring(0,fileName.indexOf("."))+"\r\n");
-			configLib.forEach((key,value)->{
-				if(!(key==null)){
-					ArrayList<String> Data=(ArrayList<String>)value;
+
+		try (BufferedWriter aWriter = new BufferedWriter(new FileWriter(file, true))) {
+			aWriter.write("#" + fileName.substring(0, fileName.indexOf(".")) + "\r\n");
+			configLib.forEach((key, value) -> {
+				if (!(key == null)) {
+					ArrayList<String> Data = (ArrayList<String>) value;
 					try {
 						aWriter.write("\r\n");
-						aWriter.write("#"+Data.get(0)+"(默认:"+Data.get(1)+")"+"\r\n");
-						aWriter.write(key.toString()+"="+Data.get(1)+"\r\n");
+						aWriter.write("#" + Data.get(0) + "(默认:" + Data.get(1) + ")" + "\r\n");
+						aWriter.write(key.toString() + "=" + Data.get(1) + "\r\n");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
 			});
-		} 						
+		}
 	}
 
-
+	/**
+	 * Universal read function 通用读取函数
+	 * 
+	 * @param fileName
+	 *            Profile name
+	 * @param item
+	 *            Option name
+	 * @return An arrayList with line read the file
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	private static ArrayList<String> generalReader(String fileName, String item)
 			throws IOException, ClassNotFoundException {
 
@@ -104,7 +134,18 @@ public class ConfigHandle {
 		return aArrayList;
 	}
 
-
+	/**
+	 * Gets the current string data for an option for a configuration file
+	 * 得到一个配置文件的某个选项的当前字符串数据
+	 * 
+	 * @param fileName
+	 *            Profile name
+	 * @param item
+	 *            Option name
+	 * @return An array of strings that stores configuration data
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public static String[] getConfigStringData(String fileName, String item)
 			throws IOException, ClassNotFoundException {
 
@@ -122,11 +163,21 @@ public class ConfigHandle {
 		return array;
 	}
 
-
+	/**
+	 * Gets the current int data for an option for a configuration file
+	 * 得到一个配置文件的某个选项的当前整型数据
+	 * 
+	 * @param fileName
+	 *            Profile name
+	 * @param item
+	 *            Option name
+	 * @return An array of int that stores configuration data
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public static int[] getConfigIntData(String fileName, String item) throws IOException, ClassNotFoundException {
 
 		String[] Data = getConfigStringData(fileName, item);
-
 		int[] NewData = new int[Data.length];
 
 		for (int i = 0; i < Data.length; i++) {
@@ -136,7 +187,18 @@ public class ConfigHandle {
 		return NewData;
 	}
 
-
+	/**
+	 * Set an option to a value 设置一个选项到某个值
+	 * 
+	 * @param fileName
+	 *            Profile name
+	 * @param item
+	 *            Option name
+	 * @param modifyArray
+	 *            An array of strings that store the changed value
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public static void setConfigData(String fileName, String item, String modifyArray)
 			throws IOException, ClassNotFoundException {
 

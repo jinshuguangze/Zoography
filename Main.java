@@ -16,30 +16,29 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			//´´½¨¸ù½Úµã
+			//åˆ›å»ºè·ŸèŠ‚ç‚¹
 			Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
 			
-			//¶ÁÈ¡ÆÁÄ»´óĞ¡
+			//åˆå§‹åŒ–é»˜è®¤å¤§å°
 			double screenWidth=java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
 			double screenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;			
 			double defaultWidth=0.75*screenWidth;
 			double defaultHeight=0.75*screenHeight;
 			
-			//Ìí¼ÓÑùÊ½
+			//åˆ›å»ºåœºæ™¯åŠæ ·å¼
 			Scene scene = new Scene(root,defaultWidth,defaultHeight);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			//primaryStage.initStyle(StageStyle.TRANSPARENT);
 									
-			//´ÓÅäÖÃ¶ÁÈ¡ÏîÄ¿²¢Ìí¼Óµ½×ó²àListView
+			//è¯»å–é…ç½®æ–‡ä»¶åŠå†™è¿›ListView
 			String[] ListViewItems=ConfigHandle.getConfigStringData("Option.cfg","ListViewItems");
 			ListView Main_ListView1=(ListView)root.lookup("#Main_ListView1");
 			ObservableList<String> Main_ListView1_Item =FXCollections.observableArrayList(ListViewItems);
 			Main_ListView1.setItems(Main_ListView1_Item);
 								
 			//primaryStage.heightProperty().addListener((ov,t,t1)->{});
-			ConfigHandle.setAllConfigInitialization("Option.cfg");
-			//ÏÔÊ¾
+			
 			primaryStage.show();
 			
 		} catch(Exception e) {
