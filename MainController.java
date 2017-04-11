@@ -3,6 +3,8 @@ package application;
 import java.io.*;
 import java.util.*;
 
+import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
+
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -65,19 +67,19 @@ public class MainController {
     @FXML
     void Main_ListView1_MouseClicked(MouseEvent event) throws ClassNotFoundException, IOException {
     	
-		List StackPaneItems=Arrays.asList(Main_StackPane2.getChildren().toArray());
-		List ListViewItems=Arrays.asList(ConfigHandle.getConfigStringData("Option.cfg","ListViewItems"));
-		//由于自动装箱出了点问题,暂时用string读取配置
-		List ListViewEventSequence=Arrays.asList(ConfigHandle.getConfigStringData("Option.cfg","ListViewEventSequence"));
+		List<Object> StackPaneItems=Arrays.asList(Main_StackPane2.getChildren().toArray());
+		List<String> ListViewItems=Arrays.asList(ConfigHandle.getConfigStringData("Option.cfg","ListViewItems"));		
+		List<Integer> ListViewEventSequence=new ArrayList<>();
+		int[] aIntArray=ConfigHandle.getConfigIntData("Option.cfg","ListViewEventSequence");
+		for (int i:aIntArray) {
+			ListViewEventSequence.add(i);	
+		}
 		
-    	AutoHandle aHandle=new AutoHandle();
-    	HashMap hashMap=aHandle.autoItemCountConformity(StackPaneItems,ListViewItems,ListViewEventSequence);
-    	
+		HashMap hashMap=new AutoHandle().autoItemCountConformity(StackPaneItems,ListViewItems,ListViewEventSequence);   	
     	Object item=Main_ListView1.getSelectionModel().getSelectedItem();
 
     	for (int i=0;i<hashMap.size();i++) {
-    		//强制转化为字符串先
-			if(item.equals(hashMap.get(""+i))){
+			if(item.equals(hashMap.get(i))){
 				for(int j=0;j<hashMap.size();j++){
 					ScrollPane AllPane=(ScrollPane)Main_StackPane2.lookup("#Main_ScrollPane"+(j+1));
 					AllPane.setVisible(false);

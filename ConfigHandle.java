@@ -19,7 +19,7 @@ public class ConfigHandle {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public static HashMap setConfigInitialization(String fileName, String item)
+	public static HashMap<String,ArrayList<String>> setConfigInitialization(String fileName, String item)
 			throws ClassNotFoundException, IOException {
 
 		ArrayList<String> keys = new ArrayList<String>() {
@@ -30,7 +30,7 @@ public class ConfigHandle {
 			}
 		};
 
-		HashMap configLib = new HashMap();
+		HashMap<String,ArrayList<String>> configLib = new HashMap<>();
 		int i = 0;
 		{
 			configLib.put(keys.get(i), null);
@@ -77,7 +77,7 @@ public class ConfigHandle {
 	 */
 	public static void setAllConfigInitialization(String fileName) throws ClassNotFoundException, IOException {
 
-		HashMap configLib = setConfigInitialization(fileName, null);
+		HashMap<String,ArrayList<String>> configLib = setConfigInitialization(fileName, null);
 		String fileString = Class.forName(new Throwable().getStackTrace()[0].getClassName()).getResource(fileName)
 				.getFile();
 		File file = new File(fileString);
@@ -194,12 +194,12 @@ public class ConfigHandle {
 	 *            Profile name
 	 * @param item
 	 *            Option name
-	 * @param modifyArray
-	 *            An array of strings that store the changed value
+	 * @param modifyString
+	 *            An String of strings that store the changed value
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static void setConfigData(String fileName, String item, String modifyArray)
+	public static void setConfigData(String fileName, String item, String modifyString)
 			throws IOException, ClassNotFoundException {
 
 		String fileString = Class.forName(new Throwable().getStackTrace()[0].getClassName()).getResource(fileName)
@@ -215,7 +215,7 @@ public class ConfigHandle {
 
 			if (position != -1) {
 				aBuilder.delete(position, aBuilder.length());
-				aBuilder.append(modifyArray);
+				aBuilder.append(modifyString);
 			}
 		}
 	}

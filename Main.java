@@ -36,7 +36,7 @@ public class Main extends Application {
 			ListView Main_ListView1=(ListView)root.lookup("#Main_ListView1");
 			ObservableList<String> Main_ListView1_Item =FXCollections.observableArrayList(ListViewItems);
 			Main_ListView1.setItems(Main_ListView1_Item);
-								
+			
 			//primaryStage.heightProperty().addListener((ov,t,t1)->{});
 			
 			primaryStage.show();
