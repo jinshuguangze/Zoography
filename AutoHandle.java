@@ -1,72 +1,51 @@
 package application;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.security.PrivateKey;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import com.sun.javafx.geom.AreaOp.AddOp;
-
+import java.io.*;
+import java.util.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class AutoHandle {
-		
-	/**
-	 * 
-	 * @throws IOException
-	 */
-	public AutoHandle() throws IOException {
-	}
-	
 
 	/**
-	 * @return 
+	 * A function of automatic formatting length 一个自动格式化长度的函数
+	 * 
+	 * @param mainList
+	 *            List as a reference length
+	 * @param valueList
+	 *            List as the value of HashMap(Generic string)
+	 * @param keyList
+	 *            List as the key of HashMap(Generic int)
+	 * @return A HashMap that stores an automatically formatted valueList
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	protected void autoItemCountConformity() throws ClassNotFoundException, IOException {				
-		Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
-		StackPane Main_StackPane2=(StackPane)root.lookup("#Main_StackPane2");
-		
-		Object[] StackPaneItems=Main_StackPane2.getChildren().toArray();
-    	String[] ListViewItems=ConfigHandle.getConfigStringData("Option.cfg","ListViewItems");
-    	int[] ListViewEventSequence=ConfigHandle.getConfigIntData("Option.cfg","ListViewEventSequence");
-    	    	
-    	int StackPaneCount=StackPaneItems.length;
-    	int ItemsCount=ListViewItems.length;
-    	int SequenceCount=ListViewEventSequence.length;
+	protected HashMap autoItemCountConformity(List mainList, List valueList, List keyList)
+			throws ClassNotFoundException, IOException {
 
-    	if(StackPaneCount>ItemsCount){
-    		ConfigHandle.setConfigInitialization("Option.cfg","ListViewItems");
-    	}
-    	else if (StackPaneCount<ItemsCount) {
-    		String[] modify=new String[StackPaneCount];
-    		for(int i=0;i<StackPaneCount;i++){
-    			Array.set(modify, i, ListViewItems[i]);    			
-    		}
-    		ListViewItems=modify;
+		int mainCount = mainList.size();
+		int valueCount = valueList.size();
+		int keyCount = keyList.size();
+
+		if (mainCount > valueCount) {
+			ConfigHandle.setConfigInitialization("Option.cfg", "ListViewItems");
+		} else if (mainCount < valueCount) {
+			valueList = valueList.subList(0, mainCount);
 		}
-    	
-    	if(StackPaneCount>SequenceCount){
-    		ConfigHandle.setConfigInitialization("Option.cfg","ListViewEventSequence");
-    	}
-    	else if (StackPaneCount<SequenceCount) {
-    		int[] modify=new int[StackPaneCount];
-    		for(int i=0;i<StackPaneCount;i++){
-    			Array.set(modify, i, ListViewEventSequence[i]);    			
-    		}
-    		ListViewEventSequence=modify;
+
+		if (mainCount > keyCount) {
+			ConfigHandle.setConfigInitialization("Option.cfg", "ListViewEventSequence");
+		} else if (mainCount < keyCount) {
+			keyList = keyList.subList(0, mainCount);
 		}
-    	
-    	HashMap hashMap=new HashMap();
-    	/*Main_StackPane2.getChildren().forEach((node)->{
-    		hashMap.put(ListViewEventSequence[i], ListViewItems[i]);
-    	});*/
-    	//return
-    	
+
+		HashMap hashMap = new HashMap();
+		for (int i = 0; i < mainCount; i++) {
+			hashMap.put(keyList.get(i), valueList.get(i));
+		}
+
+		return hashMap;
 	}
 }
