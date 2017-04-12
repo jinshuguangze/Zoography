@@ -73,7 +73,7 @@ public class MainController {
 			ListViewEventSequence.add(i);
 		}
 
-		HashMap hashMap = new AutoHandle().autoItemCountConformity(StackPaneItems, ListViewItems,
+		HashMap<Integer,String> hashMap = new AutoHandle().autoItemCountConformity(StackPaneItems, ListViewItems,
 				ListViewEventSequence);
 		Object item = Main_ListView1.getSelectionModel().getSelectedItem();
 
