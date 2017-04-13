@@ -7,6 +7,7 @@ import javafx.fxml.*;
 import javafx.scene.control.*;
 
 public class ConfigHandle {
+	public static final String MAIN_CFG = Main.MAIN_CFG;
 
 	/**
 	 * Reset a configuration option to default 设置某个选项至默认
@@ -251,8 +252,7 @@ public class ConfigHandle {
 	 * @throws ClassNotFoundException
 	 */
 	private static String getFilePath(String fileName) throws ClassNotFoundException {
-		String filePath = Class.forName(new Throwable().getStackTrace()[0].getClassName()).getResource(fileName)
-				.getFile();
+		String filePath = System.getProperty("user.dir") + "\\config\\" + MAIN_CFG;
 		return filePath;
 	}
 }

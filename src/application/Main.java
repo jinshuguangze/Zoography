@@ -11,21 +11,25 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 
 public class Main extends Application {
-	private static final String CONFIGNAME = "Option.cfg";
+	public static final String MAIN_CFG = "Option.cfg";
+	public static final String MAIN_FXML = "MainScene.fxml";
+	public static final String MAIN_CSS = "application.css";
+	public static final String LISTVIEW_CSS = "listview.css";
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 
 			// 创建配置文件(第一次启动时)
-			File file = new File(getClass().getResource("").getFile() + CONFIGNAME);
+			File file = new File(System.getProperty("user.dir") + "\\config\\" + MAIN_CFG);
 			if (!file.exists()) {
 				file.createNewFile();
-				ConfigHandle.setAllConfigInitialization(CONFIGNAME);
+				ConfigHandle.setAllConfigInitialization(MAIN_CFG);
 			}
 
 			// 创建跟节点
-			Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+			Parent root = FXMLLoader
+					.load(new File(System.getProperty("user.dir") + "\\resource\\fxml\\" + MAIN_FXML).toURI().toURL());
 
 			// 初始化默认大小
 			double screenWidth = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -33,11 +37,11 @@ public class Main extends Application {
 			double defaultWidth = 0.75 * screenWidth;
 			double defaultHeight = 0.75 * screenHeight;
 
-			// 创建场景及样式
+			// 创建主场景及样式
 			Scene scene = new Scene(root, defaultWidth, defaultHeight);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			scene.getStylesheets().add(new File(System.getProperty("user.dir") + "\\resource\\css\\" + MAIN_CSS).toURI()
+					.toURL().toExternalForm());
 			primaryStage.setScene(scene);
-			// primaryStage.initStyle(StageStyle.TRANSPARENT);
 
 			// 读取配置文件及写进ListView
 			String[] ListViewItems = ConfigHandle.getConfigStringData("Option.cfg", "ListViewItems");
@@ -47,6 +51,7 @@ public class Main extends Application {
 
 			// primaryStage.heightProperty().addListener((ov,t,t1)->{});
 
+			// 显示
 			primaryStage.show();
 
 		} catch (Exception e) {

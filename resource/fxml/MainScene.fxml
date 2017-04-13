@@ -31,35 +31,32 @@
                   </ImageView>
                </children>
             </StackPane>
-            <HBox fx:id="Main_HBox1" prefHeight="100.0" prefWidth="250.0" VBox.vgrow="NEVER">
+            <HBox fx:id="Main_HBox1" prefHeight="0.0" prefWidth="250.0" VBox.vgrow="NEVER" />
+            <StackPane fx:id="Main_StackPane1" prefHeight="128.0" prefWidth="250.0">
                <children>
-                  <StackPane fx:id="Main_StackPane1" prefHeight="128.0" prefWidth="250.0">
-                     <children>
-                        <ImageView fx:id="Main_ImageView21" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" StackPane.alignment="TOP_LEFT">
-                           <image>
-                              <Image url="@../textures/head4.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fx:id="Main_ImageView211" fitHeight="128.0" fitWidth="250.0" pickOnBounds="true">
-                           <image>
-                              <Image url="@../textures/headBackground.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="Main_Label1" prefHeight="128.0" prefWidth="122.0" text="   姓名:张三丰&#10;   性别:男&#10;   积分:10&#10;   权限:VIP用户" textAlignment="CENTER" textFill="#65d7d7" StackPane.alignment="TOP_RIGHT">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="Main_ImageView2" fitHeight="186.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../textures/headFrame.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </StackPane>
+                  <ImageView fx:id="Main_ImageView21" fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" StackPane.alignment="TOP_LEFT">
+                     <image>
+                        <Image url="@../textures/head4.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="Main_ImageView211" fitHeight="128.0" fitWidth="250.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../textures/headBackground.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="Main_Label1" prefHeight="128.0" prefWidth="122.0" text="   姓名:张三丰&#10;   性别:男&#10;   积分:10&#10;   权限:VIP用户" textAlignment="CENTER" textFill="#65d7d7" StackPane.alignment="TOP_RIGHT">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="Main_ImageView2" fitHeight="186.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../textures/headFrame.png" />
+                     </image>
+                  </ImageView>
                </children>
-            </HBox>
-            <ListView fx:id="Main_ListView1" editable="true" fixedCellSize="50.0" onMouseClicked="#Main_ListView1_MouseClicked" prefHeight="572.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
+            </StackPane>
+            <ListView fx:id="Main_ListView1" editable="true" fixedCellSize="50.0" onMouseClicked="#Main_ListView1_MouseClicked" prefHeight="572.0" prefWidth="250.0" stylesheets="@../css/listview.css" VBox.vgrow="ALWAYS">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></ListView>

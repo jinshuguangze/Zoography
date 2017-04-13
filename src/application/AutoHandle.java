@@ -2,6 +2,8 @@ package application;
 
 import java.io.*;
 import java.util.*;
+
+import application.ConfigHandle;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
