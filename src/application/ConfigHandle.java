@@ -109,7 +109,7 @@ public class ConfigHandle {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	private static ArrayList<String> generalReader(String fileName, String item)
+	protected static ArrayList<String> generalReader(String fileName)
 			throws IOException, ClassNotFoundException {
 
 		String filePath = getFilePath(fileName);
@@ -143,7 +143,7 @@ public class ConfigHandle {
 	public static String[] getConfigStringData(String fileName, String item)
 			throws IOException, ClassNotFoundException {
 
-		ArrayList<String> aArrayList = generalReader(fileName, item);
+		ArrayList<String> aArrayList = generalReader(fileName);
 		int size = aArrayList.size();
 		String[] array = null;
 
@@ -199,7 +199,7 @@ public class ConfigHandle {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static void setConfigData(String fileName, String item, String modifyString)
+	protected static void setConfigData(String fileName, String item, String modifyString)
 			throws IOException, ClassNotFoundException {
 
 		String filePath = getFilePath(fileName);
@@ -234,7 +234,7 @@ public class ConfigHandle {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public static File clearConfigFile(String fileName) throws ClassNotFoundException, IOException {
+	private static File clearConfigFile(String fileName) throws ClassNotFoundException, IOException {
 		File file = new File(getFilePath(fileName));
 		if (file.exists())
 			file.delete();
@@ -251,7 +251,7 @@ public class ConfigHandle {
 	 * @return Absolute path
 	 * @throws ClassNotFoundException
 	 */
-	private static String getFilePath(String fileName) throws ClassNotFoundException {
+	protected static String getFilePath(String fileName) throws ClassNotFoundException {
 		String filePath = System.getProperty("user.dir") + "\\config\\" + MAIN_CFG;
 		return filePath;
 	}

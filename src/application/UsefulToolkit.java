@@ -2,14 +2,13 @@ package application;
 
 import java.io.*;
 import java.util.*;
-
-import application.ConfigHandle;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import application.*;
 
-public class AutoHandle {
+public class UsefulToolkit {
 
 	/**
 	 * A function of automatic formatting length 一个自动格式化长度的函数
@@ -24,7 +23,7 @@ public class AutoHandle {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	protected HashMap<Integer, String> autoItemCountConformity(List<?> mainList, List<String> valueList,
+	public HashMap<Integer, String> autoItemCountConformity(List<?> mainList, List<String> valueList,
 			List<Integer> keyList) throws ClassNotFoundException, IOException {
 
 		int mainCount = mainList.size();
@@ -74,4 +73,23 @@ public class AutoHandle {
 
 		return hashMap;
 	}
+	
+	/**
+	 * 
+	 * @param fileName
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public void autoCreateDataFile(String fileName) throws ClassNotFoundException, IOException {
+		ArrayList<ArrayList<String>> arrayData=DataHandle.generalReader(fileName);
+		if(!DataHandle.finalData(fileName)){
+			if(DataHandle.existData(fileName)){
+				for(int i=1;i<DataHandle.getLineCount(fileName);i++){
+					String addonFileName=DataHandle.getStringData(fileName, i, 0);
+					System.out.println(addonFileName);
+					DataHandle.createNewDataFile(fileName.substring(0,fileName.indexOf("."))+addonFileName+".csv");
+				}
+			}
+		}
+	}	
 }

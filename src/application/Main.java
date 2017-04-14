@@ -15,15 +15,16 @@ public class Main extends Application {
 	public static final String MAIN_FXML = "MainScene.fxml";
 	public static final String MAIN_CSS = "application.css";
 	public static final String LISTVIEW_CSS = "listview.css";
+	public static final String BIOLOGY_CSV = "Biology.csv";
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 
 			// 创建配置文件(第一次启动时)
-			File file = new File(System.getProperty("user.dir") + "\\config\\" + MAIN_CFG);
-			if (!file.exists()) {
-				file.createNewFile();
+			File main_cfg = new File(ConfigHandle.getFilePath(MAIN_CFG));
+			if (!main_cfg.exists()) {
+				main_cfg.createNewFile();
 				ConfigHandle.setAllConfigInitialization(MAIN_CFG);
 			}
 
@@ -49,6 +50,12 @@ public class Main extends Application {
 			ObservableList<String> Main_ListView1_Item = FXCollections.observableArrayList(ListViewItems);
 			Main_ListView1.setItems(Main_ListView1_Item);
 
+			// 创建实用工具类的实例
+			UsefulToolkit aToolkit=new UsefulToolkit();
+			
+			// 自动生成数据文件
+			aToolkit.autoCreateDataFile(BIOLOGY_CSV);
+			
 			// primaryStage.heightProperty().addListener((ov,t,t1)->{});
 
 			// 显示
