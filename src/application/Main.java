@@ -17,6 +17,11 @@ public class Main extends Application {
 	public static final String LISTVIEW_CSS = "listview.css";
 	public static final String BIOLOGY_CSV = "Biology.csv";
 
+	public static void main(String[] args) {
+		launch(args);
+
+	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -45,17 +50,24 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 
 			// 读取配置文件及写进ListView
-			String[] ListViewItems = ConfigHandle.getConfigStringData("Option.cfg", "ListViewItems");
+			String[] ListViewItems = ConfigHandle.getConfigStringData(MAIN_CFG, "ListViewItems");
 			ListView Main_ListView1 = (ListView) root.lookup("#Main_ListView1");
 			ObservableList<String> Main_ListView1_Item = FXCollections.observableArrayList(ListViewItems);
 			Main_ListView1.setItems(Main_ListView1_Item);
 
-			// 创建实用工具类的实例
-			UsefulToolkit aToolkit=new UsefulToolkit();
-			
-			// 自动生成数据文件
+			// 创建实用工具类的实例并自动生成数据文件
+			UsefulToolkit aToolkit = new UsefulToolkit();
 			aToolkit.autoCreateDataFile(BIOLOGY_CSV);
-			
+
+			// 读取配置文件确定并填充1号ScrollPane
+			int[] ListViewEventSequence=ConfigHandle.getConfigIntData(MAIN_CFG, "ListViewEventSequence");
+			for (int i=0;i<ListViewEventSequence.length;i++) {
+				if(ListViewEventSequence[i]==1){
+					ScrollPane ScrollPane1=(ScrollPane)root.lookup("#Main_ScrollPane"+(i+1));
+					//添加填充方法
+				}				
+			}
+								
 			// primaryStage.heightProperty().addListener((ov,t,t1)->{});
 
 			// 显示
@@ -64,10 +76,5 @@ public class Main extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args) {
-		launch(args);
-
 	}
 }

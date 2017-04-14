@@ -11,6 +11,27 @@ import application.*;
 public class UsefulToolkit {
 
 	/**
+	 * A function of automatic create the rest data file 一个生成剩余数据文件的函数
+	 * 
+	 * @param fileName
+	 *            Data file Name
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public void autoCreateDataFile(String fileName) throws ClassNotFoundException, IOException {
+		ArrayList<ArrayList<String>> arrayData = DataHandle.generalReader(fileName);
+		if (!DataHandle.finalData(fileName)) {
+			if (DataHandle.existData(fileName)) {
+				for (int i = 1; i < DataHandle.getLineCount(fileName); i++) {
+					String addonFileName = DataHandle.getStringData(fileName, i, 0);
+					DataHandle.createNewDataFile(
+							fileName.substring(0, fileName.indexOf(".")) + "_" + addonFileName + ".csv");
+				}
+			}
+		}
+	}
+
+	/**
 	 * A function of automatic formatting length 一个自动格式化长度的函数
 	 * 
 	 * @param mainList
@@ -73,23 +94,4 @@ public class UsefulToolkit {
 
 		return hashMap;
 	}
-	
-	/**
-	 * 
-	 * @param fileName
-	 * @throws ClassNotFoundException
-	 * @throws IOException
-	 */
-	public void autoCreateDataFile(String fileName) throws ClassNotFoundException, IOException {
-		ArrayList<ArrayList<String>> arrayData=DataHandle.generalReader(fileName);
-		if(!DataHandle.finalData(fileName)){
-			if(DataHandle.existData(fileName)){
-				for(int i=1;i<DataHandle.getLineCount(fileName);i++){
-					String addonFileName=DataHandle.getStringData(fileName, i, 0);
-					System.out.println(addonFileName);
-					DataHandle.createNewDataFile(fileName.substring(0,fileName.indexOf("."))+addonFileName+".csv");
-				}
-			}
-		}
-	}	
 }
