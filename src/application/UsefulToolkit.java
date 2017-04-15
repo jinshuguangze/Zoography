@@ -5,10 +5,13 @@ import java.util.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.image.*;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import application.*;
 
 public class UsefulToolkit {
+	public static final String MAIN_CFG = Main.MAIN_CFG;
 
 	/**
 	 * A function of automatic create the rest data file 一个生成剩余数据文件的函数
@@ -25,8 +28,50 @@ public class UsefulToolkit {
 				for (int i = 1; i < DataHandle.getLineCount(fileName); i++) {
 					String addonFileName = DataHandle.getStringData(fileName, i, 0);
 					DataHandle.createNewDataFile(
-							fileName.substring(0, fileName.indexOf(".")) + "_" + addonFileName + ".csv");
+							fileName.substring(0, fileName.lastIndexOf(".")) + "_" + addonFileName + ".csv");
 				}
+			}
+		}
+	}
+
+	/**
+	 * A function of automatic fill interface 一个自动填充界面的函数
+	 * 
+	 * @param paneName
+	 *            Container name
+	 * @param fileName
+	 *            Data file Name
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public void autoFillInterface(TilePane paneName, String fileName) throws ClassNotFoundException, IOException {
+		ArrayList<Button> buttonList = new ArrayList<>();
+
+		if (DataHandle.existData(fileName) && !DataHandle.finalData(fileName)) {
+			int lineCount = DataHandle.getLineCount(fileName);
+
+			String[][] data = DataHandle.getAllData(fileName);
+
+			for (int i = 0; i < lineCount - 1; i++) {
+				buttonList.add(new Button());
+
+				Button aButton = buttonList.get(i);
+				String name = data[i + 1][0];
+
+				buttonList.get(i).setPrefSize(200, 200);
+				buttonList.get(i).setText(name);
+
+				paneName.getChildren().add(buttonList.get(i));
+
+				aButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> {
+					paneName.getChildren().clear();
+					try {
+						autoFillInterface(paneName,
+								fileName.substring(0, fileName.lastIndexOf(".")) + "_" + name + ".csv");
+					} catch (ClassNotFoundException | IOException e) {
+						e.printStackTrace();
+					}
+				});
 			}
 		}
 	}
@@ -55,16 +100,16 @@ public class UsefulToolkit {
 			for (int i = 0; i < mainCount - valueCount; i++) {
 				valueList.add("新建选项" + (i + 1));
 			}
-			ConfigHandle.setConfigData("Option.cfg", "ListViewItems",
+			ConfigHandle.setConfigData(MAIN_CFG, "ListViewItems",
 					valueList.toString().substring(1, valueList.toString().length() - 1).replace(" ", ""));
 		} else if (mainCount < valueCount) {
 			valueList = valueList.subList(0, mainCount);
-			ConfigHandle.setConfigData("Option.cfg", "ListViewItems",
+			ConfigHandle.setConfigData(MAIN_CFG, "ListViewItems",
 					valueList.toString().substring(1, valueList.toString().length() - 1).replace(" ", ""));
 		}
 
 		if (mainCount > keyCount) {
-			int[] aIntArray = ConfigHandle.getConfigIntData("Option.cfg", "ListViewEventSequence");
+			int[] aIntArray = ConfigHandle.getConfigIntData(MAIN_CFG, "ListViewEventSequence");
 			HashMap<Integer, Integer> aHashMap = new HashMap<>();
 			for (int i = 0; i < aIntArray.length; i++) {
 				aHashMap.put(aIntArray[i], i);
@@ -79,11 +124,11 @@ public class UsefulToolkit {
 			for (int i = 0; i < mainCount - keyCount; i++) {
 				keyList.add(keyCount + i);
 			}
-			ConfigHandle.setConfigData("Option.cfg", "ListViewEventSequence",
+			ConfigHandle.setConfigData(MAIN_CFG, "ListViewEventSequence",
 					keyList.toString().substring(1, keyList.toString().length() - 1).replace(" ", ""));
 		} else if (mainCount < keyCount) {
 			keyList = keyList.subList(0, mainCount);
-			ConfigHandle.setConfigData("Option.cfg", "ListViewEventSequence",
+			ConfigHandle.setConfigData(MAIN_CFG, "ListViewEventSequence",
 					keyList.toString().substring(1, keyList.toString().length() - 1).replace(" ", ""));
 		}
 

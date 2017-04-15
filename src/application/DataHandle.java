@@ -115,6 +115,26 @@ public class DataHandle {
 	}
 
 	/**
+	 * Get all the data of the target file 得到目标文件的所有数据
+	 * 
+	 * @param fileName
+	 *            Data file name
+	 * @return Two-dimensional string array of target data file
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public static String[][] getAllData(String fileName) throws ClassNotFoundException, IOException {
+		String[][] data = new String[getLineCount(fileName)][getColumnCount(fileName)];
+		for (int i = 0; i < getLineCount(fileName); i++) {
+			for (int j = 0; j < getColumnCount(fileName); j++) {
+				data[i][j] = getStringData(fileName, i, j);
+			}
+		}
+
+		return data;
+	}
+
+	/**
 	 * Get the column of data file 得到数据文件的列数
 	 * 
 	 * @param fileName
@@ -126,6 +146,29 @@ public class DataHandle {
 	public static int getColumnCount(String fileName) throws ClassNotFoundException, IOException {
 		ArrayList<ArrayList<String>> tArrayList = generalReader(fileName);
 		return tArrayList.get(0).size();
+	}
+
+	/**
+	 * Get all the data of the target Column 得到目标列的所有数据
+	 * 
+	 * @param fileName
+	 *            Data file name
+	 * @param position
+	 *            Which Column
+	 * @return String array of target columns
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public static String[] getColumnData(String fileName, int position) throws ClassNotFoundException, IOException {
+		String[] aStrings = new String[getLineCount(fileName)];
+
+		if (position < getColumnCount(fileName)) {
+			for (int i = 0; i < getLineCount(fileName); i++) {
+				aStrings[i] = getStringData(fileName, i, position);
+			}
+		}
+
+		return aStrings;
 	}
 
 	/**
@@ -154,6 +197,29 @@ public class DataHandle {
 	public static int getLineCount(String fileName) throws ClassNotFoundException, IOException {
 		ArrayList<ArrayList<String>> tArrayList = generalReader(fileName);
 		return tArrayList.size();
+	}
+
+	/**
+	 * Get all the data of the target line 得到目标行的所有数据
+	 * 
+	 * @param fileName
+	 *            Data file name
+	 * @param position
+	 *            Which line
+	 * @return String array of target lines
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public static String[] getLineData(String fileName, int position) throws ClassNotFoundException, IOException {
+		String[] aStrings = new String[getColumnCount(fileName)];
+
+		if (position < getLineCount(fileName)) {
+			for (int i = 0; i < getColumnCount(fileName); i++) {
+				aStrings[i] = getStringData(fileName, position, i);
+			}
+		}
+
+		return aStrings;
 	}
 
 	/**

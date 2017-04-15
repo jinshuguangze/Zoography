@@ -1,7 +1,19 @@
 
-.list-cell:odd:filled{         /*偶数未选中时的颜色*/
-	-fx-background-color: rgba(51,51,51,0.3);
+.list-cell:odd:filled{
+	-fx-background-color: #89152E;
 }
-.list-cell:filled:selected:focused{
-	-fx-background-color: rgba(51,51,51,0.3);
+.list-cell:even:filled{
+	-fx-background-color: #89152E;
+}
+.list-cell:odd:empty{
+	-fx-background-color: #89152E;
+}
+.list-cell:even:empty{
+	-fx-background-color: #89152E;
+}
+.list-cell:odd:selected{
+	-fx-background-color: #f35839;
+}
+.list-cell:even:selected{
+	-fx-background-color: #f35839;
 }

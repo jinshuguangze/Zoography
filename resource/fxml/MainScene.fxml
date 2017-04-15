@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -23,7 +24,7 @@
                         <Image url="@../textures/logo.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="Main_ImageView11" fitHeight="100.0" fitWidth="250.0" pickOnBounds="true">
+                  <ImageView fx:id="Main_ImageView11" fitHeight="100.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../textures/logoFrame.png" />
                      </image>
@@ -55,7 +56,7 @@
                   </ImageView>
                </children>
             </StackPane>
-            <ListView fx:id="Main_ListView1" editable="true" fixedCellSize="50.0" onMouseClicked="#Main_ListView1_MouseClicked" prefHeight="572.0" prefWidth="250.0" stylesheets="@../css/listview.css" VBox.vgrow="ALWAYS">
+            <ListView fx:id="Main_ListView1" editable="true" fixedCellSize="80.0" onMouseClicked="#Main_ListView1_MouseClicked" prefHeight="572.0" prefWidth="250.0" stylesheets="@../css/listview.css" VBox.vgrow="ALWAYS">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></ListView>
@@ -65,7 +66,10 @@
    <center>
       <StackPane fx:id="Main_StackPane2" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="Main_ScrollPane1" prefHeight="200.0" prefWidth="200.0" />
+            <ScrollPane fx:id="Main_ScrollPane1" prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <TilePane fx:id="Main_TilePane1" prefHeight="800.0" prefWidth="950.0" />
+               </content></ScrollPane>
             <ScrollPane fx:id="Main_ScrollPane2" prefHeight="200.0" prefWidth="200.0" visible="false" />
             <ScrollPane fx:id="Main_ScrollPane3" prefHeight="200.0" prefWidth="200.0" visible="false" />
             <ScrollPane fx:id="Main_ScrollPane4" prefHeight="200.0" prefWidth="200.0" visible="false" />
