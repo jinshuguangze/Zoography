@@ -5,12 +5,16 @@ import java.util.*;
 import javafx.application.*;
 import javafx.beans.value.*;
 import javafx.collections.*;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.*;
+import javafx.geometry.Insets;
 import javafx.stage.*;
 import javafx.util.Callback;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 public class Main extends Application {
@@ -19,7 +23,9 @@ public class Main extends Application {
 	public static final String MAIN_CSS = "application.css";
 	public static final String LISTVIEW_CSS = "listview.css";
 	public static final String BIOLOGY_CSV = "Biology.csv";
-
+	public static final String DATA_CODE = "utf-8";
+	public static final String CONFIG_CODE = "utf-8";
+	
 	public static void main(String[] args) {
 		launch(args);
 
@@ -60,7 +66,7 @@ public class Main extends Application {
 				ImageView aImageView = new ImageView(
 						new File(System.getProperty("user.dir") + "\\resource\\textures\\" + ListViewItems[i] + ".png")
 								.toURI().toURL().toString());
-				aImageView.setFitWidth(234);
+				aImageView.setFitWidth(252);
 				aImageView.setFitHeight(80);
 
 				ListViewItemsImage.add(aImageView);
@@ -68,7 +74,25 @@ public class Main extends Application {
 
 			ListView<ImageView> Main_ListView1 = (ListView) root.lookup("#Main_ListView1");
 			ObservableList<ImageView> Main_ListView1_Item = FXCollections.observableArrayList(ListViewItemsImage);
+
 			Main_ListView1.setItems(Main_ListView1_Item);
+			Main_ListView1.setPadding(new Insets(-1, -8, 0, -8));
+
+			// ListView监听事件:选择改变贴图
+			Main_ListView1.getSelectionModel().selectedItemProperty().addListener(
+					(ObservableValue<? extends ImageView> aObservable, ImageView oldValue, ImageView newValue) -> {
+						if (oldValue != null) {
+							String oldUrl = oldValue.getImage().impl_getUrl();
+							String newUrl = oldUrl.replace("_按下", "");
+							oldValue.setImage(new Image(newUrl));
+						}
+
+						if (newValue != null) {
+							String oldUrl = newValue.getImage().impl_getUrl();
+							String newUrl = oldUrl.substring(0, oldUrl.lastIndexOf(".")) + "_按下.png";
+							newValue.setImage(new Image(newUrl));
+						}
+					});
 
 			// 创建实用工具类的实例并自动生成数据文件
 			UsefulToolkit aToolkit = new UsefulToolkit();

@@ -6,14 +6,8 @@
 	-fx-background-color: #89152E;
 }
 .list-cell:odd:empty{
-	-fx-background-color: #89152E;
-}
-.list-cell:even:empty{
-	-fx-background-color: #89152E;
-}
-.list-cell:odd:selected{
 	-fx-background-color: #f35839;
 }
-.list-cell:even:selected{
+.list-cell:even:empty{
 	-fx-background-color: #f35839;
 }

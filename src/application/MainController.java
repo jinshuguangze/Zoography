@@ -86,13 +86,13 @@ public class MainController {
 
 		HashMap<Integer, String> hashMap = new UsefulToolkit().autoItemCountConformity(StackPaneItems, ListViewItems,
 				ListViewEventSequence);
-		Object item = Main_ListView1.getSelectionModel().getSelectedItem();
-
+		Object item = Main_ListView1.getSelectionModel().getSelectedItem();		
+		
 		if (item != null) {
 			for (int i = 0; i < hashMap.size(); i++) {
 				// 过时方法!
 				String urlString = ((ImageView) item).getImage().impl_getUrl();
-				String imageName = urlString.substring(urlString.lastIndexOf("/") + 1, urlString.lastIndexOf("."));
+				String imageName = urlString.substring(urlString.lastIndexOf("/") + 1, urlString.lastIndexOf("_"));
 
 				if (imageName.equals(hashMap.get(i))) {
 					for (int j = 0; j < hashMap.size(); j++) {

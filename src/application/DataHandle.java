@@ -6,7 +6,8 @@ import application.*;
 
 public class DataHandle {
 	public static final String BIOLOGY_CSV = Main.BIOLOGY_CSV;
-
+	public static final String DATACODE = Main.DATA_CODE;
+	
 	/**
 	 * Create a child data file 创造一个子数据文件
 	 * 
@@ -98,7 +99,8 @@ public class DataHandle {
 		ArrayList<ArrayList<String>> tArrayList = new ArrayList<>();
 		String s = "";
 
-		try (BufferedReader aReader = new BufferedReader(new FileReader(filePath))) {
+		try (BufferedReader aReader = new BufferedReader(
+				new InputStreamReader(new FileInputStream(filePath), DATACODE))) {
 			while ((s = aReader.readLine()) != null) {
 				ArrayList<String> sArrayList = new ArrayList<>();
 				String[] aStrings = s.split(",");

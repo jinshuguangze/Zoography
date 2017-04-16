@@ -2,12 +2,17 @@ package application;
 
 import java.io.*;
 import java.util.*;
+
+import com.sun.javafx.css.Size;
+
 import javafx.fxml.*;
+import javafx.geometry.Insets;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.*;
 import application.*;
 
 public class UsefulToolkit {
@@ -45,8 +50,8 @@ public class UsefulToolkit {
 	 * @throws IOException
 	 */
 	public void autoFillInterface(TilePane paneName, String fileName) throws ClassNotFoundException, IOException {
-		ArrayList<Button> buttonList = new ArrayList<>();
-
+		paneName.getChildren().clear();
+		ArrayList<Button> buttonList = new ArrayList<>();		
 		if (DataHandle.existData(fileName) && !DataHandle.finalData(fileName)) {
 			int lineCount = DataHandle.getLineCount(fileName);
 
@@ -57,21 +62,56 @@ public class UsefulToolkit {
 
 				Button aButton = buttonList.get(i);
 				String name = data[i + 1][0];
+				String localName=data[i+1][1];
+				String image=data[i+1][2];
+				String label=data[i+1][3];
+				String profile=data[i+1][4];
+				String introduce=data[i+1][5];
 
 				buttonList.get(i).setPrefSize(200, 200);
-				buttonList.get(i).setText(name);
-
-				paneName.getChildren().add(buttonList.get(i));
-
-				aButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> {
-					paneName.getChildren().clear();
-					try {
-						autoFillInterface(paneName,
-								fileName.substring(0, fileName.lastIndexOf(".")) + "_" + name + ".csv");
-					} catch (ClassNotFoundException | IOException e) {
-						e.printStackTrace();
-					}
+				buttonList.get(i).setText(name+"\r\n"+localName);
+				
+				paneName.getChildren().add(buttonList.get(i));				
+				aButton.setBackground(null);
+				
+				//创建一个新进程用于加载图片URL
+				Runnable r=()->{
+					aButton.setBackground(new Background(new BackgroundImage(new Image(image), null, null, null, new BackgroundSize(200, 200, true, true, true, true))));
+				};
+				Thread thread =new Thread(r);
+				thread.start();
+				
+				Background defaultGround = aButton.getBackground();
+				//添加鼠标进入事件
+				aButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent m) -> {					
+					aButton.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));					
 				});
+				
+				//添加鼠标离开事件
+				aButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent m) -> {
+					aButton.setBackground(defaultGround);
+				});
+				
+				//添加鼠标点击事件
+				aButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> {
+					if(m.isPrimaryButtonDown()){//左击
+						try {
+							autoFillInterface(paneName,
+									fileName.substring(0, fileName.lastIndexOf(".")) + "_" + name + ".csv");
+						} catch (ClassNotFoundException | IOException e) {
+							e.printStackTrace();
+						}
+					}
+					else if(m.isSecondaryButtonDown()){//右击
+						String dataFileName=fileName.substring(0, fileName.lastIndexOf("_"))+".csv";
+						try {
+							if(new File(DataHandle.getFilePath(dataFileName)).exists())
+								autoFillInterface(paneName,dataFileName);						
+						} catch (ClassNotFoundException | IOException e) {
+							e.printStackTrace();
+						}
+					}
+				});				
 			}
 		}
 	}

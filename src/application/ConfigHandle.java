@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 
 public class ConfigHandle {
 	public static final String MAIN_CFG = Main.MAIN_CFG;
+	public static final String CONFIG_CODE = Main.CONFIG_CODE;
 
 	/**
 	 * Clear configuration file content 清除配置文件内容
@@ -43,7 +44,8 @@ public class ConfigHandle {
 		ArrayList<String> aArrayList = new ArrayList<String>();
 		String s = "";
 
-		try (BufferedReader aReader = new BufferedReader(new FileReader(filePath))) {
+		try (BufferedReader aReader = new BufferedReader(
+				new InputStreamReader(new FileInputStream(filePath), CONFIG_CODE))) {
 			while ((s = aReader.readLine()) != null) {
 				if (!s.equals("") && !s.startsWith("#")) {
 					aArrayList.add(s);

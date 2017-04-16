@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -59,7 +60,10 @@
             <ListView fx:id="Main_ListView1" editable="true" fixedCellSize="80.0" onMouseClicked="#Main_ListView1_MouseClicked" prefHeight="572.0" prefWidth="250.0" stylesheets="@../css/listview.css" VBox.vgrow="ALWAYS">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
-               </cursor></ListView>
+               </cursor>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></ListView>
          </children>
       </VBox>
    </left>
