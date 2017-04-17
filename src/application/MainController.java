@@ -13,56 +13,38 @@ public class MainController {
 
 	public static final String MAIN_CFG = Main.MAIN_CFG;
 
-	@FXML
-	private BorderPane Main_BorderPane1;
+    @FXML
+    private BorderPane MainBorderPane;
 
-	@FXML
-	private VBox Main_VBox1;
+    @FXML
+    private VBox InformarionVBox;
 
-	@FXML
-	private ImageView Main_ImageView1;
+    @FXML
+    private ListView<?> MainListView;
 
-	@FXML
-	private ImageView Main_ImageView11;
+    @FXML
+    private StackPane Center;
 
-	@FXML
-	private HBox Main_HBox1;
+    @FXML
+    private StackPane MainListViewItem1;
 
-	@FXML
-	private StackPane Main_StackPane1;
+    @FXML
+    private ImageView MainFrameLeftTop;
 
-	@FXML
-	private ImageView Main_ImageView21;
+    @FXML
+    private ImageView MainFrameLeftBottom;
 
-	@FXML
-	private ImageView Main_ImageView211;
+    @FXML
+    private ImageView MainFrameRight;
 
-	@FXML
-	private Label Main_Label1;
+    @FXML
+    private StackPane MainListViewItem2;
 
-	@FXML
-	private ImageView Main_ImageView2;
+    @FXML
+    private StackPane MainListViewItem3;
 
-	@FXML
-	private ListView<?> Main_ListView1;
-
-	@FXML
-	private StackPane Main_StackPane2;
-
-	@FXML
-	private ScrollPane Main_ScrollPane1;
-
-	@FXML
-	private TilePane Main_TilePane1;
-
-	@FXML
-	private ScrollPane Main_ScrollPane2;
-
-	@FXML
-	private ScrollPane Main_ScrollPane3;
-
-	@FXML
-	private ScrollPane Main_ScrollPane4;
+    @FXML
+    private StackPane MainListViewItem4;
 
 	/**
 	 * Event that left-clicking on the ListView 鼠标左击列表的触发器
@@ -73,9 +55,9 @@ public class MainController {
 	 * @throws IOException
 	 */
 	@FXML
-	void Main_ListView1_MouseClicked(MouseEvent event) throws ClassNotFoundException, IOException {
+	void MainListView_MouseClicked(MouseEvent event) throws ClassNotFoundException, IOException {
 
-		List<Object> StackPaneItems = new ArrayList<>(Arrays.asList(Main_StackPane2.getChildren().toArray()));
+		List<Object> StackPaneItems = new ArrayList<>(Arrays.asList(Center.getChildren().toArray()));
 		List<String> ListViewItems = new ArrayList<>(
 				Arrays.asList(ConfigHandle.getConfigStringData(MAIN_CFG, "ListViewItems")));
 		List<Integer> ListViewEventSequence = new ArrayList<>();
@@ -86,7 +68,7 @@ public class MainController {
 
 		HashMap<Integer, String> hashMap = new UsefulToolkit().autoItemCountConformity(StackPaneItems, ListViewItems,
 				ListViewEventSequence);
-		Object item = Main_ListView1.getSelectionModel().getSelectedItem();		
+		Object item = MainListView.getSelectionModel().getSelectedItem();		
 		
 		if (item != null) {
 			for (int i = 0; i < hashMap.size(); i++) {
@@ -96,10 +78,10 @@ public class MainController {
 
 				if (imageName.equals(hashMap.get(i))) {
 					for (int j = 0; j < hashMap.size(); j++) {
-						ScrollPane AllPane = (ScrollPane) Main_StackPane2.lookup("#Main_ScrollPane" + (j + 1));
+						StackPane AllPane = (StackPane) Center.lookup("#MainListViewItem" + (j + 1));
 						AllPane.setVisible(false);
 					}
-					ScrollPane ActivityPane = (ScrollPane) Main_StackPane2.lookup("#Main_ScrollPane" + (i + 1));
+					StackPane ActivityPane = (StackPane) Center.lookup("#MainListViewItem" + (i + 1));
 					ActivityPane.setVisible(true);
 				}
 			}
