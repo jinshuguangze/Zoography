@@ -113,19 +113,23 @@ public class Main extends Application {
 			aToolkit.autoCreateDataFile(BIOLOGY_CSV);
 			
 			// 读取配置文件确定并填充分层查看
-			int[] ListViewEventSequence = ConfigHandle.getConfigIntData(MAIN_CFG, "ListViewEventSequence");
+			int[] ListViewEventSequence = ConfigHandle.getConfigIntData(MAIN_CFG, "ListViewEventSequence");			
 			for (int i = 0; i < ListViewEventSequence.length; i++) {
 				if (ListViewEventSequence[i] == 0) {
-					StackPane layeredView = (StackPane) root.lookup("#MainListViewItem" + (i + 1));
-					TilePane AutoFillPane = 
-							(TilePane)((VBox)((ScrollPane)((HBox)
-									layeredView.getChildren().get(3)).getChildren().get(0)).getContent()).getChildren().get(1);
-					aToolkit.autoFillInterface(AutoFillPane, BIOLOGY_CSV);
+					StackPane layeredView = (StackPane) root.lookup("#MainListViewItem" + (i + 1));					
+					//TilePane AutoFillPane= (TilePane) root.lookup("#a123");
+					//System.out.println(AutoFillPane.getWidth());
+					//aToolkit.autoFillInterface(AutoFillPane, BIOLOGY_CSV);
 				}
 			}
 
 			//属性绑定分层查看框架与中心区域
-			StackPane Center = (StackPane) root.lookup("#Center");
+			/*StackPane Center = (StackPane) root.lookup("#Center");
+			HBox MainHBox=(HBox) root.lookup("#MainHBox");
+			MainHBox.setBackground(new Background(new BackgroundImage(new Image(
+					getFileURL("\\resource\\textures\\Wheel.png").toString()), null, null, null, 
+					new BackgroundSize(MainHBox.getWidth(), MainHBox.getHeight(), true, true, true, true))));
+			System.out.println(MainHBox.getBackground());
 			ImageView MainImageFrameRight=(ImageView) root.lookup("#MainFrameRight");
 			ImageView MainImageFrameLeftTop=(ImageView) root.lookup("#MainFrameLeftTop");
 			ImageView MainImageFrameLeftBottom=(ImageView) root.lookup("#MainFrameLeftBottom");
@@ -133,7 +137,12 @@ public class Main extends Application {
 					Center.heightProperty().add(MainImageFrameLeftTop.fitHeightProperty().negate()));
 			MainImageFrameRight.fitHeightProperty().bind(Center.heightProperty());
 			MainImageFrameRight.fitWidthProperty().bind(
-					Center.widthProperty().add(MainImageFrameLeftTop.fitWidthProperty().negate()));
+					Center.widthProperty().add(MainImageFrameLeftTop.fitWidthProperty().negate()));*/
+			ScrollPane LayeredView_Left=(ScrollPane)root.lookup("#LayeredView_Left");
+			/*LayeredView_Left.setBackground(new Background(new BackgroundImage(new Image(
+					getFileURL("\\resource\\textures\\MainFrameLeftBottom.png").toString()), null, null, null, 
+						new BackgroundSize(LayeredView_Left.getWidth(), LayeredView_Left.getHeight(), true, true, true, true))));*/
+			LayeredView_Left.setStyle("-fx-background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1492156665&di=ba8c98db01e4c4cc3b33c97120c82a12&src=http://img.mp.itc.cn/upload/20160717/725b92eca6bc4c1eadeac900267d1f27_th.jpg)");
 			
 			// primaryStage.heightProperty().addListener((ov,t,t1)->{});
 

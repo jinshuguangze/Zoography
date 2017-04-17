@@ -76,7 +76,8 @@ public class UsefulToolkit {
 				
 				//创建一个新进程用于加载图片URL
 				Runnable r=()->{
-					aButton.setBackground(new Background(new BackgroundImage(new Image(image), null, null, null, new BackgroundSize(200, 200, true, true, true, true))));
+					aButton.setBackground(new Background(new BackgroundImage(
+							new Image(image), null, null, null, new BackgroundSize(200, 200, true, true, true, true))));
 				};
 				Thread thread =new Thread(r);
 				thread.start();

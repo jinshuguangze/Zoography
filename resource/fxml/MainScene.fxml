@@ -4,18 +4,18 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.effect.ImageInput?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="MainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<BorderPane fx:id="MainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <left>
       <VBox fx:id="InformarionVBox" style="-fx-background-color: #565656;">
          <children>
@@ -60,44 +60,37 @@
    <center>
       <StackPane fx:id="Center" BorderPane.alignment="CENTER">
          <children>
-            <StackPane fx:id="MainListViewItem1" alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
+            <StackPane fx:id="MainListViewItem1">
                <children>
-                  <ImageView fx:id="MainFrameLeftTop" fitHeight="60.0" fitWidth="500.0" pickOnBounds="true" StackPane.alignment="TOP_LEFT">
-                     <image>
-                        <Image url="@../textures/MainFrameLeftTop.png" />
-                     </image>
-                     <StackPane.margin>
-                        <Insets />
-                     </StackPane.margin>
-                  </ImageView>
-                  <ImageView fx:id="MainFrameLeftBottom" fitHeight="740.0" fitWidth="500.0" pickOnBounds="true" StackPane.alignment="BOTTOM_LEFT">
-                     <image>
-                        <Image url="@../textures/MainFrameLeftBottom.png" />
-                     </image>
-                     <StackPane.margin>
-                        <Insets />
-                     </StackPane.margin>
-                  </ImageView>
-                  <ImageView fx:id="MainFrameRight" fitHeight="800.0" fitWidth="450.0" pickOnBounds="true" StackPane.alignment="CENTER_RIGHT">
-                     <image>
-                        <Image url="@../textures/mainFrameRight.png" />
-                     </image>
-                  </ImageView>
-                  <HBox fx:id="MainHBox" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="800.0" prefWidth="492.0" vbarPolicy="ALWAYS" HBox.hgrow="NEVER">
+                  <BorderPane prefHeight="800.0" prefWidth="950.0">
+                     <left>
+                        <ScrollPane fx:id="LayeredView_Left" hbarPolicy="NEVER" prefHeight="750.0" prefWidth="490.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
                            <content>
-                              <VBox prefWidth="492.0">
-                                 <children>
-                                    <TreeView prefHeight="59.0" prefWidth="492.0" />
-                                    <TilePane prefWidth="492.0" />
-                                 </children>
-                              </VBox>
+                              <TilePane fx:id="AutoFillPane" prefWidth="492.0">
+                                 <effect>
+                                    <ImageInput>
+                                       <source>
+                                          <Image url="file:/E:/forge-1.7.10-10.13.4.1614-1.7.10-src/eclipse/Zoography/resource/textures/MainFrameLeftBottom.png" />
+                                       </source>
+                                    </ImageInput>
+                                 </effect></TilePane>
                            </content>
                         </ScrollPane>
-                        <ScrollPane hbarPolicy="ALWAYS" prefHeight="800.0" prefWidth="400.0" style="-fx-background-color: #FECE8C;" vbarPolicy="ALWAYS" HBox.hgrow="ALWAYS" />
-                     </children>
-                  </HBox>
+                     </left>
+                     <right>
+                        <ScrollPane fx:id="LayeredView_Right" hbarPolicy="ALWAYS" prefHeight="791.0" prefWidth="460.0" style="-fx-background-color: #FECE8C;" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+                           <effect>
+                              <ImageInput>
+                                 <source>
+                                    <Image url="file:/E:/forge-1.7.10-10.13.4.1614-1.7.10-src/eclipse/Zoography/resource/textures/MainFrameRight.png" />
+                                 </source>
+                              </ImageInput>
+                           </effect></ScrollPane>
+                     </right>
+                     <top>
+                        <MenuBar fx:id="LayeredView_Top" prefHeight="50.0" prefWidth="442.0" BorderPane.alignment="CENTER" />
+                     </top>
+                  </BorderPane>
                </children>
             </StackPane>
             <StackPane fx:id="MainListViewItem2">
@@ -108,11 +101,11 @@
             <StackPane fx:id="MainListViewItem3">
                <children>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0" visible="false" />
-               </children>
-            </StackPane>
-            <StackPane fx:id="MainListViewItem4">
-               <children>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" visible="false" />
+                  <StackPane fx:id="MainListViewItem4">
+                     <children>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" visible="false" />
+                     </children>
+                  </StackPane>
                </children>
             </StackPane>
          </children>

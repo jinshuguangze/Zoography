@@ -29,13 +29,16 @@ public class MainController {
     private StackPane MainListViewItem1;
 
     @FXML
-    private ImageView MainFrameLeftTop;
+    private ScrollPane LayeredView_Left;
 
     @FXML
-    private ImageView MainFrameLeftBottom;
+    private TilePane AutoFillPane;
 
     @FXML
-    private ImageView MainFrameRight;
+    private ScrollPane LayeredView_Right;
+
+    @FXML
+    private MenuBar LayeredView_Top;
 
     @FXML
     private StackPane MainListViewItem2;
@@ -45,7 +48,6 @@ public class MainController {
 
     @FXML
     private StackPane MainListViewItem4;
-
 	/**
 	 * Event that left-clicking on the ListView 鼠标左击列表的触发器
 	 * 
