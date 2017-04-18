@@ -4,20 +4,19 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.effect.ImageInput?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="MainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
-   <left>
-      <VBox fx:id="InformarionVBox" style="-fx-background-color: #565656;">
+
+<HBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+   <children>
+      <VBox fx:id="Left" maxWidth="250.0" minWidth="250.0" HBox.hgrow="NEVER">
          <children>
             <StackPane prefHeight="100.0" prefWidth="250.0" VBox.vgrow="NEVER">
                <children>
@@ -53,62 +52,58 @@
                </cursor>
                <opaqueInsets>
                   <Insets />
-               </opaqueInsets></ListView>
+               </opaqueInsets>
+            </ListView>
          </children>
       </VBox>
-   </left>
-   <center>
-      <StackPane fx:id="Center" BorderPane.alignment="CENTER">
+      <HBox fx:id="Right" HBox.hgrow="ALWAYS">
          <children>
-            <StackPane fx:id="MainListViewItem1">
+            <StackPane fx:id="HBox_Left" prefHeight="801.0" prefWidth="465.0" HBox.hgrow="NEVER">
                <children>
-                  <BorderPane prefHeight="800.0" prefWidth="950.0">
+                  <BorderPane fx:id="MainListViewItem1" StackPane.alignment="CENTER">
+                     <center>
+                        <TilePane fx:id="Item1CenterFrame" prefHeight="589.0" prefWidth="435.0" style="-fx-background-color: #F78932;" BorderPane.alignment="CENTER" />
+                     </center>
                      <left>
-                        <ScrollPane fx:id="LayeredView_Left" hbarPolicy="NEVER" prefHeight="750.0" prefWidth="490.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
-                           <content>
-                              <TilePane fx:id="AutoFillPane" prefWidth="492.0">
-                                 <effect>
-                                    <ImageInput>
-                                       <source>
-                                          <Image url="file:/E:/forge-1.7.10-10.13.4.1614-1.7.10-src/eclipse/Zoography/resource/textures/MainFrameLeftBottom.png" />
-                                       </source>
-                                    </ImageInput>
-                                 </effect></TilePane>
-                           </content>
-                        </ScrollPane>
+                        <ImageView fx:id="Item1LeftFrame" fitHeight="745.0" fitWidth="14.0" pickOnBounds="true" BorderPane.alignment="CENTER_LEFT">
+                           <image>
+                              <Image url="@../textures/MainFrame_Left_Left.png" />
+                           </image>
+                        </ImageView>
                      </left>
                      <right>
-                        <ScrollPane fx:id="LayeredView_Right" hbarPolicy="ALWAYS" prefHeight="791.0" prefWidth="460.0" style="-fx-background-color: #FECE8C;" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
-                           <effect>
-                              <ImageInput>
-                                 <source>
-                                    <Image url="file:/E:/forge-1.7.10-10.13.4.1614-1.7.10-src/eclipse/Zoography/resource/textures/MainFrameRight.png" />
-                                 </source>
-                              </ImageInput>
-                           </effect></ScrollPane>
+                        <ImageView fx:id="Item1RightFrame" fitHeight="745.0" fitWidth="23.0" pickOnBounds="true" BorderPane.alignment="CENTER_RIGHT">
+                           <image>
+                              <Image url="@../textures/MainFrame_Left_Right.png" />
+                           </image>
+                        </ImageView>
                      </right>
+                     <bottom>
+                        <ImageView fx:id="Item1BottomFrame" fitHeight="22.0" fitWidth="499.0" pickOnBounds="true" BorderPane.alignment="BOTTOM_CENTER">
+                           <image>
+                              <Image url="@../textures/MainFrame_Left_Bottom.png" />
+                           </image>
+                        </ImageView>
+                     </bottom>
                      <top>
-                        <MenuBar fx:id="LayeredView_Top" prefHeight="50.0" prefWidth="442.0" BorderPane.alignment="CENTER" />
+                        <StackPane fx:id="Item1TopFrame" prefHeight="25.0" prefWidth="499.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <ImageView fitHeight="68.0" fitWidth="499.0" pickOnBounds="true" StackPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../textures/MainFrame_Left_Top.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
                      </top>
                   </BorderPane>
+                  <BorderPane fx:id="MainListViewItem2" prefHeight="200.0" prefWidth="200.0" />
+                  <BorderPane fx:id="MainListViewItem3" prefHeight="200.0" prefWidth="200.0" />
+                  <BorderPane fx:id="MainListViewItem4" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </StackPane>
-            <StackPane fx:id="MainListViewItem2">
-               <children>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" visible="false" />
-               </children>
-            </StackPane>
-            <StackPane fx:id="MainListViewItem3">
-               <children>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" visible="false" />
-                  <StackPane fx:id="MainListViewItem4">
-                     <children>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0" visible="false" />
-                     </children>
-                  </StackPane>
-               </children>
-            </StackPane>
+            <VBox fx:id="HBox_Right" alignment="CENTER_RIGHT" prefHeight="801.0" prefWidth="357.0" HBox.hgrow="ALWAYS" />
          </children>
-      </StackPane>
-   </center>
-</BorderPane>
+      </HBox>
+   </children>
+</HBox>

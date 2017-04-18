@@ -13,41 +13,50 @@ public class MainController {
 
 	public static final String MAIN_CFG = Main.MAIN_CFG;
 
-    @FXML
-    private BorderPane MainBorderPane;
 
     @FXML
-    private VBox InformarionVBox;
+    private VBox Left;
 
     @FXML
     private ListView<?> MainListView;
 
     @FXML
-    private StackPane Center;
+    private HBox Right;
 
     @FXML
-    private StackPane MainListViewItem1;
+    private StackPane HBox_Left;
 
     @FXML
-    private ScrollPane LayeredView_Left;
+    private BorderPane MainListViewItem1;
 
     @FXML
-    private TilePane AutoFillPane;
+    private TilePane Item1CenterFrame;
 
     @FXML
-    private ScrollPane LayeredView_Right;
+    private ImageView Item1LeftFrame;
 
     @FXML
-    private MenuBar LayeredView_Top;
+    private ImageView Item1RightFrame;
 
     @FXML
-    private StackPane MainListViewItem2;
+    private ImageView Item1BottomFrame;
 
     @FXML
-    private StackPane MainListViewItem3;
+    private StackPane Item1TopFrame;
 
     @FXML
-    private StackPane MainListViewItem4;
+    private BorderPane MainListViewItem2;
+
+    @FXML
+    private BorderPane MainListViewItem3;
+
+    @FXML
+    private BorderPane MainListViewItem4;
+
+    @FXML
+    private VBox HBox_Right;
+
+    
 	/**
 	 * Event that left-clicking on the ListView 鼠标左击列表的触发器
 	 * 
@@ -59,7 +68,7 @@ public class MainController {
 	@FXML
 	void MainListView_MouseClicked(MouseEvent event) throws ClassNotFoundException, IOException {
 
-		List<Object> StackPaneItems = new ArrayList<>(Arrays.asList(Center.getChildren().toArray()));
+		List<Object> StackPaneItems = new ArrayList<>(Arrays.asList(HBox_Left.getChildren().toArray()));
 		List<String> ListViewItems = new ArrayList<>(
 				Arrays.asList(ConfigHandle.getConfigStringData(MAIN_CFG, "ListViewItems")));
 		List<Integer> ListViewEventSequence = new ArrayList<>();
@@ -80,10 +89,10 @@ public class MainController {
 
 				if (imageName.equals(hashMap.get(i))) {
 					for (int j = 0; j < hashMap.size(); j++) {
-						StackPane AllPane = (StackPane) Center.lookup("#MainListViewItem" + (j + 1));
+						BorderPane AllPane = (BorderPane) HBox_Left.lookup("#MainListViewItem" + (j + 1));
 						AllPane.setVisible(false);
 					}
-					StackPane ActivityPane = (StackPane) Center.lookup("#MainListViewItem" + (i + 1));
+					BorderPane ActivityPane = (BorderPane) HBox_Left.lookup("#MainListViewItem" + (i + 1));
 					ActivityPane.setVisible(true);
 				}
 			}
