@@ -2,8 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -14,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<HBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<HBox prefHeight="835.0" prefWidth="1106.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <VBox fx:id="Left" maxWidth="250.0" minWidth="250.0" HBox.hgrow="NEVER">
          <children>
@@ -58,21 +60,25 @@
       </VBox>
       <HBox fx:id="Right" HBox.hgrow="ALWAYS">
          <children>
-            <StackPane fx:id="HBox_Left" prefHeight="801.0" prefWidth="465.0" HBox.hgrow="NEVER">
+            <StackPane fx:id="HBox_Left" prefHeight="835.0" prefWidth="499.0" HBox.hgrow="NEVER">
                <children>
-                  <BorderPane fx:id="MainListViewItem1" StackPane.alignment="CENTER">
+                  <BorderPane fx:id="MainListViewItem1" prefHeight="835.0" prefWidth="499.0" StackPane.alignment="CENTER">
                      <center>
-                        <TilePane fx:id="Item1CenterFrame" prefHeight="589.0" prefWidth="435.0" style="-fx-background-color: #F78932;" BorderPane.alignment="CENTER" />
+                        <TilePane fx:id="Item1CenterFrame" alignment="TOP_CENTER" hgap="15.0" prefColumns="2" prefHeight="745.0" prefRows="20" prefTileHeight="210.0" prefTileWidth="210.0" prefWidth="462.0" style="-fx-background-color: #F78932;" vgap="15.0" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </TilePane>
                      </center>
                      <left>
-                        <ImageView fx:id="Item1LeftFrame" fitHeight="745.0" fitWidth="14.0" pickOnBounds="true" BorderPane.alignment="CENTER_LEFT">
+                        <ImageView fx:id="Item1LeftFrame" fitHeight="745.0" fitWidth="11.0" pickOnBounds="true" BorderPane.alignment="CENTER_LEFT">
                            <image>
                               <Image url="@../textures/MainFrame_Left_Left.png" />
                            </image>
                         </ImageView>
                      </left>
                      <right>
-                        <ImageView fx:id="Item1RightFrame" fitHeight="745.0" fitWidth="23.0" pickOnBounds="true" BorderPane.alignment="CENTER_RIGHT">
+                        <ImageView fx:id="Item1RightFrame" fitHeight="745.0" fitWidth="24.0" pickOnBounds="true" BorderPane.alignment="CENTER_RIGHT">
                            <image>
                               <Image url="@../textures/MainFrame_Left_Right.png" />
                            </image>
@@ -86,13 +92,28 @@
                         </ImageView>
                      </bottom>
                      <top>
-                        <StackPane fx:id="Item1TopFrame" prefHeight="25.0" prefWidth="499.0" BorderPane.alignment="CENTER">
+                        <StackPane fx:id="Item1TopFrame" prefHeight="25.0" prefWidth="499.0">
                            <children>
                               <ImageView fitHeight="68.0" fitWidth="499.0" pickOnBounds="true" StackPane.alignment="CENTER">
                                  <image>
                                     <Image url="@../textures/MainFrame_Left_Top.png" />
                                  </image>
                               </ImageView>
+                              <TextField alignment="TOP_CENTER" prefHeight="53.0" prefWidth="0.0" StackPane.alignment="CENTER">
+                                 <StackPane.margin>
+                                    <Insets bottom="25.0" left="32.0" right="113.0" top="10.0" />
+                                 </StackPane.margin>
+                              </TextField>
+                              <Button fx:id="Button_Inquiry" mnemonicParsing="false" prefHeight="46.0" prefWidth="16.0" StackPane.alignment="CENTER_LEFT">
+                                 <StackPane.margin>
+                                    <Insets bottom="14.0" left="10.0" top="9.0" />
+                                 </StackPane.margin>
+                              </Button>
+                              <Button fx:id="Botton_Return" mnemonicParsing="false" prefHeight="43.0" prefWidth="102.0" StackPane.alignment="CENTER_RIGHT">
+                                 <StackPane.margin>
+                                    <Insets bottom="23.0" right="11.0" top="8.0" />
+                                 </StackPane.margin>
+                              </Button>
                            </children>
                         </StackPane>
                      </top>

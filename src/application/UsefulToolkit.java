@@ -3,16 +3,26 @@ package application;
 import java.io.*;
 import java.util.*;
 
-import com.sun.javafx.css.Size;
+import javax.swing.GroupLayout.Alignment;
 
 import javafx.fxml.*;
 import javafx.geometry.Insets;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.effect.ColorInput;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.ImageInput;
+import javafx.scene.effect.ImageInputBuilder;
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.effect.Shadow;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import application.*;
 
 public class UsefulToolkit {
@@ -50,6 +60,7 @@ public class UsefulToolkit {
 	 * @throws IOException
 	 */
 	public void autoFillInterface(TilePane paneName, String fileName) throws ClassNotFoundException, IOException {
+		
 		paneName.getChildren().clear();
 		ArrayList<Button> buttonList = new ArrayList<>();		
 		if (DataHandle.existData(fileName) && !DataHandle.finalData(fileName)) {
@@ -58,39 +69,70 @@ public class UsefulToolkit {
 			String[][] data = DataHandle.getAllData(fileName);
 
 			for (int i = 0; i < lineCount - 1; i++) {
+				//预处理
 				buttonList.add(new Button());
-
 				Button aButton = buttonList.get(i);
+				aButton.setPrefSize(210, 210);
+				aButton.setBackground(null);
+				
+				//读取属性				
 				String name = data[i + 1][0];
 				String localName=data[i+1][1];
 				String image=data[i+1][2];
 				String label=data[i+1][3];
 				String profile=data[i+1][4];
-				String introduce=data[i+1][5];
-
-				buttonList.get(i).setPrefSize(200, 200);
-				buttonList.get(i).setText(name+"\r\n"+localName);
+				String introduce=data[i+1][5];	
 				
-				paneName.getChildren().add(buttonList.get(i));				
-				aButton.setBackground(null);
+				//创建一个新进程用于加载图片URL与字体颜色
+				setButtonImage(aButton,image);
+							
+				//添加阴影
+				InnerShadow aShadow=new InnerShadow();
+				aShadow.setRadius(20.0);
+				aButton.setEffect(aShadow);
+								
+				//添加字体
+				aButton.setText(name+"\r\n"+localName);
+				aButton.setTextAlignment(TextAlignment.CENTER);
+				aButton.setFont(new Font(30.0).font("BankGothic Md BT",30.0));											
 				
-				//创建一个新进程用于加载图片URL
-				Runnable r=()->{
-					aButton.setBackground(new Background(new BackgroundImage(
-							new Image(image), null, null, null, new BackgroundSize(200, 200, true, true, true, true))));
-				};
-				Thread thread =new Thread(r);
-				thread.start();
-				
-				Background defaultGround = aButton.getBackground();
 				//添加鼠标进入事件
 				aButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent m) -> {					
-					aButton.setBackground(new Background(new BackgroundFill(Color.GRAY, null, null)));					
-				});
+					if(aButton.getBackground()!=null){
+						Image imageHandle=new Image(image);
+						int ImageWidth=(int)imageHandle.getWidth();
+						int ImageHeight=(int)imageHandle.getHeight();
+						WritableImage wImage= new WritableImage(ImageWidth,ImageHeight);
+						PixelReader pixelReader = imageHandle.getPixelReader(); 			
+						PixelWriter pixelWriter=wImage.getPixelWriter();
+						
+						for (int x = 0; x < ImageWidth; x++) {
+							for (int y = 0; y < ImageHeight; y++) {
+								 Color color=pixelReader.getColor(x, y);
+								 color = color.darker().darker().darker(); 
+								 pixelWriter.setColor(x, y, color);  
+							}
+						}
+						aButton.setBackground(new Background(new BackgroundImage(
+								wImage, null, null, null, new BackgroundSize(210, 210, true, true, true, true))));
+						StringBuilder aStringBuilder=new StringBuilder(profile);
+						for (int j = 11; j < profile.length(); j+=12) {
+							aStringBuilder.insert(j, "\n");					
+						}
+						aButton.setText(aStringBuilder.toString());
+						aButton.setFont(new Font(14.0).font("Comic Sans MS",14.0));
+						aButton.setTextFill(Paint.valueOf("#C7D7E6"));
+					}		
+				});	
+
+				
 				
 				//添加鼠标离开事件
 				aButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent m) -> {
-					aButton.setBackground(defaultGround);
+					setButtonImage(aButton,image);
+					aButton.setText(name+"\r\n"+localName);
+					aButton.setTextAlignment(TextAlignment.CENTER);
+					aButton.setFont(new Font(30.0).font("BankGothic Md BT",30.0));	
 				});
 				
 				//添加鼠标点击事件
@@ -112,11 +154,73 @@ public class UsefulToolkit {
 							e.printStackTrace();
 						}
 					}
-				});				
+				});	
+				
+				//添加按钮
+				paneName.getChildren().add(aButton);
 			}
 		}
 	}
+	
+	/**
+	 * 
+	 * @param aButton
+	 * @param imageURL
+	 */
+	private static void setButtonImage(Button aButton,String imageURL) {
+		Runnable r=()->{
+			Image aImage=new Image(imageURL);
+			aButton.setBackground(new Background(new BackgroundImage(
+					aImage, null, null, null, new BackgroundSize(210, 210, true, true, true, true))));
+			aButton.setTextFill(Paint.valueOf(getImageAnalysis(aImage)));
+		};
+		Thread thread =new Thread(r);
+		thread.start();		
+	}
+		
+	/**
+	 * 
+	 * @param aImage
+	 * @return
+	 */
+	private static String getImageAnalysis(Image aImage) {
+		int ImageWidth=(int)aImage.getWidth();
+		int ImageHeight=(int)aImage.getHeight();
+		WritableImage wImage= new WritableImage(ImageWidth,ImageHeight);
+		PixelReader pixelReader = aImage.getPixelReader(); 
+		PixelWriter pixelWriter=wImage.getPixelWriter();
+		
+		String fontColor="#C7D7E6";
+		ArrayList<Double[]> colorArray=new ArrayList<>();
+		if(aImage!=null){			
+			double opacityCount=0.0;
+			double redCount=0.0;
+			double greenCount=0.0;
+			double blueCount=0.0;
+			for (int x = ImageWidth/4; x < ImageWidth*3/4; x++) {
+				for (int y = ImageHeight/4; y < ImageHeight*3/4; y++) {
+					Color color=pixelReader.getColor(x, y);
+					Double[] arrayDouble={color.getRed(),color.getGreen(),color.getBlue()};							
+					colorArray.add(arrayDouble);
+				}
+			}
+			
+			int s=colorArray.size();
+			for (Double[] doubles : colorArray) {
+				redCount+=doubles[0];
+				greenCount+=doubles[1];
+				blueCount+=doubles[2];
+			}
 
+			String red=Integer.toHexString(Math.round((float)(255.0-redCount/s*255)));
+			String green=Integer.toHexString(Math.round((float)(255.0-greenCount/s*255)));
+			String blue=Integer.toHexString(Math.round((float)(255.0-blueCount/s*255)));
+			fontColor="#"+red+green+blue;	
+		}
+		
+		return fontColor;
+	}
+	
 	/**
 	 * A function of automatic formatting length 一个自动格式化长度的函数
 	 * 

@@ -26,8 +26,8 @@ public class Main extends Application {
 	public static final String MAIN_CSS = "application.css";
 	public static final String LISTVIEW_CSS = "listview.css";
 	public static final String BIOLOGY_CSV = "Biology.csv";
-	public static final String DATA_CODE = "utf-8";
-	public static final String CONFIG_CODE = "utf-8";
+	public static final String DATA_CODE = "UTF-8";
+	public static final String CONFIG_CODE = "UTF-8";
 	
 	public static URL getFileURL(String relativePath) {
 		File file=new File(System.getProperty("user.dir")+relativePath);
@@ -104,8 +104,6 @@ public class Main extends Application {
 							newValue.setImage(new Image(newUrl));
 						}
 					});
-			
-			//ListView设置最小尺寸
 
 			// 创建实用工具类的实例并自动生成数据文件
 			UsefulToolkit aToolkit = new UsefulToolkit();
@@ -120,7 +118,7 @@ public class Main extends Application {
 					aToolkit.autoFillInterface(AutoFillPane, BIOLOGY_CSV);
 				}
 			}
-
+	
 			//属性绑定分层查看框架与中心区域			
 			StackPane HBox_Left = (StackPane) root.lookup("#HBox_Left");
 			TilePane Item1CenterFrame=(TilePane) root.lookup("#Item1CenterFrame");
@@ -142,7 +140,7 @@ public class Main extends Application {
 			Item1LeftFrame.fitHeightProperty().bind(HBox_Left.heightProperty().add(Item1TopFrame.heightProperty().negate()).add(Item1BottomFrame.fitHeightProperty().negate()));
 			
 			Item1RightFrame.fitWidthProperty().bind(Item1BottomFrame.fitWidthProperty().multiply(24.0/510.0));
-			Item1RightFrame.fitHeightProperty().bind(Item1LeftFrame.fitHeightProperty());
+			Item1RightFrame.fitHeightProperty().bind(Item1LeftFrame.fitHeightProperty());			
 			
 			// primaryStage.heightProperty().addListener((ov,t,t1)->{});
 
