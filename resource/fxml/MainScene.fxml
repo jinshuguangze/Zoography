@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <HBox prefHeight="835.0" prefWidth="1106.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <VBox fx:id="Left" maxWidth="250.0" minWidth="250.0" HBox.hgrow="NEVER">
@@ -64,10 +63,13 @@
                <children>
                   <BorderPane fx:id="MainListViewItem1" prefHeight="835.0" prefWidth="499.0" StackPane.alignment="CENTER">
                      <center>
-                        <TilePane fx:id="Item1CenterFrame" alignment="TOP_CENTER" hgap="15.0" prefColumns="2" prefHeight="745.0" prefRows="20" prefTileHeight="210.0" prefTileWidth="210.0" prefWidth="462.0" style="-fx-background-color: #F78932;" vgap="15.0" BorderPane.alignment="CENTER">
+                        <TilePane fx:id="Item1CenterFrame" alignment="TOP_CENTER" hgap="15.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMousePressed="#Item1CenterFrame_MousePressed" prefColumns="2" prefRows="20" prefTileHeight="210.0" prefTileWidth="210.0" style="-fx-background-color: #F78932;" vgap="15.0" BorderPane.alignment="CENTER">
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding>
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
                         </TilePane>
                      </center>
                      <left>
@@ -99,20 +101,32 @@
                                     <Image url="@../textures/MainFrame_Left_Top.png" />
                                  </image>
                               </ImageView>
-                              <TextField alignment="TOP_CENTER" prefHeight="53.0" prefWidth="0.0" StackPane.alignment="CENTER">
+                              <TextField fx:id="TextField_Information" alignment="TOP_CENTER" editable="false" prefHeight="44.0" prefWidth="354.0" StackPane.alignment="CENTER">
                                  <StackPane.margin>
-                                    <Insets bottom="25.0" left="32.0" right="113.0" top="10.0" />
+                                    <Insets bottom="15.0" left="32.0" right="113.0" />
                                  </StackPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="22.0" />
+                                 </font>
                               </TextField>
-                              <Button fx:id="Button_Inquiry" mnemonicParsing="false" prefHeight="46.0" prefWidth="16.0" StackPane.alignment="CENTER_LEFT">
+                              <Button fx:id="Button_Inquiry" mnemonicParsing="false" onAction="#Button_Inquiry_Action" prefHeight="46.0" prefWidth="16.0" StackPane.alignment="CENTER_LEFT">
                                  <StackPane.margin>
                                     <Insets bottom="14.0" left="10.0" top="9.0" />
                                  </StackPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
-                              <Button fx:id="Botton_Return" mnemonicParsing="false" prefHeight="43.0" prefWidth="102.0" StackPane.alignment="CENTER_RIGHT">
+                              <Button fx:id="Botton_Return" mnemonicParsing="false" onAction="#Button_Return_Action" prefHeight="43.0" prefWidth="102.0" StackPane.alignment="CENTER_RIGHT">
                                  <StackPane.margin>
                                     <Insets bottom="23.0" right="11.0" top="8.0" />
                                  </StackPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                            </children>
                         </StackPane>
@@ -123,7 +137,32 @@
                   <BorderPane fx:id="MainListViewItem4" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </StackPane>
-            <VBox fx:id="HBox_Right" alignment="CENTER_RIGHT" prefHeight="801.0" prefWidth="357.0" HBox.hgrow="ALWAYS" />
+            <BorderPane fx:id="HBox_Right" HBox.hgrow="ALWAYS">
+               <center>
+                  <VBox fx:id="Right_Center" alignment="CENTER_RIGHT" prefHeight="823.0" prefWidth="349.0" BorderPane.alignment="CENTER" />
+               </center>
+               <top>
+                  <ImageView fx:id="Right_Top" fitHeight="20.0" fitWidth="357.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
+                     <image>
+                        <Image url="@../textures/上.png" />
+                     </image>
+                  </ImageView>
+               </top>
+               <right>
+                  <ImageView fx:id="Right_Right" fitHeight="806.0" fitWidth="8.0" pickOnBounds="true" BorderPane.alignment="CENTER_RIGHT">
+                     <image>
+                        <Image url="@../textures/左.png" />
+                     </image>
+                  </ImageView>
+               </right>
+               <bottom>
+                  <ImageView fx:id="Right_Bottom" fitHeight="20.0" fitWidth="357.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="BOTTOM_LEFT">
+                     <image>
+                        <Image url="@../textures/底部.png" />
+                     </image>
+                  </ImageView>
+               </bottom>
+            </BorderPane>
          </children>
       </HBox>
    </children>

@@ -23,10 +23,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javafx.util.StringConverter;
 import application.*;
 
 public class UsefulToolkit {
 	public static final String MAIN_CFG = Main.MAIN_CFG;
+	public static final String LOGNAME_LOG = Main.LOGNAME_LOG;
+	public static final String BIOLOGY_CSV = Main.BIOLOGY_CSV;
 
 	/**
 	 * A function of automatic create the rest data file 一个生成剩余数据文件的函数
@@ -41,9 +44,11 @@ public class UsefulToolkit {
 		if (!DataHandle.finalData(fileName)) {
 			if (DataHandle.existData(fileName)) {
 				for (int i = 1; i < DataHandle.getLineCount(fileName); i++) {
-					String addonFileName = DataHandle.getStringData(fileName, i, 0);
-					DataHandle.createNewDataFile(
-							fileName.substring(0, fileName.lastIndexOf(".")) + "_" + addonFileName + ".csv");
+					String addonFileName = DataHandle.getStringData(fileName, i, 1);
+					String newfileName=fileName.substring(0, fileName.lastIndexOf(".")) + "_" + addonFileName + ".csv";
+					DataHandle.createNewDataFile(newfileName);
+					LogHandle.writeLog(LOGNAME_LOG, 
+							new Throwable().getStackTrace()[0].getMethodName() +":"+newfileName);
 				}
 			}
 		}
@@ -56,116 +61,129 @@ public class UsefulToolkit {
 	 *            Container name
 	 * @param fileName
 	 *            Data file Name
+	 * @param root
+	 *            The root for finding child node         
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public void autoFillInterface(TilePane paneName, String fileName) throws ClassNotFoundException, IOException {
-		
+	public void autoFillInterface(TilePane paneName, String fileName, TextField textName) throws ClassNotFoundException, IOException {
+
 		paneName.getChildren().clear();
-		ArrayList<Button> buttonList = new ArrayList<>();		
+		ArrayList<Button> buttonList = new ArrayList<>();
 		if (DataHandle.existData(fileName) && !DataHandle.finalData(fileName)) {
 			int lineCount = DataHandle.getLineCount(fileName);
 
 			String[][] data = DataHandle.getAllData(fileName);
 
 			for (int i = 0; i < lineCount - 1; i++) {
-				//预处理
+				// 预处理
 				buttonList.add(new Button());
 				Button aButton = buttonList.get(i);
 				aButton.setPrefSize(210, 210);
 				aButton.setBackground(null);
 				
-				//读取属性				
-				String name = data[i + 1][0];
-				String localName=data[i+1][1];
-				String image=data[i+1][2];
-				String label=data[i+1][3];
-				String profile=data[i+1][4];
-				String introduce=data[i+1][5];	
+				//写进日志文件
+				LogHandle.writeLog(LOGNAME_LOG, 
+						"autoFillInterface"+":"+fileName);
 				
-				//创建一个新进程用于加载图片URL与字体颜色
-				setButtonImage(aButton,image);
-							
-				//添加阴影
-				InnerShadow aShadow=new InnerShadow();
+				// 读取属性
+				String name = data[i + 1][0];
+				String localName = data[i + 1][1];
+				String image = data[i + 1][2];
+				String label = data[i + 1][3];
+				String profile = data[i + 1][4];
+				String introduce = data[i + 1][5];
+
+				// 创建一个新进程用于加载图片URL与字体颜色
+				setButtonImage(aButton, image);
+
+				// 添加阴影
+				InnerShadow aShadow = new InnerShadow();
 				aShadow.setRadius(20.0);
 				aButton.setEffect(aShadow);
-								
-				//添加字体
-				aButton.setText(name+"\r\n"+localName);
+
+				// 添加字体
+				aButton.setText(name + "\r\n" + localName);
+				int length=(name.length()-localName.length()>0)?name.length():localName.length();
+				double fontSize=35.0-length;
+
 				aButton.setTextAlignment(TextAlignment.CENTER);
-				aButton.setFont(new Font(30.0).font("BankGothic Md BT",30.0));											
+				aButton.setFont(new Font(fontSize).font("BankGothic Md BT", FontWeight.EXTRA_BOLD, fontSize));
 				
-				//添加鼠标进入事件
-				aButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent m) -> {					
-					if(aButton.getBackground()!=null){
-						Image imageHandle=new Image(image);
-						int ImageWidth=(int)imageHandle.getWidth();
-						int ImageHeight=(int)imageHandle.getHeight();
-						WritableImage wImage= new WritableImage(ImageWidth,ImageHeight);
-						PixelReader pixelReader = imageHandle.getPixelReader(); 			
-						PixelWriter pixelWriter=wImage.getPixelWriter();
-						
+				//设置标题栏
+				textName.setText(fileName.substring(0,fileName.lastIndexOf(".")).replace("_", ">"));	
+				
+				// 添加鼠标进入事件
+				aButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent m) -> {
+					if (aButton.getBackground() != null) {
+						Image imageHandle = new Image(image);
+						int ImageWidth = (int) imageHandle.getWidth();
+						int ImageHeight = (int) imageHandle.getHeight();
+						WritableImage wImage = new WritableImage(ImageWidth, ImageHeight);
+						PixelReader pixelReader = imageHandle.getPixelReader();
+						PixelWriter pixelWriter = wImage.getPixelWriter();
+
 						for (int x = 0; x < ImageWidth; x++) {
 							for (int y = 0; y < ImageHeight; y++) {
-								 Color color=pixelReader.getColor(x, y);
-								 color = color.darker().darker().darker(); 
-								 pixelWriter.setColor(x, y, color);  
+								Color color = pixelReader.getColor(x, y);
+								color = color.darker().darker().darker();
+								pixelWriter.setColor(x, y, color);
 							}
 						}
-						aButton.setBackground(new Background(new BackgroundImage(
-								wImage, null, null, null, new BackgroundSize(210, 210, true, true, true, true))));
-						StringBuilder aStringBuilder=new StringBuilder(profile);
-						for (int j = 11; j < profile.length(); j+=12) {
-							aStringBuilder.insert(j, "\n");					
+						aButton.setBackground(new Background(new BackgroundImage(wImage, null, null, null,
+								new BackgroundSize(210, 210, true, true, true, true))));
+						StringBuilder aStringBuilder = new StringBuilder(profile);
+						for (int j = 11; j < profile.length(); j += 12) {
+							aStringBuilder.insert(j, "\n");
 						}
 						aButton.setText(aStringBuilder.toString());
-						aButton.setFont(new Font(14.0).font("Comic Sans MS",14.0));
+						aButton.setFont(new Font(14.0).font("Comic Sans MS", 14.0));
 						aButton.setTextFill(Paint.valueOf("#C7D7E6"));
-					}		
-				});	
-
-				
-				
-				//添加鼠标离开事件
-				aButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent m) -> {
-					setButtonImage(aButton,image);
-					aButton.setText(name+"\r\n"+localName);
-					aButton.setTextAlignment(TextAlignment.CENTER);
-					aButton.setFont(new Font(30.0).font("BankGothic Md BT",30.0));	
+					}
 				});
-				
-				//添加鼠标点击事件
+
+				// 添加鼠标离开事件
+				aButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent m) -> {
+					setButtonImage(aButton, image);
+					aButton.setText(name + "\r\n" + localName);
+					aButton.setTextAlignment(TextAlignment.CENTER);					
+					aButton.setFont(new Font(fontSize).font("BankGothic Md BT", FontWeight.EXTRA_BOLD, fontSize));
+				});
+
+				// 添加鼠标点击事件
 				aButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> {
-					if(m.isPrimaryButtonDown()){//左击
+					if (m.isPrimaryButtonDown()) {// 左击
 						try {
-							autoFillInterface(paneName,
-									fileName.substring(0, fileName.lastIndexOf(".")) + "_" + name + ".csv");
+							String newFileName=fileName.substring(0,fileName.lastIndexOf(".")) + "_" + localName + ".csv";
+							autoFillInterface(paneName,newFileName,textName);
+						} catch (ClassNotFoundException | IOException e) {
+							e.printStackTrace();
+						}
+					} else if (m.isSecondaryButtonDown()) {// 右击
+						int aint=fileName.lastIndexOf("_");
+						String newFileName=(aint!=-1)?fileName.substring(0,aint)+ ".csv":"BIOLOGY_CSV";						
+						try {
+							if (new File(DataHandle.getFilePath(newFileName)).exists()){
+								autoFillInterface(paneName, newFileName,textName);
+							}
 						} catch (ClassNotFoundException | IOException e) {
 							e.printStackTrace();
 						}
 					}
-					else if(m.isSecondaryButtonDown()){//右击
-						String dataFileName=fileName.substring(0, fileName.lastIndexOf("_"))+".csv";
-						try {
-							if(new File(DataHandle.getFilePath(dataFileName)).exists())
-								autoFillInterface(paneName,dataFileName);						
-						} catch (ClassNotFoundException | IOException e) {
-							e.printStackTrace();
-						}
-					}
-				});	
+				});
+
+				// 添加按钮
 				
-				//添加按钮
 				paneName.getChildren().add(aButton);
 			}
 		}
 	}
 	
 	/**
-	 * 
-	 * @param aButton
-	 * @param imageURL
+	 * A function of asynchronous processing button background image and font color
+	 * 一个异步处理按钮背景图片和字体颜色样式的函数
+	 * @param aButton Handle button
+	 * @param imageURL Image URL
 	 */
 	private static void setButtonImage(Button aButton,String imageURL) {
 		Runnable r=()->{
@@ -179,9 +197,10 @@ public class UsefulToolkit {
 	}
 		
 	/**
-	 * 
-	 * @param aImage
-	 * @return
+	 * A function of the average color picture analysis of core region and gives the color RGB string
+	 * 一个分析图片核心区域的平均颜色并给出反色RGB字符串的函数
+	 * @param aImage Analytical image
+	 * @return The color of the string
 	 */
 	private static String getImageAnalysis(Image aImage) {
 		int ImageWidth=(int)aImage.getWidth();
@@ -211,11 +230,16 @@ public class UsefulToolkit {
 				greenCount+=doubles[1];
 				blueCount+=doubles[2];
 			}
-
-			String red=Integer.toHexString(Math.round((float)(255.0-redCount/s*255)));
-			String green=Integer.toHexString(Math.round((float)(255.0-greenCount/s*255)));
-			String blue=Integer.toHexString(Math.round((float)(255.0-blueCount/s*255)));
-			fontColor="#"+red+green+blue;	
+			
+			double red=255.0-redCount/s*255.0;
+			double green=255.0-greenCount/s*255.0;
+			double blue=255.0-blueCount/s*255.0;
+			if(!(red<140.0&&red>116.0&&green<140.0&&green>116.0&&blue<140.0&&blue>116.0)){					
+				String redStr=Integer.toHexString(Math.round((float)red));
+				String greenStr=Integer.toHexString(Math.round((float)green));
+				String blueStr=Integer.toHexString(Math.round((float)blue));
+				fontColor="#"+redStr+greenStr+blueStr;
+			}
 		}
 		
 		return fontColor;
@@ -242,18 +266,30 @@ public class UsefulToolkit {
 		int keyCount = keyList.size();
 
 		if (mainCount > valueCount) {
+			List<?> oldList=valueList;
+			
 			for (int i = 0; i < mainCount - valueCount; i++) {
 				valueList.add("新建选项" + (i + 1));
 			}
+			
 			ConfigHandle.setConfigData(MAIN_CFG, "ListViewItems",
 					valueList.toString().substring(1, valueList.toString().length() - 1).replace(" ", ""));
+			LogHandle.writeLog(LOGNAME_LOG, 
+					new Throwable().getStackTrace()[0].getMethodName() +":"+oldList+"->"+valueList);
 		} else if (mainCount < valueCount) {
+			List<?> oldList=valueList;
+			
 			valueList = valueList.subList(0, mainCount);
+			
 			ConfigHandle.setConfigData(MAIN_CFG, "ListViewItems",
 					valueList.toString().substring(1, valueList.toString().length() - 1).replace(" ", ""));
+			LogHandle.writeLog(LOGNAME_LOG, 
+					new Throwable().getStackTrace()[0].getMethodName() +":"+oldList+"->"+valueList);
 		}
 
 		if (mainCount > keyCount) {
+			List<?> oldList=keyList;
+			
 			int[] aIntArray = ConfigHandle.getConfigIntData(MAIN_CFG, "ListViewEventSequence");
 			HashMap<Integer, Integer> aHashMap = new HashMap<>();
 			for (int i = 0; i < aIntArray.length; i++) {
@@ -269,12 +305,20 @@ public class UsefulToolkit {
 			for (int i = 0; i < mainCount - keyCount; i++) {
 				keyList.add(keyCount + i);
 			}
+			
 			ConfigHandle.setConfigData(MAIN_CFG, "ListViewEventSequence",
 					keyList.toString().substring(1, keyList.toString().length() - 1).replace(" ", ""));
+			LogHandle.writeLog(LOGNAME_LOG, 
+					new Throwable().getStackTrace()[0].getMethodName() +":"+oldList+"->"+keyList);
 		} else if (mainCount < keyCount) {
+			List<?> oldList=keyList;
+			
 			keyList = keyList.subList(0, mainCount);
+			
 			ConfigHandle.setConfigData(MAIN_CFG, "ListViewEventSequence",
 					keyList.toString().substring(1, keyList.toString().length() - 1).replace(" ", ""));
+			LogHandle.writeLog(LOGNAME_LOG, 
+					new Throwable().getStackTrace()[0].getMethodName() +":"+oldList+"->"+keyList);
 		}
 
 		HashMap<Integer, String> hashMap = new HashMap<>();

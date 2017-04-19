@@ -2,6 +2,7 @@ package application;
 
 import java.io.*;
 import java.net.*;
+import java.text.*;
 import java.util.*;
 import javafx.application.*;
 import javafx.beans.*;
@@ -21,19 +22,22 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 
 public class Main extends Application {
+	public static String LOGNAME_LOG;
+	public static HashMap<Integer, String> FILENUMBER = new HashMap<>();
 	public static final String MAIN_CFG = "Option.cfg";
 	public static final String MAIN_FXML = "MainScene.fxml";
 	public static final String MAIN_CSS = "application.css";
 	public static final String LISTVIEW_CSS = "listview.css";
-	public static final String BIOLOGY_CSV = "Biology.csv";
+	public static final String BIOLOGY_CSV = "生物圈.csv";
 	public static final String DATA_CODE = "UTF-8";
 	public static final String CONFIG_CODE = "UTF-8";
+	public static final String LOG_CODE = "UTF-8";
 	
 	public static URL getFileURL(String relativePath) {
-		File file=new File(System.getProperty("user.dir")+relativePath);
+		File file = new File(System.getProperty("user.dir") + relativePath);
 		try {
 			return file.toURI().toURL();
-		} catch (MalformedURLException e) {			
+		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -47,7 +51,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-
+			// 开启日志文件
+			LOGNAME_LOG = (new SimpleDateFormat("yyyyMMdd_HH_mm_ss")).format(new Date())+".log";
+			LogHandle.createNewLog(LOGNAME_LOG);
+			
 			// 创建配置文件(第一次启动时)
 			File main_cfg = new File(ConfigHandle.getFilePath(MAIN_CFG));
 			if (!main_cfg.exists()) {
@@ -69,7 +76,28 @@ public class Main extends Application {
 			Scene scene = new Scene(root, defaultWidth, defaultHeight);
 			scene.getStylesheets().add(getFileURL("\\resource\\css\\" + MAIN_CSS).toExternalForm());
 			primaryStage.setScene(scene);
-
+			
+			//控件与容器的命名
+			ListView<ImageView> MainListView=(ListView<ImageView>) root.lookup("#MainListView");
+			Button Button_Inquiry=(Button)root.lookup("#Button_Inquiry");
+			Button Botton_Return=(Button)root.lookup("#Botton_Return");
+			TextField TextField_Information=(TextField)root.lookup("#TextField_Information");
+			
+			HBox Right=(HBox)root.lookup("#Right");
+			
+			ImageView Item1LeftFrame=(ImageView) root.lookup("#Item1LeftFrame");
+			ImageView Item1RightFrame=(ImageView) root.lookup("#Item1RightFrame");
+			ImageView Item1BottomFrame=(ImageView) root.lookup("#Item1BottomFrame");
+			StackPane HBox_Left = (StackPane) root.lookup("#HBox_Left");
+			TilePane Item1CenterFrame=(TilePane) root.lookup("#Item1CenterFrame");
+			StackPane Item1TopFrame=(StackPane) root.lookup("#Item1TopFrame");
+			
+			BorderPane HBox_Right=(BorderPane) root.lookup("#HBox_Right");
+			ImageView Right_Top=(ImageView) root.lookup("#Right_Top");
+			ImageView Right_Right=(ImageView) root.lookup("#Right_Right");
+			ImageView Right_Bottom=(ImageView) root.lookup("#Right_Bottom");
+			VBox Right_Center=(VBox) root.lookup("#Right_Center");
+			
 			// 读取配置文件及写进ListView
 			String[] MainListViewItems = ConfigHandle.getConfigStringData(MAIN_CFG, "ListViewItems");
 			ArrayList<ImageView> MainListViewImage = new ArrayList<>();
@@ -82,10 +110,8 @@ public class Main extends Application {
 
 				MainListViewImage.add(aImageView);
 			}
-			
-			ListView<ImageView> MainListView=(ListView<ImageView>) root.lookup("#MainListView");
-			ObservableList<ImageView> MainListView_ItemList = FXCollections.observableArrayList(MainListViewImage);
-			
+						
+			ObservableList<ImageView> MainListView_ItemList = FXCollections.observableArrayList(MainListViewImage);			
 			MainListView.setItems(MainListView_ItemList);
 			MainListView.setPadding(new Insets(-1, -8, 0, -8));
 
@@ -109,25 +135,36 @@ public class Main extends Application {
 			UsefulToolkit aToolkit = new UsefulToolkit();
 			aToolkit.autoCreateDataFile(BIOLOGY_CSV);
 			
+			// 给所有数据文件编号
+			File dataFile=new File(getFileURL("\\resource\\data").toURI());
+			int number=0;
+			if(dataFile.exists()){
+				File[] data=dataFile.listFiles();
+				for (File file:data) {
+					String fileName=file.getName();
+					if(!file.isDirectory()
+							&&!fileName.startsWith(".")
+							&&fileName.endsWith(".csv")
+							&&DataHandle.existData(fileName)){
+						FILENUMBER.put(number, fileName);
+						number++;
+					}					
+				}
+			}
+			
 			// 读取配置文件确定并填充分层查看
 			int[] ListViewEventSequence = ConfigHandle.getConfigIntData(MAIN_CFG, "ListViewEventSequence");			
 			for (int i = 0; i < ListViewEventSequence.length; i++) {
 				if (ListViewEventSequence[i] == 0) {
 					BorderPane layeredView = (BorderPane) root.lookup("#MainListViewItem" + (i + 1));
 					TilePane AutoFillPane = (TilePane) layeredView.getChildren().get(0);					
-					aToolkit.autoFillInterface(AutoFillPane, BIOLOGY_CSV);
+					aToolkit.autoFillInterface(AutoFillPane, BIOLOGY_CSV, TextField_Information);
 				}
 			}
-	
-			//属性绑定分层查看框架与中心区域			
-			StackPane HBox_Left = (StackPane) root.lookup("#HBox_Left");
-			TilePane Item1CenterFrame=(TilePane) root.lookup("#Item1CenterFrame");
-			StackPane Item1TopFrame=(StackPane) root.lookup("#Item1TopFrame");
-			ImageView StackPane_Frame=(ImageView)Item1TopFrame.getChildren().get(0);
-			ImageView Item1LeftFrame=(ImageView) root.lookup("#Item1LeftFrame");
-			ImageView Item1RightFrame=(ImageView) root.lookup("#Item1RightFrame");
-			ImageView Item1BottomFrame=(ImageView) root.lookup("#Item1BottomFrame");
 						
+			//属性绑定分层查看框架与中心区域			
+			ImageView StackPane_Frame=(ImageView)Item1TopFrame.getChildren().get(0);
+					
 			StackPane_Frame.minHeight(74.0);
 			StackPane_Frame.maxHeight(74.0);
 			StackPane_Frame.fitWidthProperty().bind(HBox_Left.widthProperty());
@@ -141,9 +178,40 @@ public class Main extends Application {
 			
 			Item1RightFrame.fitWidthProperty().bind(Item1BottomFrame.fitWidthProperty().multiply(24.0/510.0));
 			Item1RightFrame.fitHeightProperty().bind(Item1LeftFrame.fitHeightProperty());			
+						
+		/*	Right_Bottom.minHeight(14.0);
+			Right_Bottom.maxHeight(14.0);
+			Right_Bottom.fitWidthProperty().bind(Right.widthProperty());
+			
+			Right_Top.minHeight(20.0);
+			Right_Top.maxHeight(20.0);
+			Right_Top.fitWidthProperty().bind(Right_Bottom.fitWidthProperty());
+			
+			Right_Right.fitWidthProperty().bind(Right_Bottom.fitWidthProperty().multiply(10.0/440.0));
+			Right_Right.fitHeightProperty().bind(HBox_Right.heightProperty().add(Right_Bottom.fitHeightProperty().negate()).add(Right_Top.fitHeightProperty().negate()));
+		*/
 			
 			// primaryStage.heightProperty().addListener((ov,t,t1)->{});
-
+			
+			//设置背景			
+			Button_Inquiry.setBackground(new Background(new BackgroundImage(
+					new Image(getFileURL("\\resouce\\texture\\Button_Inquiry.png").toString(), 24, 64, true, true, true),
+					BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, 
+					BackgroundPosition.CENTER, 
+					new BackgroundSize(24, 62, true, true, true, true))));
+			
+			Botton_Return.setBackground(new Background(new BackgroundImage(
+					new Image(getFileURL("\\resouce\\texture\\Botton_Return.png").toString(), 115, 48, true, true, true),
+					BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, 
+					BackgroundPosition.CENTER, 
+					new BackgroundSize(115, 48, true, true, true, true))));
+			
+			TextField_Information.setBackground(new Background(new BackgroundImage(
+					new Image(getFileURL("\\resouce\\texture\\MainFrame_Left_Top_Txt.png").toString(), 352, 37, true, true, true),
+					BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, 
+					BackgroundPosition.CENTER, 
+					new BackgroundSize(352, 37, true, true, true, true))));
+			
 			// 显示
 			primaryStage.show();
 
