@@ -16,6 +16,7 @@ import javafx.stage.*;
 import javafx.util.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.effect.ImageInput;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
@@ -93,10 +94,6 @@ public class Main extends Application {
 			StackPane Item1TopFrame=(StackPane) root.lookup("#Item1TopFrame");
 			
 			BorderPane HBox_Right=(BorderPane) root.lookup("#HBox_Right");
-			ImageView Right_Top=(ImageView) root.lookup("#Right_Top");
-			ImageView Right_Right=(ImageView) root.lookup("#Right_Right");
-			ImageView Right_Bottom=(ImageView) root.lookup("#Right_Bottom");
-			VBox Right_Center=(VBox) root.lookup("#Right_Center");
 			
 			// 读取配置文件及写进ListView
 			String[] MainListViewItems = ConfigHandle.getConfigStringData(MAIN_CFG, "ListViewItems");
@@ -178,7 +175,8 @@ public class Main extends Application {
 			
 			Item1RightFrame.fitWidthProperty().bind(Item1BottomFrame.fitWidthProperty().multiply(24.0/510.0));
 			Item1RightFrame.fitHeightProperty().bind(Item1LeftFrame.fitHeightProperty());			
-						
+			
+			
 		/*	Right_Bottom.minHeight(14.0);
 			Right_Bottom.maxHeight(14.0);
 			Right_Bottom.fitWidthProperty().bind(Right.widthProperty());
@@ -212,6 +210,10 @@ public class Main extends Application {
 					BackgroundPosition.CENTER, 
 					new BackgroundSize(352, 37, true, true, true, true))));
 			
+			BorderImage dasdas=new BorderImage(new Image("http://p8.qhmsg.com/t01fe4f5744f3e9305b.jpg")
+					, BorderWidths.FULL, new Insets(0, 0, 0, 0), BorderWidths.FULL, true, BorderRepeat.ROUND, BorderRepeat.ROUND);
+			HBox_Right.setBorder(new Border(dasdas));
+			System.out.println(dasdas);
 			// 显示
 			primaryStage.show();
 

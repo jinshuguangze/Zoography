@@ -22,69 +22,57 @@ public class MainController {
 
 	public static double x;
 	public static double y;
-	
-	@FXML
-	private VBox Left;
 
-	@FXML
-	private ListView<?> MainListView;
+    @FXML
+    private VBox Left;
 
-	@FXML
-	private HBox Right;
+    @FXML
+    private ListView<?> MainListView;
 
-	@FXML
-	private StackPane HBox_Left;
+    @FXML
+    private HBox Right;
 
-	@FXML
-	private BorderPane MainListViewItem1;
+    @FXML
+    private StackPane HBox_Left;
 
-	@FXML
-	private TilePane Item1CenterFrame;
+    @FXML
+    private BorderPane MainListViewItem1;
 
-	@FXML
-	private ImageView Item1LeftFrame;
+    @FXML
+    private TilePane Item1CenterFrame;
 
-	@FXML
-	private ImageView Item1RightFrame;
+    @FXML
+    private ImageView Item1LeftFrame;
 
-	@FXML
-	private ImageView Item1BottomFrame;
+    @FXML
+    private ImageView Item1RightFrame;
 
-	@FXML
-	private StackPane Item1TopFrame;
+    @FXML
+    private ImageView Item1BottomFrame;
 
-	@FXML
-	private TextField TextField_Information;
+    @FXML
+    private StackPane Item1TopFrame;
 
-	@FXML
-	private Button Button_Inquiry;
+    @FXML
+    private TextField TextField_Information;
 
-	@FXML
-	private Button Botton_Return;
+    @FXML
+    private Button Button_Inquiry;
 
-	@FXML
-	private BorderPane MainListViewItem2;
+    @FXML
+    private Button Botton_Return;
 
-	@FXML
-	private BorderPane MainListViewItem3;
+    @FXML
+    private BorderPane MainListViewItem2;
 
-	@FXML
-	private BorderPane MainListViewItem4;
+    @FXML
+    private BorderPane MainListViewItem3;
 
-	@FXML
-	private BorderPane HBox_Right;
+    @FXML
+    private BorderPane MainListViewItem4;
 
-	@FXML
-	private VBox Right_Center;
-
-	@FXML
-	private ImageView Right_Top;
-
-	@FXML
-	private ImageView Right_Right;
-
-	@FXML
-	private ImageView Right_Bottom;
+    @FXML
+    private BorderPane HBox_Right;
 
 	@FXML
 	void Item1CenterFrame_MousePressed(MouseEvent event) {
@@ -165,5 +153,4 @@ public class MainController {
 			}
 		}
 	}
-
 }

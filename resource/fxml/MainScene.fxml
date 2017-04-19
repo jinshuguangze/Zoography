@@ -137,31 +137,10 @@
                   <BorderPane fx:id="MainListViewItem4" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </StackPane>
-            <BorderPane fx:id="HBox_Right" HBox.hgrow="ALWAYS">
+            <BorderPane fx:id="HBox_Right">
                <center>
-                  <VBox fx:id="Right_Center" alignment="CENTER_RIGHT" prefHeight="823.0" prefWidth="349.0" BorderPane.alignment="CENTER" />
+                  <VBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="835.0" prefWidth="431.0" />
                </center>
-               <top>
-                  <ImageView fx:id="Right_Top" fitHeight="20.0" fitWidth="357.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
-                     <image>
-                        <Image url="@../textures/上.png" />
-                     </image>
-                  </ImageView>
-               </top>
-               <right>
-                  <ImageView fx:id="Right_Right" fitHeight="806.0" fitWidth="8.0" pickOnBounds="true" BorderPane.alignment="CENTER_RIGHT">
-                     <image>
-                        <Image url="@../textures/左.png" />
-                     </image>
-                  </ImageView>
-               </right>
-               <bottom>
-                  <ImageView fx:id="Right_Bottom" fitHeight="20.0" fitWidth="357.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="BOTTOM_LEFT">
-                     <image>
-                        <Image url="@../textures/底部.png" />
-                     </image>
-                  </ImageView>
-               </bottom>
             </BorderPane>
          </children>
       </HBox>
