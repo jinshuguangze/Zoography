@@ -75,12 +75,16 @@ public class UsefulToolkit {
 			int lineCount = DataHandle.getLineCount(fileName);
 			String[][] data = DataHandle.getAllData(fileName);
 			int lastNumber = fromNumber;
-			if (fromNumber > lineCount - 2) {
-				lastNumber = fromNumber % (lineCount - 2);
+			if (fromNumber > lineCount -2) {
+				lastNumber=0;
+			}
+			else if (fromNumber<0) {
+				lastNumber=lineCount -2;
 			}
 
 			for (int i = lastNumber; i < lineCount - 1; i++) {
 				// 预处理
+				int forLambda=i;
 				Button aButton = new Button();
 				buttonList.add(aButton);
 				aButton.setPrefSize(210, 210);
@@ -106,7 +110,7 @@ public class UsefulToolkit {
 				aButton.setEffect(aShadow);
 
 				// 添加字体
-				aButton.setText(i + "\r\n" + name + "\r\n" + localName);
+				aButton.setText((i+1) + "\r\n" + name + "\r\n" + localName);
 				int length = (name.length() - localName.length() > 0) ? name.length() : localName.length();
 				double fontSize = 35.0 - length;
 
@@ -157,7 +161,7 @@ public class UsefulToolkit {
 				// 添加鼠标离开事件
 				aButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent m) -> {
 					setButtonImage(aButton, image);
-					aButton.setText(fromNumber + "\r\n" + name + "\r\n" + localName);
+					aButton.setText((forLambda+1) + "\r\n" + name + "\r\n" + localName);
 					aButton.setTextAlignment(TextAlignment.CENTER);
 					aButton.setFont(new Font(fontSize).font("BankGothic Md BT", FontWeight.EXTRA_BOLD, fontSize));
 				});

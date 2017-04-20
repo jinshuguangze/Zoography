@@ -133,7 +133,73 @@
                      </top>
                   </BorderPane>
                   <BorderPane fx:id="MainListViewItem2" prefHeight="200.0" prefWidth="200.0" />
-                  <BorderPane fx:id="MainListViewItem3" prefHeight="200.0" prefWidth="200.0" />
+                  <BorderPane fx:id="MainListViewItem3" prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <StackPane fx:id="Item3TopFrame" prefHeight="25.0" prefWidth="499.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <ImageView fitHeight="68.0" fitWidth="499.0" pickOnBounds="true" StackPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../textures/MainFrame_Left_Top.png" />
+                                 </image>
+                              </ImageView>
+                              <TextField fx:id="TextField_Information2" alignment="TOP_CENTER" editable="false" prefHeight="44.0" prefWidth="354.0" StackPane.alignment="CENTER">
+                                 <StackPane.margin>
+                                    <Insets bottom="15.0" left="32.0" right="113.0" />
+                                 </StackPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <font>
+                                    <Font name="Microsoft YaHei Bold" size="22.0" />
+                                 </font>
+                              </TextField>
+                              <Button fx:id="Button_Inquiry2" mnemonicParsing="false" onAction="#Button_Inquiry_Action" prefHeight="46.0" prefWidth="16.0" StackPane.alignment="CENTER_LEFT">
+                                 <StackPane.margin>
+                                    <Insets bottom="14.0" left="10.0" top="9.0" />
+                                 </StackPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="Botton_Return2" mnemonicParsing="false" onAction="#Button_Return_Action" prefHeight="43.0" prefWidth="102.0" StackPane.alignment="CENTER_RIGHT">
+                                 <StackPane.margin>
+                                    <Insets bottom="23.0" right="11.0" top="8.0" />
+                                 </StackPane.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </StackPane>
+                     </top>
+                     <left>
+                        <ImageView fx:id="Item3LeftFrame" fitHeight="753.0" fitWidth="11.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+                           <image>
+                              <Image url="@../textures/MainFrame_Left_Left.png" />
+                           </image>
+                        </ImageView>
+                     </left>
+                     <center>
+                        <TilePane fx:id="Item3CenterFrame" alignment="TOP_CENTER" hgap="15.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onScroll="#Item1CenterFrame_Sroll" prefColumns="2" prefRows="20" prefTileHeight="210.0" prefTileWidth="210.0" style="-fx-background-color: #F78932;" vgap="15.0" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </TilePane>
+                     </center>
+                     <right>
+                        <ImageView fx:id="Item3RightFrame" fitHeight="753.0" fitWidth="24.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+                           <image>
+                              <Image url="@../textures/MainFrame_Left_Right.png" />
+                           </image>
+                        </ImageView>
+                     </right>
+                     <bottom>
+                        <ImageView fx:id="Item3BottomFrame" fitHeight="22.0" fitWidth="499.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+                           <image>
+                              <Image url="@../textures/MainFrame_Left_Bottom.png" />
+                           </image>
+                        </ImageView>
+                     </bottom></BorderPane>
                   <BorderPane fx:id="MainListViewItem4" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </StackPane>
@@ -143,20 +209,23 @@
                      <children>
                         <Label fx:id="RightCenter_Title" textAlignment="CENTER" textFill="#5b3215">
                            <font>
-                              <Font name="Microsoft Himalaya" size="30.0" />
+                              <Font name="Microsoft Himalaya" size="40.0" />
                            </font>
                            <padding>
                               <Insets bottom="50.0" />
                            </padding>
                         </Label>
                         <ImageView fx:id="RightCenter_ImageView" fitHeight="350.0" fitWidth="350.0" pickOnBounds="true" VBox.vgrow="NEVER" />
-                        <Label fx:id="RightCenter_Label" alignment="TOP_CENTER" onScroll="#RightCenter_Label_Scroll" prefHeight="541.0" textAlignment="JUSTIFY" textFill="#a16128" wrapText="true" VBox.vgrow="ALWAYS">
+                        <Label fx:id="RightCenter_Label" alignment="TOP_CENTER" lineSpacing="2.0" onScroll="#RightCenter_Label_Scroll" prefHeight="400.0" snapToPixel="false" textAlignment="JUSTIFY" textFill="#a16128" wrapText="true" VBox.vgrow="ALWAYS">
                            <font>
-                              <Font name="Microsoft YaHei Light" size="15.0" />
+                              <Font name="Microsoft YaHei Light" size="18.0" />
                            </font>
                            <padding>
                               <Insets top="30.0" />
                            </padding>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </Label>
                      </children></VBox>
                </center>

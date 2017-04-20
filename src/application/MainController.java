@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.event.MouseWheelEvent;
 import java.io.*;
 import java.util.*;
 import java.util.function.DoubleToLongFunction;
@@ -15,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 
 public class MainController {
 	public static final String LOGNAME_LOG = Main.LOGNAME_LOG;
@@ -24,90 +26,122 @@ public class MainController {
 	public static double x;
 	public static double y;
 
-	@FXML
-	private VBox Left;
+    @FXML
+    private VBox Left;
 
-	@FXML
-	private ListView<?> MainListView;
+    @FXML
+    private ListView<?> MainListView;
 
-	@FXML
-	private HBox Right;
+    @FXML
+    private HBox Right;
 
-	@FXML
-	private StackPane HBox_Left;
+    @FXML
+    private StackPane HBox_Left;
 
-	@FXML
-	private BorderPane MainListViewItem1;
+    @FXML
+    private BorderPane MainListViewItem1;
 
-	@FXML
-	private TilePane Item1CenterFrame;
+    @FXML
+    private TilePane Item1CenterFrame;
 
-	@FXML
-	private ImageView Item1LeftFrame;
+    @FXML
+    private ImageView Item1LeftFrame;
 
-	@FXML
-	private ImageView Item1RightFrame;
+    @FXML
+    private ImageView Item1RightFrame;
 
-	@FXML
-	private ImageView Item1BottomFrame;
+    @FXML
+    private ImageView Item1BottomFrame;
 
-	@FXML
-	private StackPane Item1TopFrame;
+    @FXML
+    private StackPane Item1TopFrame;
 
-	@FXML
-	private TextField TextField_Information;
+    @FXML
+    private TextField TextField_Information;
 
-	@FXML
-	private Button Button_Inquiry;
+    @FXML
+    private Button Button_Inquiry;
 
-	@FXML
-	private Button Botton_Return;
+    @FXML
+    private Button Botton_Return;
 
-	@FXML
-	private BorderPane MainListViewItem2;
+    @FXML
+    private BorderPane MainListViewItem2;
 
-	@FXML
-	private BorderPane MainListViewItem3;
+    @FXML
+    private BorderPane MainListViewItem3;
 
-	@FXML
-	private BorderPane MainListViewItem4;
+    @FXML
+    private StackPane Item3TopFrame;
 
-	@FXML
-	private BorderPane HBox_Right;
+    @FXML
+    private TextField TextField_Information2;
 
-	@FXML
-	private VBox Right_Center;
+    @FXML
+    private Button Button_Inquiry2;
 
-	@FXML
-	private Label RightCenter_Title;
+    @FXML
+    private Button Botton_Return2;
 
-	@FXML
-	private ImageView RightCenter_ImageView;
+    @FXML
+    private ImageView Item3LeftFrame1;
 
-	@FXML
-	private Label RightCenter_Label;
+    @FXML
+    private TilePane Item3CenterFrame1;
 
-	@FXML
-	private ImageView Right_Top;
+    @FXML
+    private ImageView Item3RightFrame1;
 
-	@FXML
-	private ImageView Right_Right;
+    @FXML
+    private ImageView Item3BottomFrame1;
 
-	@FXML
-	private ImageView Right_Bottom;
+    @FXML
+    private BorderPane MainListViewItem4;
+
+    @FXML
+    private BorderPane HBox_Right;
+
+    @FXML
+    private VBox Right_Center;
+
+    @FXML
+    private Label RightCenter_Title;
+
+    @FXML
+    private ImageView RightCenter_ImageView;
+
+    @FXML
+    private Label RightCenter_Label;
+
+    @FXML
+    private ImageView Right_Top;
+
+    @FXML
+    private ImageView Right_Right;
+
+    @FXML
+    private ImageView Right_Bottom;
 
     @FXML
     void Item1CenterFrame_Sroll(ScrollEvent event) throws ClassNotFoundException, IOException {
     	UsefulToolkit aToolkit=new UsefulToolkit();
     	String fileName=TextField_Information.getText().replace(">","_")+".csv";
-    	String text=((Button)Item1CenterFrame.getChildren().get(0)).getText();
-    	int fromNumber=Integer.parseInt(text.substring(0,text.indexOf("\r\n")));
-    	aToolkit.autoFillInterface(Item1CenterFrame, fileName, fromNumber+2, TextField_Information,RightCenter_Title,RightCenter_ImageView,RightCenter_Label);   	
+    	int addon=(event.getDeltaY()>0)?-1:+1;
+    	if(Item1CenterFrame.getChildren().size()>0){
+    		String text=((Button)Item1CenterFrame.getChildren().get(0)).getText();
+    		int fromNumber=Integer.parseInt(text.substring(0,text.indexOf("\r\n")))-1;
+    		aToolkit.autoFillInterface(Item1CenterFrame, fileName, fromNumber+addon, 
+    				TextField_Information,RightCenter_Title,RightCenter_ImageView,RightCenter_Label);   	
+    	}    	     	
     }
     
     @FXML
     void RightCenter_Label_Scroll(ScrollEvent event) {
-
+    	double top=RightCenter_Label.getPadding().getTop();
+    	double right=RightCenter_Label.getPadding().getRight();
+    	double bottom=RightCenter_Label.getPadding().getBottom();
+    	double left=RightCenter_Label.getPadding().getLeft();
+     	RightCenter_Label.setPadding(new Insets(top+event.getDeltaY(), right, bottom, left));
     }
 
 	@FXML

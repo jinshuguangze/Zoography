@@ -79,22 +79,31 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			
 			//控件与容器的命名
-			ListView<ImageView> MainListView=(ListView<ImageView>) root.lookup("#MainListView");
+			VBox Left=(VBox)root.lookup("#Left");			
+			HBox Right=(HBox)root.lookup("#Right");
+			
+			ListView<ImageView> MainListView=(ListView<ImageView>) root.lookup("#MainListView");		
 			Button Button_Inquiry=(Button)root.lookup("#Button_Inquiry");
 			Button Botton_Return=(Button)root.lookup("#Botton_Return");
 			TextField TextField_Information=(TextField)root.lookup("#TextField_Information");
-			VBox Left=(VBox)root.lookup("#Left");
+			Button Button_Inquiry2=(Button)root.lookup("#Button_Inquiry2");
+			Button Botton_Return2=(Button)root.lookup("#Botton_Return2");
+			TextField TextField_Information2=(TextField)root.lookup("#TextField_Information2");
 			
-			HBox Right=(HBox)root.lookup("#Right");
+			StackPane HBox_Left = (StackPane) root.lookup("#HBox_Left");
+			BorderPane HBox_Right=(BorderPane) root.lookup("#HBox_Right");
 			
 			ImageView Item1LeftFrame=(ImageView) root.lookup("#Item1LeftFrame");
 			ImageView Item1RightFrame=(ImageView) root.lookup("#Item1RightFrame");
 			ImageView Item1BottomFrame=(ImageView) root.lookup("#Item1BottomFrame");
-			StackPane HBox_Left = (StackPane) root.lookup("#HBox_Left");
 			TilePane Item1CenterFrame=(TilePane) root.lookup("#Item1CenterFrame");
 			StackPane Item1TopFrame=(StackPane) root.lookup("#Item1TopFrame");
-			
-			BorderPane HBox_Right=(BorderPane) root.lookup("#HBox_Right");
+			ImageView Item3LeftFrame=(ImageView) root.lookup("#Item3LeftFrame");
+			ImageView Item3RightFrame=(ImageView) root.lookup("#Item3RightFrame");
+			ImageView Item3BottomFrame=(ImageView) root.lookup("#Item3BottomFrame");
+			TilePane Item3CenterFrame=(TilePane) root.lookup("#Item3CenterFrame");
+			StackPane Item3TopFrame=(StackPane) root.lookup("#Item3TopFrame");
+						
 			ImageView Right_Bottom=(ImageView) root.lookup("#Right_Bottom");
 			ImageView Right_Top=(ImageView) root.lookup("#Right_Top");			
 			ImageView Right_Right=(ImageView) root.lookup("#Right_Right");
@@ -169,8 +178,7 @@ public class Main extends Application {
 			}
 						
 			//属性绑定分层查看框架与中心区域			
-			ImageView StackPane_Frame=(ImageView)Item1TopFrame.getChildren().get(0);
-					
+			ImageView StackPane_Frame=(ImageView)Item1TopFrame.getChildren().get(0);					
 			StackPane_Frame.minHeight(74.0);
 			StackPane_Frame.maxHeight(74.0);
 			StackPane_Frame.fitWidthProperty().bind(HBox_Left.widthProperty());
@@ -184,8 +192,24 @@ public class Main extends Application {
 					Item1TopFrame.heightProperty().negate()).add(Item1BottomFrame.fitHeightProperty().negate()));
 			
 			Item1RightFrame.fitWidthProperty().bind(Item1BottomFrame.fitWidthProperty().multiply(24.0/510.0));
-			Item1RightFrame.fitHeightProperty().bind(Item1LeftFrame.fitHeightProperty());			
+			Item1RightFrame.fitHeightProperty().bind(Item1LeftFrame.fitHeightProperty());
+			//-----------------------
+			ImageView StackPane_Frame2=(ImageView)Item3TopFrame.getChildren().get(0);					
+			StackPane_Frame2.minHeight(74.0);
+			StackPane_Frame2.maxHeight(74.0);
+			StackPane_Frame2.fitWidthProperty().bind(HBox_Left.widthProperty());
 			
+			Item3BottomFrame.minHeight(22.0);
+			Item3BottomFrame.maxHeight(22.0);
+			Item3BottomFrame.fitWidthProperty().bind(StackPane_Frame.fitWidthProperty());
+			
+			Item3LeftFrame.fitWidthProperty().bind(Item3BottomFrame.fitWidthProperty().multiply(11.0/510.0));
+			Item3LeftFrame.fitHeightProperty().bind(HBox_Left.heightProperty().add(
+					Item3TopFrame.heightProperty().negate()).add(Item3BottomFrame.fitHeightProperty().negate()));
+			
+			Item3RightFrame.fitWidthProperty().bind(Item3BottomFrame.fitWidthProperty().multiply(24.0/510.0));
+			Item3RightFrame.fitHeightProperty().bind(Item3LeftFrame.fitHeightProperty());
+			//-----------------------
 			Right_Bottom.minHeight(13.0);
 			Right_Bottom.maxHeight(13.0);			
 			Right_Bottom.fitWidthProperty().bind(primaryStage.widthProperty()
@@ -202,7 +226,7 @@ public class Main extends Application {
 			RightCenter_ImageView.fitWidthProperty().bind((Right_Bottom.fitWidthProperty()
 					.add(Right_Right.fitWidthProperty().negate())).multiply(0.7));
 			RightCenter_ImageView.fitHeightProperty().bind(primaryStage.heightProperty().multiply(0.5));
-						
+				
 			
 			// primaryStage.heightProperty().addListener((ov,t,t1)->{});
 			
@@ -220,6 +244,24 @@ public class Main extends Application {
 					new BackgroundSize(115, 48, true, true, true, true))));
 			
 			TextField_Information.setBackground(new Background(new BackgroundImage(
+					new Image(getFileURL("\\resouce\\texture\\MainFrame_Left_Top_Txt.png").toString(), 352, 37, true, true, true),
+					BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, 
+					BackgroundPosition.CENTER, 
+					new BackgroundSize(352, 37, true, true, true, true))));
+			
+			Button_Inquiry2.setBackground(new Background(new BackgroundImage(
+					new Image(getFileURL("\\resouce\\texture\\Button_Inquiry.png").toString(), 24, 64, true, true, true),
+					BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, 
+					BackgroundPosition.CENTER, 
+					new BackgroundSize(24, 62, true, true, true, true))));
+			
+			Botton_Return2.setBackground(new Background(new BackgroundImage(
+					new Image(getFileURL("\\resouce\\texture\\Botton_Return.png").toString(), 115, 48, true, true, true),
+					BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, 
+					BackgroundPosition.CENTER, 
+					new BackgroundSize(115, 48, true, true, true, true))));
+			
+			TextField_Information2.setBackground(new Background(new BackgroundImage(
 					new Image(getFileURL("\\resouce\\texture\\MainFrame_Left_Top_Txt.png").toString(), 352, 37, true, true, true),
 					BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, 
 					BackgroundPosition.CENTER, 
