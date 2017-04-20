@@ -40,14 +40,13 @@ public class LogHandle {
 		}
 	}
 
-	public static String readBeforeLog(String fileName,int bottomNumber) throws ClassNotFoundException, IOException {
-		ArrayList<String> stringList=generalReader(fileName);
-		if(bottomNumber>stringList.size()){
+	public static String readBeforeLog(String fileName, int bottomNumber) throws ClassNotFoundException, IOException {
+		ArrayList<String> stringList = generalReader(fileName);
+		if (bottomNumber > stringList.size()) {
 			return null;
+		} else {
+			return stringList.get(stringList.size() - bottomNumber);
 		}
-		else {
-			return stringList.get(stringList.size()-bottomNumber);
-		}	
 	}
 		
 	protected static String getFilePath(String fileName) throws ClassNotFoundException {

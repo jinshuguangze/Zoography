@@ -49,7 +49,7 @@
             </StackPane>
             <ListView fx:id="MainListView" fixedCellSize="80.0" onMouseClicked="#MainListView_MouseClicked" prefHeight="572.0" prefWidth="246.0" stylesheets="@../css/listview.css" VBox.vgrow="ALWAYS">
                <cursor>
-                  <Cursor fx:constant="DEFAULT" />
+                  <Cursor fx:constant="HAND" />
                </cursor>
                <opaqueInsets>
                   <Insets />
@@ -59,11 +59,11 @@
       </VBox>
       <HBox fx:id="Right" HBox.hgrow="ALWAYS">
          <children>
-            <StackPane fx:id="HBox_Left" prefHeight="835.0" prefWidth="499.0" HBox.hgrow="NEVER">
+            <StackPane fx:id="HBox_Left" prefHeight="843.0" prefWidth="499.0" HBox.hgrow="NEVER">
                <children>
                   <BorderPane fx:id="MainListViewItem1" prefHeight="835.0" prefWidth="499.0" StackPane.alignment="CENTER">
                      <center>
-                        <TilePane fx:id="Item1CenterFrame" alignment="TOP_CENTER" hgap="15.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMousePressed="#Item1CenterFrame_MousePressed" prefColumns="2" prefRows="20" prefTileHeight="210.0" prefTileWidth="210.0" style="-fx-background-color: #F78932;" vgap="15.0" BorderPane.alignment="CENTER">
+                        <TilePane fx:id="Item1CenterFrame" alignment="TOP_CENTER" hgap="15.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onScroll="#Item1CenterFrame_Sroll" prefColumns="2" prefRows="20" prefTileHeight="210.0" prefTileWidth="210.0" style="-fx-background-color: #F78932;" vgap="15.0" BorderPane.alignment="CENTER">
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding>
@@ -73,28 +73,28 @@
                         </TilePane>
                      </center>
                      <left>
-                        <ImageView fx:id="Item1LeftFrame" fitHeight="745.0" fitWidth="11.0" pickOnBounds="true" BorderPane.alignment="CENTER_LEFT">
+                        <ImageView fx:id="Item1LeftFrame" fitHeight="753.0" fitWidth="11.0" pickOnBounds="true" BorderPane.alignment="CENTER_LEFT">
                            <image>
                               <Image url="@../textures/MainFrame_Left_Left.png" />
                            </image>
                         </ImageView>
                      </left>
                      <right>
-                        <ImageView fx:id="Item1RightFrame" fitHeight="745.0" fitWidth="24.0" pickOnBounds="true" BorderPane.alignment="CENTER_RIGHT">
+                        <ImageView fx:id="Item1RightFrame" fitHeight="753.0" fitWidth="24.0" pickOnBounds="true" BorderPane.alignment="CENTER_RIGHT">
                            <image>
                               <Image url="@../textures/MainFrame_Left_Right.png" />
                            </image>
                         </ImageView>
                      </right>
                      <bottom>
-                        <ImageView fx:id="Item1BottomFrame" fitHeight="22.0" fitWidth="499.0" pickOnBounds="true" BorderPane.alignment="BOTTOM_CENTER">
+                        <ImageView fx:id="Item1BottomFrame" fitHeight="22.0" fitWidth="499.0" pickOnBounds="true" BorderPane.alignment="TOP_CENTER">
                            <image>
                               <Image url="@../textures/MainFrame_Left_Bottom.png" />
                            </image>
                         </ImageView>
                      </bottom>
                      <top>
-                        <StackPane fx:id="Item1TopFrame" prefHeight="25.0" prefWidth="499.0">
+                        <StackPane fx:id="Item1TopFrame" prefHeight="25.0" prefWidth="499.0" BorderPane.alignment="BOTTOM_CENTER">
                            <children>
                               <ImageView fitHeight="68.0" fitWidth="499.0" pickOnBounds="true" StackPane.alignment="CENTER">
                                  <image>
@@ -137,10 +137,50 @@
                   <BorderPane fx:id="MainListViewItem4" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </StackPane>
-            <BorderPane fx:id="HBox_Right">
+            <BorderPane fx:id="HBox_Right" HBox.hgrow="ALWAYS">
                <center>
-                  <VBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="835.0" prefWidth="431.0" />
+                  <VBox fx:id="Right_Center" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="799.0" prefWidth="350.0" style="-fx-background-color: #FECE8C;">
+                     <children>
+                        <Label fx:id="RightCenter_Title" textAlignment="CENTER" textFill="#5b3215">
+                           <font>
+                              <Font name="Microsoft Himalaya" size="30.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="50.0" />
+                           </padding>
+                        </Label>
+                        <ImageView fx:id="RightCenter_ImageView" fitHeight="350.0" fitWidth="350.0" pickOnBounds="true" VBox.vgrow="NEVER" />
+                        <Label fx:id="RightCenter_Label" alignment="TOP_CENTER" onScroll="#RightCenter_Label_Scroll" prefHeight="541.0" textAlignment="JUSTIFY" textFill="#a16128" wrapText="true" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="Microsoft YaHei Light" size="15.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                     </children></VBox>
                </center>
+               <top>
+                  <ImageView fx:id="Right_Top" fitHeight="19.0" fitWidth="358.0" pickOnBounds="true" BorderPane.alignment="TOP_LEFT">
+                     <image>
+                        <Image url="@../textures/Right_Top.png" />
+                     </image>
+                  </ImageView>
+               </top>
+               <right>
+                  <ImageView fx:id="Right_Right" fitHeight="811.0" fitWidth="8.0" pickOnBounds="true" BorderPane.alignment="CENTER_RIGHT">
+                     <image>
+                        <Image url="@../textures/Right_Right.png" />
+                     </image>
+                  </ImageView>
+               </right>
+               <bottom>
+                  <ImageView fx:id="Right_Bottom" fitHeight="13.0" fitWidth="358.0" pickOnBounds="true" BorderPane.alignment="TOP_LEFT">
+                     <image>
+                        <Image url="@../textures/Right_Bottom.png" />
+                     </image>
+                  </ImageView>
+               </bottom>
             </BorderPane>
          </children>
       </HBox>

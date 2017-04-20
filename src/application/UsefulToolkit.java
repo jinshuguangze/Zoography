@@ -62,30 +62,33 @@ public class UsefulToolkit {
 	 * @param fileName
 	 *            Data file Name
 	 * @param root
-	 *            The root for finding child node         
+	 *            The root for finding child node
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public void autoFillInterface(TilePane paneName, String fileName, TextField textName) throws ClassNotFoundException, IOException {
+	public void autoFillInterface(TilePane paneName, String fileName, int fromNumber, TextField textName,
+			Label titleName, ImageView imageName, Label labelName) throws ClassNotFoundException, IOException {
 
 		paneName.getChildren().clear();
 		ArrayList<Button> buttonList = new ArrayList<>();
 		if (DataHandle.existData(fileName) && !DataHandle.finalData(fileName)) {
 			int lineCount = DataHandle.getLineCount(fileName);
-
 			String[][] data = DataHandle.getAllData(fileName);
+			int lastNumber = fromNumber;
+			if (fromNumber > lineCount - 2) {
+				lastNumber = fromNumber % (lineCount - 2);
+			}
 
-			for (int i = 0; i < lineCount - 1; i++) {
+			for (int i = lastNumber; i < lineCount - 1; i++) {
 				// 预处理
-				buttonList.add(new Button());
-				Button aButton = buttonList.get(i);
+				Button aButton = new Button();
+				buttonList.add(aButton);
 				aButton.setPrefSize(210, 210);
 				aButton.setBackground(null);
-				
-				//写进日志文件
-				LogHandle.writeLog(LOGNAME_LOG, 
-						"autoFillInterface"+":"+fileName);
-				
+
+				// 写进日志文件
+				LogHandle.writeLog(LOGNAME_LOG, "autoFillInterface" + ":" + fileName);
+
 				// 读取属性
 				String name = data[i + 1][0];
 				String localName = data[i + 1][1];
@@ -103,16 +106,25 @@ public class UsefulToolkit {
 				aButton.setEffect(aShadow);
 
 				// 添加字体
-				aButton.setText(name + "\r\n" + localName);
-				int length=(name.length()-localName.length()>0)?name.length():localName.length();
-				double fontSize=35.0-length;
+				aButton.setText(i + "\r\n" + name + "\r\n" + localName);
+				int length = (name.length() - localName.length() > 0) ? name.length() : localName.length();
+				double fontSize = 35.0 - length;
 
 				aButton.setTextAlignment(TextAlignment.CENTER);
 				aButton.setFont(new Font(fontSize).font("BankGothic Md BT", FontWeight.EXTRA_BOLD, fontSize));
-				
-				//设置标题栏
-				textName.setText(fileName.substring(0,fileName.lastIndexOf(".")).replace("_", ">"));	
-				
+
+				// 设置标题栏
+				textName.setText(fileName.substring(0, fileName.lastIndexOf(".")).replace("_", ">"));
+
+				// 添加详细信息以及初始大图
+				if (titleName.getText() == "" || titleName.getText() == null) {
+					titleName.setText("生物圈");
+					imageName.setImage(new Image(
+							"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1492677832108&di=4c050a5e4173d05ddc98b2eff2060887&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F130912%2F240385-1309120JA053.jpg"));
+					labelName.setText(
+							"生物圈（Biosphere）是指地球上所有生态系统的统合整体，是地球的一个外层圈，其范围大约为海平面上下垂直约10公里。它包括地球上有生命存在和由生命过程变化和转变的空气、陆地、岩石圈和水。从地质学的广义角度上来看生物圈是结合所有生物以及它们之间的关系的全球性的生态系统，包括生物与岩石圈、水圈和空气的相互作用。生物圈是一个封闭且能自我调控的系统。地球是整个宇宙中唯一已知的有生物生存的地方。一般认为生物圈是从35亿年前生命起源后演化而来。");
+				}
+
 				// 添加鼠标进入事件
 				aButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent m) -> {
 					if (aButton.getBackground() != null) {
@@ -145,8 +157,8 @@ public class UsefulToolkit {
 				// 添加鼠标离开事件
 				aButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent m) -> {
 					setButtonImage(aButton, image);
-					aButton.setText(name + "\r\n" + localName);
-					aButton.setTextAlignment(TextAlignment.CENTER);					
+					aButton.setText(fromNumber + "\r\n" + name + "\r\n" + localName);
+					aButton.setTextAlignment(TextAlignment.CENTER);
 					aButton.setFont(new Font(fontSize).font("BankGothic Md BT", FontWeight.EXTRA_BOLD, fontSize));
 				});
 
@@ -154,17 +166,21 @@ public class UsefulToolkit {
 				aButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> {
 					if (m.isPrimaryButtonDown()) {// 左击
 						try {
-							String newFileName=fileName.substring(0,fileName.lastIndexOf(".")) + "_" + localName + ".csv";
-							autoFillInterface(paneName,newFileName,textName);
+							String newFileName = fileName.substring(0, fileName.lastIndexOf(".")) + "_" + localName
+									+ ".csv";
+							autoFillInterface(paneName, newFileName, 0, textName, titleName, imageName, labelName);
+							titleName.setText(localName + " " + name);
+							imageName.setImage(new Image(image));
+							labelName.setText(introduce);
 						} catch (ClassNotFoundException | IOException e) {
 							e.printStackTrace();
 						}
 					} else if (m.isSecondaryButtonDown()) {// 右击
-						int aint=fileName.lastIndexOf("_");
-						String newFileName=(aint!=-1)?fileName.substring(0,aint)+ ".csv":"BIOLOGY_CSV";						
+						int aint = fileName.lastIndexOf("_");
+						String newFileName = (aint != -1) ? fileName.substring(0, aint) + ".csv" : "BIOLOGY_CSV";
 						try {
-							if (new File(DataHandle.getFilePath(newFileName)).exists()){
-								autoFillInterface(paneName, newFileName,textName);
+							if (new File(DataHandle.getFilePath(newFileName)).exists()) {
+								autoFillInterface(paneName, newFileName, 0, textName, titleName, imageName, labelName);
 							}
 						} catch (ClassNotFoundException | IOException e) {
 							e.printStackTrace();
@@ -173,8 +189,9 @@ public class UsefulToolkit {
 				});
 
 				// 添加按钮
-				
+
 				paneName.getChildren().add(aButton);
+
 			}
 		}
 	}
@@ -189,7 +206,7 @@ public class UsefulToolkit {
 		Runnable r=()->{
 			Image aImage=new Image(imageURL);
 			aButton.setBackground(new Background(new BackgroundImage(
-					aImage, null, null, null, new BackgroundSize(210, 210, true, true, true, true))));
+					aImage, BackgroundRepeat.ROUND, BackgroundRepeat.ROUND, null, new BackgroundSize(210, 210, true, true, true, true))));
 			aButton.setTextFill(Paint.valueOf(getImageAnalysis(aImage)));
 		};
 		Thread thread =new Thread(r);

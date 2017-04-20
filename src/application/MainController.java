@@ -2,6 +2,7 @@ package application;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.DoubleToLongFunction;
 
 import com.sun.glass.events.WheelEvent;
 import com.sun.javafx.scene.layout.region.Margins;
@@ -23,68 +24,91 @@ public class MainController {
 	public static double x;
 	public static double y;
 
-    @FXML
-    private VBox Left;
-
-    @FXML
-    private ListView<?> MainListView;
-
-    @FXML
-    private HBox Right;
-
-    @FXML
-    private StackPane HBox_Left;
-
-    @FXML
-    private BorderPane MainListViewItem1;
-
-    @FXML
-    private TilePane Item1CenterFrame;
-
-    @FXML
-    private ImageView Item1LeftFrame;
-
-    @FXML
-    private ImageView Item1RightFrame;
-
-    @FXML
-    private ImageView Item1BottomFrame;
-
-    @FXML
-    private StackPane Item1TopFrame;
-
-    @FXML
-    private TextField TextField_Information;
-
-    @FXML
-    private Button Button_Inquiry;
-
-    @FXML
-    private Button Botton_Return;
-
-    @FXML
-    private BorderPane MainListViewItem2;
-
-    @FXML
-    private BorderPane MainListViewItem3;
-
-    @FXML
-    private BorderPane MainListViewItem4;
-
-    @FXML
-    private BorderPane HBox_Right;
+	@FXML
+	private VBox Left;
 
 	@FXML
-	void Item1CenterFrame_MousePressed(MouseEvent event) {
-		/*
-		 * if(event.getY()>0.75*Item1CenterFrame.getHeight()){
-		 * System.out.println(Item1CenterFrame.getWidth());
-		 * System.out.println(event.getSceneX()); for(Node
-		 * node:Item1CenterFrame.getChildren()){
-		 * Item1CenterFrame.setMargin(node, new
-		 * Insets(Item1CenterFrame.getInsets().getTop()-400, 0, 0, 0)); } }
-		 */
-	}
+	private ListView<?> MainListView;
+
+	@FXML
+	private HBox Right;
+
+	@FXML
+	private StackPane HBox_Left;
+
+	@FXML
+	private BorderPane MainListViewItem1;
+
+	@FXML
+	private TilePane Item1CenterFrame;
+
+	@FXML
+	private ImageView Item1LeftFrame;
+
+	@FXML
+	private ImageView Item1RightFrame;
+
+	@FXML
+	private ImageView Item1BottomFrame;
+
+	@FXML
+	private StackPane Item1TopFrame;
+
+	@FXML
+	private TextField TextField_Information;
+
+	@FXML
+	private Button Button_Inquiry;
+
+	@FXML
+	private Button Botton_Return;
+
+	@FXML
+	private BorderPane MainListViewItem2;
+
+	@FXML
+	private BorderPane MainListViewItem3;
+
+	@FXML
+	private BorderPane MainListViewItem4;
+
+	@FXML
+	private BorderPane HBox_Right;
+
+	@FXML
+	private VBox Right_Center;
+
+	@FXML
+	private Label RightCenter_Title;
+
+	@FXML
+	private ImageView RightCenter_ImageView;
+
+	@FXML
+	private Label RightCenter_Label;
+
+	@FXML
+	private ImageView Right_Top;
+
+	@FXML
+	private ImageView Right_Right;
+
+	@FXML
+	private ImageView Right_Bottom;
+
+    @FXML
+    void Item1CenterFrame_Sroll(ScrollEvent event) throws ClassNotFoundException, IOException {
+    	UsefulToolkit aToolkit=new UsefulToolkit();
+    	String fileName=TextField_Information.getText().replace(">","_")+".csv";
+    	String text=((Button)Item1CenterFrame.getChildren().get(0)).getText();
+    	int fromNumber=Integer.parseInt(text.substring(0,text.indexOf("\r\n")));
+    	aToolkit.autoFillInterface(Item1CenterFrame, fileName, fromNumber+2, TextField_Information,RightCenter_Title,RightCenter_ImageView,RightCenter_Label);   	
+    }
+    
+    @FXML
+    void RightCenter_Label_Scroll(ScrollEvent event) {
+
+    }
 
 	@FXML
 	void Button_Inquiry_Action(ActionEvent event) {
@@ -107,7 +131,8 @@ public class MainController {
 
 		UsefulToolkit aToolkit = new UsefulToolkit();
 
-		aToolkit.autoFillInterface(Item1CenterFrame, newFileName, TextField_Information);
+		aToolkit.autoFillInterface(Item1CenterFrame, newFileName, 0,TextField_Information, RightCenter_Title,
+				RightCenter_ImageView, RightCenter_Label);
 	}
 
 	/**

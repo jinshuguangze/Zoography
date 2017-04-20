@@ -83,6 +83,7 @@ public class Main extends Application {
 			Button Button_Inquiry=(Button)root.lookup("#Button_Inquiry");
 			Button Botton_Return=(Button)root.lookup("#Botton_Return");
 			TextField TextField_Information=(TextField)root.lookup("#TextField_Information");
+			VBox Left=(VBox)root.lookup("#Left");
 			
 			HBox Right=(HBox)root.lookup("#Right");
 			
@@ -94,7 +95,14 @@ public class Main extends Application {
 			StackPane Item1TopFrame=(StackPane) root.lookup("#Item1TopFrame");
 			
 			BorderPane HBox_Right=(BorderPane) root.lookup("#HBox_Right");
-			
+			ImageView Right_Bottom=(ImageView) root.lookup("#Right_Bottom");
+			ImageView Right_Top=(ImageView) root.lookup("#Right_Top");			
+			ImageView Right_Right=(ImageView) root.lookup("#Right_Right");
+			VBox Right_Center=(VBox) root.lookup("#Right_Center");
+			Label RightCenter_Title=(Label) root.lookup("#RightCenter_Title");
+			ImageView RightCenter_ImageView=(ImageView) root.lookup("#RightCenter_ImageView");
+			Label RightCenter_Label=(Label) root.lookup("#RightCenter_Label");
+						
 			// 读取配置文件及写进ListView
 			String[] MainListViewItems = ConfigHandle.getConfigStringData(MAIN_CFG, "ListViewItems");
 			ArrayList<ImageView> MainListViewImage = new ArrayList<>();
@@ -155,7 +163,8 @@ public class Main extends Application {
 				if (ListViewEventSequence[i] == 0) {
 					BorderPane layeredView = (BorderPane) root.lookup("#MainListViewItem" + (i + 1));
 					TilePane AutoFillPane = (TilePane) layeredView.getChildren().get(0);					
-					aToolkit.autoFillInterface(AutoFillPane, BIOLOGY_CSV, TextField_Information);
+					aToolkit.autoFillInterface(AutoFillPane, BIOLOGY_CSV, 0, TextField_Information, RightCenter_Title,
+							RightCenter_ImageView, RightCenter_Label);
 				}
 			}
 						
@@ -171,23 +180,29 @@ public class Main extends Application {
 			Item1BottomFrame.fitWidthProperty().bind(StackPane_Frame.fitWidthProperty());
 			
 			Item1LeftFrame.fitWidthProperty().bind(Item1BottomFrame.fitWidthProperty().multiply(11.0/510.0));
-			Item1LeftFrame.fitHeightProperty().bind(HBox_Left.heightProperty().add(Item1TopFrame.heightProperty().negate()).add(Item1BottomFrame.fitHeightProperty().negate()));
+			Item1LeftFrame.fitHeightProperty().bind(HBox_Left.heightProperty().add(
+					Item1TopFrame.heightProperty().negate()).add(Item1BottomFrame.fitHeightProperty().negate()));
 			
 			Item1RightFrame.fitWidthProperty().bind(Item1BottomFrame.fitWidthProperty().multiply(24.0/510.0));
 			Item1RightFrame.fitHeightProperty().bind(Item1LeftFrame.fitHeightProperty());			
 			
+			Right_Bottom.minHeight(13.0);
+			Right_Bottom.maxHeight(13.0);			
+			Right_Bottom.fitWidthProperty().bind(primaryStage.widthProperty()
+					.add(Left.widthProperty().negate()).add(HBox_Left.widthProperty().negate()));
 			
-		/*	Right_Bottom.minHeight(14.0);
-			Right_Bottom.maxHeight(14.0);
-			Right_Bottom.fitWidthProperty().bind(Right.widthProperty());
-			
-			Right_Top.minHeight(20.0);
-			Right_Top.maxHeight(20.0);
+			Right_Top.minHeight(19.0);
+			Right_Top.maxHeight(19.0);
 			Right_Top.fitWidthProperty().bind(Right_Bottom.fitWidthProperty());
 			
-			Right_Right.fitWidthProperty().bind(Right_Bottom.fitWidthProperty().multiply(10.0/440.0));
-			Right_Right.fitHeightProperty().bind(HBox_Right.heightProperty().add(Right_Bottom.fitHeightProperty().negate()).add(Right_Top.fitHeightProperty().negate()));
-		*/
+			Right_Right.fitWidthProperty().bind(Right_Bottom.fitWidthProperty().multiply(10.1/440.0));
+			Right_Right.fitHeightProperty().bind(HBox_Right.heightProperty()
+					.add(Right_Bottom.fitHeightProperty().negate()).add(Right_Top.fitHeightProperty().negate()));
+		
+			RightCenter_ImageView.fitWidthProperty().bind((Right_Bottom.fitWidthProperty()
+					.add(Right_Right.fitWidthProperty().negate())).multiply(0.7));
+			RightCenter_ImageView.fitHeightProperty().bind(primaryStage.heightProperty().multiply(0.5));
+						
 			
 			// primaryStage.heightProperty().addListener((ov,t,t1)->{});
 			
@@ -210,13 +225,10 @@ public class Main extends Application {
 					BackgroundPosition.CENTER, 
 					new BackgroundSize(352, 37, true, true, true, true))));
 			
-			BorderImage dasdas=new BorderImage(new Image("http://p8.qhmsg.com/t01fe4f5744f3e9305b.jpg")
-					, BorderWidths.FULL, new Insets(0, 0, 0, 0), BorderWidths.FULL, true, BorderRepeat.ROUND, BorderRepeat.ROUND);
-			HBox_Right.setBorder(new Border(dasdas));
-			System.out.println(dasdas);
 			// 显示
+			primaryStage.setFullScreen(true);
 			primaryStage.show();
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
