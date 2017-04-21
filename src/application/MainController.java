@@ -22,9 +22,7 @@ public class MainController {
 	public static final String LOGNAME_LOG = Main.LOGNAME_LOG;
 	public static final String MAIN_CFG = Main.MAIN_CFG;
 	public static final String BIOLOGY_CSV = Main.BIOLOGY_CSV;
-
-	public static double x;
-	public static double y;
+	public static final HashMap<Integer, String> FILENUMBER = Main.FILENUMBER;
 
     @FXML
     private VBox Left;
@@ -84,16 +82,16 @@ public class MainController {
     private Button Botton_Return2;
 
     @FXML
-    private ImageView Item3LeftFrame1;
+    private ImageView Item3LeftFrame;
 
     @FXML
-    private TilePane Item3CenterFrame1;
+    private TilePane Item3CenterFrame;
 
     @FXML
-    private ImageView Item3RightFrame1;
+    private ImageView Item3RightFrame;
 
     @FXML
-    private ImageView Item3BottomFrame1;
+    private ImageView Item3BottomFrame;
 
     @FXML
     private BorderPane MainListViewItem4;
@@ -122,27 +120,40 @@ public class MainController {
     @FXML
     private ImageView Right_Bottom;
 
-    @FXML
-    void Item1CenterFrame_Sroll(ScrollEvent event) throws ClassNotFoundException, IOException {
-    	UsefulToolkit aToolkit=new UsefulToolkit();
-    	String fileName=TextField_Information.getText().replace(">","_")+".csv";
-    	int addon=(event.getDeltaY()>0)?-1:+1;
-    	if(Item1CenterFrame.getChildren().size()>0){
-    		String text=((Button)Item1CenterFrame.getChildren().get(0)).getText();
-    		int fromNumber=Integer.parseInt(text.substring(0,text.indexOf("\r\n")))-1;
-    		aToolkit.autoFillInterface(Item1CenterFrame, fileName, fromNumber+addon, 
-    				TextField_Information,RightCenter_Title,RightCenter_ImageView,RightCenter_Label);   	
-    	}    	     	
-    }
-    
-    @FXML
-    void RightCenter_Label_Scroll(ScrollEvent event) {
-    	double top=RightCenter_Label.getPadding().getTop();
-    	double right=RightCenter_Label.getPadding().getRight();
-    	double bottom=RightCenter_Label.getPadding().getBottom();
-    	double left=RightCenter_Label.getPadding().getLeft();
-     	RightCenter_Label.setPadding(new Insets(top+event.getDeltaY(), right, bottom, left));
-    }
+	@FXML
+	void Item1CenterFrame_Sroll(ScrollEvent event) throws ClassNotFoundException, IOException {
+		UsefulToolkit aToolkit = new UsefulToolkit();
+		String fileName = TextField_Information.getText().replace(">", "_") + ".csv";
+		int addon = (event.getDeltaY() > 0) ? -2 : +2;
+		if (Item1CenterFrame.getChildren().size() > 0) {
+			String text = ((Button) Item1CenterFrame.getChildren().get(0)).getText();
+			int fromNumber = Integer.parseInt(text.substring(0, text.indexOf("\r\n"))) - 1;
+			aToolkit.autoFillInterface(Item1CenterFrame, fileName, fromNumber + addon, TextField_Information,
+					RightCenter_Title, RightCenter_ImageView, RightCenter_Label);
+		}
+	}
+	
+	@FXML
+	void Item3CenterFrame_Sroll(ScrollEvent event) throws ClassNotFoundException, IOException {
+		UsefulToolkit aToolkit = new UsefulToolkit();
+		String fileName = TextField_Information2.getText().replace(">", "_") + ".csv";
+		int addon = (event.getDeltaY() > 0) ? -2 : +2;
+		if (Item3CenterFrame.getChildren().size() > 0) {
+			String text = ((Button) Item3CenterFrame.getChildren().get(0)).getText();
+			int fromNumber = Integer.parseInt(text.substring(0, text.indexOf("\r\n"))) - 1;
+			aToolkit.autoFillInterface(Item3CenterFrame, fileName, fromNumber + addon, TextField_Information2,
+					RightCenter_Title, RightCenter_ImageView, RightCenter_Label);
+		}
+	}
+
+	@FXML
+	void RightCenter_Label_Scroll(ScrollEvent event) {
+		double top = RightCenter_Label.getPadding().getTop();
+		double right = RightCenter_Label.getPadding().getRight();
+		double bottom = RightCenter_Label.getPadding().getBottom();
+		double left = RightCenter_Label.getPadding().getLeft();
+		RightCenter_Label.setPadding(new Insets(top + event.getDeltaY(), right, bottom, left));
+	}
 
 	@FXML
 	void Button_Inquiry_Action(ActionEvent event) {
@@ -165,7 +176,27 @@ public class MainController {
 
 		UsefulToolkit aToolkit = new UsefulToolkit();
 
-		aToolkit.autoFillInterface(Item1CenterFrame, newFileName, 0,TextField_Information, RightCenter_Title,
+		aToolkit.autoFillInterface(Item1CenterFrame, newFileName, 0, TextField_Information, RightCenter_Title,
+				RightCenter_ImageView, RightCenter_Label);
+	}
+	
+	/**
+	 * 
+	 * @param event
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	@FXML
+	void Button_Return2_Action(ActionEvent event) throws ClassNotFoundException, IOException {
+		String oldFileName = TextField_Information2.getText() + ".csv";
+		String newFileName = BIOLOGY_CSV;
+
+		if (oldFileName != null && !oldFileName.equals("") && !oldFileName.equals(BIOLOGY_CSV))
+			newFileName = oldFileName.substring(0, oldFileName.lastIndexOf(">")).replace(">", "_") + ".csv";
+
+		UsefulToolkit aToolkit = new UsefulToolkit();
+
+		aToolkit.autoFillInterface(Item3CenterFrame, newFileName, 0, TextField_Information2, RightCenter_Title,
 				RightCenter_ImageView, RightCenter_Label);
 	}
 
@@ -208,6 +239,18 @@ public class MainController {
 					ActivityPane.setVisible(true);
 					LogHandle.writeLog(LOGNAME_LOG,
 							new Throwable().getStackTrace()[0].getMethodName() + ":" + ActivityPane.toString());
+					
+					switch (imageName) {
+					case "随机页面":
+						UsefulToolkit aToolkit = new UsefulToolkit();
+						String fileName=FILENUMBER.get((int)Math.floor(Math.random()*FILENUMBER.size()));
+						aToolkit.autoFillInterface(Item3CenterFrame, fileName, 0, TextField_Information2,
+								RightCenter_Title, RightCenter_ImageView, RightCenter_Label);
+						break;
+
+					default:
+						break;
+					}
 				}
 			}
 		}

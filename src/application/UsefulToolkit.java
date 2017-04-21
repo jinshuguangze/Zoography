@@ -101,9 +101,6 @@ public class UsefulToolkit {
 				String profile = data[i + 1][4];
 				String introduce = data[i + 1][5];
 
-				// 创建一个新进程用于加载图片URL与字体颜色
-				setButtonImage(aButton, image);
-
 				// 添加阴影
 				InnerShadow aShadow = new InnerShadow();
 				aShadow.setRadius(20.0);
@@ -122,7 +119,7 @@ public class UsefulToolkit {
 
 				// 添加详细信息以及初始大图
 				if (titleName.getText() == "" || titleName.getText() == null) {
-					titleName.setText("生物圈");
+					titleName.setText("生物圈(Biosphere)");
 					imageName.setImage(new Image(
 							"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1492677832108&di=4c050a5e4173d05ddc98b2eff2060887&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F130912%2F240385-1309120JA053.jpg"));
 					labelName.setText(
@@ -178,7 +175,7 @@ public class UsefulToolkit {
 							labelName.setText(introduce);
 						} catch (ClassNotFoundException | IOException e) {
 							e.printStackTrace();
-						}
+						} 
 					} else if (m.isSecondaryButtonDown()) {// 右击
 						int aint = fileName.lastIndexOf("_");
 						String newFileName = (aint != -1) ? fileName.substring(0, aint) + ".csv" : "BIOLOGY_CSV";
@@ -197,72 +194,140 @@ public class UsefulToolkit {
 				paneName.getChildren().add(aButton);
 
 			}
+			// 创建一个新进程用于加载图片URL与字体颜色
+			String[] image=new String[lineCount - 1-lastNumber];
+			for (int i = lastNumber; i < lineCount - 1; i++) {
+				image[i-lastNumber]=DataHandle.getStringData(fileName, i+1, 2);
+			}
+			
+			setButtonImage(buttonList, image);
 		}
 	}
 	
 	/**
-	 * A function of asynchronous processing button background image and font color
-	 * 一个异步处理按钮背景图片和字体颜色样式的函数
-	 * @param aButton Handle button
-	 * @param imageURL Image URL
+	 * A function of asynchronous processing button background image and font
+	 * color 一个异步处理按钮背景图片和字体颜色样式的函数
+	 * 
+	 * @param buttons
+	 *            Handle buttons
+	 * @param imageURL[]
+	 *            Image URLs
 	 */
-	private static void setButtonImage(Button aButton,String imageURL) {
-		Runnable r=()->{
-			Image aImage=new Image(imageURL);
-			aButton.setBackground(new Background(new BackgroundImage(
-					aImage, BackgroundRepeat.ROUND, BackgroundRepeat.ROUND, null, new BackgroundSize(210, 210, true, true, true, true))));
+	private static void setButtonImage(ArrayList<Button> buttons, String[] imageURL) {
+		int size=buttons.size();
+		
+		if(buttons.size()==imageURL.length){
+			Runnable r1 = () -> {
+					for (int i = 0; i < buttons.size()/3; i++) {
+						Image aImage = new Image(imageURL[i]);
+						buttons.get(i).setBackground(new Background(new BackgroundImage(aImage, BackgroundRepeat.ROUND,
+								BackgroundRepeat.ROUND, null, new BackgroundSize(210, 210, true, true, true, true))));
+						buttons.get(i).setTextFill(Paint.valueOf(getImageAnalysis(aImage)));
+					}
+				
+			};
+			
+			Runnable r2 = () -> {
+
+					for (int i = buttons.size()/3; i < buttons.size()*2/3; i++) {
+						Image aImage = new Image(imageURL[i]);
+						buttons.get(i).setBackground(new Background(new BackgroundImage(aImage, BackgroundRepeat.ROUND,
+								BackgroundRepeat.ROUND, null, new BackgroundSize(210, 210, true, true, true, true))));
+						buttons.get(i).setTextFill(Paint.valueOf(getImageAnalysis(aImage)));
+					}
+				
+			};
+			
+			Runnable r3 = () -> {
+
+					for (int i = buttons.size()*2/3; i < buttons.size(); i++) {
+						Image aImage = new Image(imageURL[i]);
+						buttons.get(i).setBackground(new Background(new BackgroundImage(aImage, BackgroundRepeat.ROUND,
+								BackgroundRepeat.ROUND, null, new BackgroundSize(210, 210, true, true, true, true))));
+						buttons.get(i).setTextFill(Paint.valueOf(getImageAnalysis(aImage)));
+					}
+				
+			};
+
+			Thread thread1 = new Thread(r1);
+			Thread thread2 = new Thread(r2);
+			Thread thread3 = new Thread(r3);
+			thread1.start();
+			thread2.start();
+			thread3.start();
+		}
+	}
+	
+	/**
+	 * A function of asynchronous processing button background image and font
+	 * color 一个异步处理按钮背景图片和字体颜色样式的函数
+	 * 
+	 * @param aButton
+	 *            Handle button
+	 * @param imageURL
+	 *            Image URL
+	 */
+	private static void setButtonImage(Button aButton, String imageURL) {
+		Runnable r = () -> {
+			Image aImage = new Image(imageURL);
+			aButton.setBackground(new Background(new BackgroundImage(aImage, BackgroundRepeat.ROUND,
+					BackgroundRepeat.ROUND, null, new BackgroundSize(210, 210, true, true, true, true))));
 			aButton.setTextFill(Paint.valueOf(getImageAnalysis(aImage)));
 		};
-		Thread thread =new Thread(r);
-		thread.start();		
+
+		Thread thread = new Thread(r);
+		thread.start();
 	}
 		
 	/**
-	 * A function of the average color picture analysis of core region and gives the color RGB string
-	 * 一个分析图片核心区域的平均颜色并给出反色RGB字符串的函数
-	 * @param aImage Analytical image
+	 * A function of the average color picture analysis of core region and gives
+	 * the color RGB string 一个分析图片核心区域的平均颜色并给出反色RGB字符串的函数
+	 * 
+	 * @param aImage
+	 *            Analytical image
 	 * @return The color of the string
 	 */
 	private static String getImageAnalysis(Image aImage) {
-		int ImageWidth=(int)aImage.getWidth();
-		int ImageHeight=(int)aImage.getHeight();
-		WritableImage wImage= new WritableImage(ImageWidth,ImageHeight);
-		PixelReader pixelReader = aImage.getPixelReader(); 
-		PixelWriter pixelWriter=wImage.getPixelWriter();
-		
-		String fontColor="#C7D7E6";
-		ArrayList<Double[]> colorArray=new ArrayList<>();
-		if(aImage!=null){			
-			double opacityCount=0.0;
-			double redCount=0.0;
-			double greenCount=0.0;
-			double blueCount=0.0;
-			for (int x = ImageWidth/4; x < ImageWidth*3/4; x++) {
-				for (int y = ImageHeight/4; y < ImageHeight*3/4; y++) {
-					Color color=pixelReader.getColor(x, y);
-					Double[] arrayDouble={color.getRed(),color.getGreen(),color.getBlue()};							
+		int ImageWidth = (int) aImage.getWidth();
+		int ImageHeight = (int) aImage.getHeight();
+		//System.out.println(ImageWidth+"   "+ImageHeight+"    "+aImage.impl_getUrl());
+		WritableImage wImage = new WritableImage(ImageWidth, ImageHeight);
+		PixelReader pixelReader = aImage.getPixelReader();
+		PixelWriter pixelWriter = wImage.getPixelWriter();
+
+		String fontColor = "#C7D7E6";
+		ArrayList<Double[]> colorArray = new ArrayList<>();
+		if (aImage != null) {
+			double opacityCount = 0.0;
+			double redCount = 0.0;
+			double greenCount = 0.0;
+			double blueCount = 0.0;
+			for (int x = ImageWidth / 4; x < ImageWidth * 3 / 4; x++) {
+				for (int y = ImageHeight / 4; y < ImageHeight * 3 / 4; y++) {
+					Color color = pixelReader.getColor(x, y);
+					Double[] arrayDouble = { color.getRed(), color.getGreen(), color.getBlue() };
 					colorArray.add(arrayDouble);
 				}
 			}
-			
-			int s=colorArray.size();
+
+			int s = colorArray.size();
 			for (Double[] doubles : colorArray) {
-				redCount+=doubles[0];
-				greenCount+=doubles[1];
-				blueCount+=doubles[2];
+				redCount += doubles[0];
+				greenCount += doubles[1];
+				blueCount += doubles[2];
 			}
-			
-			double red=255.0-redCount/s*255.0;
-			double green=255.0-greenCount/s*255.0;
-			double blue=255.0-blueCount/s*255.0;
-			if(!(red<140.0&&red>116.0&&green<140.0&&green>116.0&&blue<140.0&&blue>116.0)){					
-				String redStr=Integer.toHexString(Math.round((float)red));
-				String greenStr=Integer.toHexString(Math.round((float)green));
-				String blueStr=Integer.toHexString(Math.round((float)blue));
-				fontColor="#"+redStr+greenStr+blueStr;
+
+			double red = 255.0 - redCount / s * 255.0;
+			double green = 255.0 - greenCount / s * 255.0;
+			double blue = 255.0 - blueCount / s * 255.0;
+			if (!(red < 140.0 && red > 116.0 && green < 140.0 && green > 116.0 && blue < 140.0 && blue > 116.0)) {
+				String redStr = Integer.toHexString(Math.round((float) red));
+				String greenStr = Integer.toHexString(Math.round((float) green));
+				String blueStr = Integer.toHexString(Math.round((float) blue));
+				fontColor = "#" + redStr + greenStr + blueStr;
 			}
 		}
-		
+
 		return fontColor;
 	}
 	
@@ -287,30 +352,30 @@ public class UsefulToolkit {
 		int keyCount = keyList.size();
 
 		if (mainCount > valueCount) {
-			List<?> oldList=valueList;
-			
+			List<?> oldList = valueList;
+
 			for (int i = 0; i < mainCount - valueCount; i++) {
 				valueList.add("新建选项" + (i + 1));
 			}
-			
+
 			ConfigHandle.setConfigData(MAIN_CFG, "ListViewItems",
 					valueList.toString().substring(1, valueList.toString().length() - 1).replace(" ", ""));
-			LogHandle.writeLog(LOGNAME_LOG, 
-					new Throwable().getStackTrace()[0].getMethodName() +":"+oldList+"->"+valueList);
+			LogHandle.writeLog(LOGNAME_LOG,
+					new Throwable().getStackTrace()[0].getMethodName() + ":" + oldList + "->" + valueList);
 		} else if (mainCount < valueCount) {
-			List<?> oldList=valueList;
-			
+			List<?> oldList = valueList;
+
 			valueList = valueList.subList(0, mainCount);
-			
+
 			ConfigHandle.setConfigData(MAIN_CFG, "ListViewItems",
 					valueList.toString().substring(1, valueList.toString().length() - 1).replace(" ", ""));
-			LogHandle.writeLog(LOGNAME_LOG, 
-					new Throwable().getStackTrace()[0].getMethodName() +":"+oldList+"->"+valueList);
+			LogHandle.writeLog(LOGNAME_LOG,
+					new Throwable().getStackTrace()[0].getMethodName() + ":" + oldList + "->" + valueList);
 		}
 
 		if (mainCount > keyCount) {
-			List<?> oldList=keyList;
-			
+			List<?> oldList = keyList;
+
 			int[] aIntArray = ConfigHandle.getConfigIntData(MAIN_CFG, "ListViewEventSequence");
 			HashMap<Integer, Integer> aHashMap = new HashMap<>();
 			for (int i = 0; i < aIntArray.length; i++) {
@@ -326,20 +391,20 @@ public class UsefulToolkit {
 			for (int i = 0; i < mainCount - keyCount; i++) {
 				keyList.add(keyCount + i);
 			}
-			
+
 			ConfigHandle.setConfigData(MAIN_CFG, "ListViewEventSequence",
 					keyList.toString().substring(1, keyList.toString().length() - 1).replace(" ", ""));
-			LogHandle.writeLog(LOGNAME_LOG, 
-					new Throwable().getStackTrace()[0].getMethodName() +":"+oldList+"->"+keyList);
+			LogHandle.writeLog(LOGNAME_LOG,
+					new Throwable().getStackTrace()[0].getMethodName() + ":" + oldList + "->" + keyList);
 		} else if (mainCount < keyCount) {
-			List<?> oldList=keyList;
-			
+			List<?> oldList = keyList;
+
 			keyList = keyList.subList(0, mainCount);
-			
+
 			ConfigHandle.setConfigData(MAIN_CFG, "ListViewEventSequence",
 					keyList.toString().substring(1, keyList.toString().length() - 1).replace(" ", ""));
-			LogHandle.writeLog(LOGNAME_LOG, 
-					new Throwable().getStackTrace()[0].getMethodName() +":"+oldList+"->"+keyList);
+			LogHandle.writeLog(LOGNAME_LOG,
+					new Throwable().getStackTrace()[0].getMethodName() + ":" + oldList + "->" + keyList);
 		}
 
 		HashMap<Integer, String> hashMap = new HashMap<>();
@@ -348,5 +413,9 @@ public class UsefulToolkit {
 		}
 
 		return hashMap;
+	}
+	
+	public void randomPage(){
+		
 	}
 }
