@@ -15,8 +15,9 @@ public class ConfigHandle {
 	 * 
 	 * @param fileName
 	 *            Configuration file name
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found If fileName not found
+	 * 	
+	 * @throws IOException If IO connection failed
 	 */
 	private static File clearConfigFile(String fileName) throws ClassNotFoundException, IOException {
 		File file = new File(getFilePath(fileName));
@@ -31,11 +32,11 @@ public class ConfigHandle {
 	 * 
 	 * @param fileName
 	 *            Configuration file name
-	 * @param item
-	 *            Option name
 	 * @return An arrayList with line read the file
 	 * @throws IOException
+	 *             If IO connection failed
 	 * @throws ClassNotFoundException
+	 *             If fileName not found
 	 */
 	protected static ArrayList<String> generalReader(String fileName) throws IOException, ClassNotFoundException {
 
@@ -65,8 +66,8 @@ public class ConfigHandle {
 	 * @param item
 	 *            Option name
 	 * @return An array of int that stores configuration data
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException If IO connection failed
+	 * @throws ClassNotFoundException If fileName not found
 	 */
 	public static int[] getConfigIntData(String fileName, String item) throws IOException, ClassNotFoundException {
 
@@ -95,8 +96,8 @@ public class ConfigHandle {
 	 * @param item
 	 *            Option name
 	 * @return An array of strings that stores configuration data
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException If IO connection failed
+	 * @throws ClassNotFoundException If fileName not found
 	 */
 	public static String[] getConfigStringData(String fileName, String item)
 			throws IOException, ClassNotFoundException {
@@ -122,7 +123,7 @@ public class ConfigHandle {
 	 * @param fileName
 	 *            Configuration file name
 	 * @return Absolute path
-	 * @throws ClassNotFoundException
+	 * @throws ClassNotFoundException If fileName not found
 	 */
 	protected static String getFilePath(String fileName) throws ClassNotFoundException {
 		String filePath = System.getProperty("user.dir") + "\\config\\" + fileName;
@@ -134,8 +135,8 @@ public class ConfigHandle {
 	 * 
 	 * @param fileName
 	 *            Configuration file name
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public static void setAllConfigInitialization(String fileName) throws ClassNotFoundException, IOException {
 
@@ -168,8 +169,8 @@ public class ConfigHandle {
 	 *            Option name
 	 * @param modifyString
 	 *            An String of strings that store the changed value
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException If IO connection failed
+	 * @throws ClassNotFoundException If fileName not found
 	 */
 	protected static void setConfigData(String fileName, String item, String modifyString)
 			throws IOException, ClassNotFoundException {
@@ -206,8 +207,8 @@ public class ConfigHandle {
 	 * @param item
 	 *            Option name
 	 * @return A hashMap that stores the default data for the option
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public static HashMap<String, ArrayList<String>> setConfigInitialization(String fileName, String item)
 			throws ClassNotFoundException, IOException {

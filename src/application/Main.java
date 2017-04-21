@@ -25,6 +25,7 @@ import javafx.scene.paint.*;
 public class Main extends Application {
 	public static String LOGNAME_LOG;
 	public static HashMap<Integer, String> FILENUMBER = new HashMap<>();
+	public static final String ICON_PNG = "icon.png";
 	public static final String MAIN_CFG = "Option.cfg";
 	public static final String MAIN_FXML = "MainScene.fxml";
 	public static final String MAIN_CSS = "application.css";
@@ -34,6 +35,12 @@ public class Main extends Application {
 	public static final String CONFIG_CODE = "UTF-8";
 	public static final String LOG_CODE = "UTF-8";
 	
+	/**
+	 * getFileURL
+	 * 
+	 * @param relativePath
+	 * @return file's URL
+	 */
 	public static URL getFileURL(String relativePath) {
 		File file = new File(System.getProperty("user.dir") + relativePath);
 		try {
@@ -62,7 +69,10 @@ public class Main extends Application {
 				main_cfg.createNewFile();
 				ConfigHandle.setAllConfigInitialization(MAIN_CFG);
 			}
-
+			
+			// 给予图标
+			primaryStage.getIcons().add(new Image(getFileURL("\\resource\\textures\\"+ICON_PNG).toString()));
+			
 			// 创建跟节点
 			Parent root = FXMLLoader
 					.load(getFileURL("\\resource\\fxml\\" + MAIN_FXML));

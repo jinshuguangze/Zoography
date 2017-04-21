@@ -120,6 +120,12 @@ public class MainController {
     @FXML
     private ImageView Right_Bottom;
 
+    /**
+     * Item1CenterFrame_Sroll
+     * @param event The event
+     * @throws ClassNotFoundException If fileName not found
+     * @throws IOException If IO connection failed
+     */
 	@FXML
 	void Item1CenterFrame_Sroll(ScrollEvent event) throws ClassNotFoundException, IOException {
 		UsefulToolkit aToolkit = new UsefulToolkit();
@@ -133,6 +139,12 @@ public class MainController {
 		}
 	}
 	
+    /**
+     * Item3CenterFrame_Sroll
+     * @param event The event
+     * @throws ClassNotFoundException If fileName not found
+     * @throws IOException If IO connection failed
+     */
 	@FXML
 	void Item3CenterFrame_Sroll(ScrollEvent event) throws ClassNotFoundException, IOException {
 		UsefulToolkit aToolkit = new UsefulToolkit();
@@ -146,6 +158,10 @@ public class MainController {
 		}
 	}
 
+	/**
+	 * RightCenter_Label_Scroll
+	 * @param event The event
+	 */
 	@FXML
 	void RightCenter_Label_Scroll(ScrollEvent event) {
 		double top = RightCenter_Label.getPadding().getTop();
@@ -153,18 +169,31 @@ public class MainController {
 		double bottom = RightCenter_Label.getPadding().getBottom();
 		double left = RightCenter_Label.getPadding().getLeft();
 		RightCenter_Label.setPadding(new Insets(top + event.getDeltaY(), right, bottom, left));
+	/*	
+		int i=(int)Math.round(RightCenter_Label.getWidth()/20);
+		StringBuilder aStringBuilder=new StringBuilder(RightCenter_Label.getText());
+		
+		String appendString=aStringBuilder.substring(0,i);
+		aStringBuilder.append(appendString);
+		aStringBuilder=new StringBuilder(aStringBuilder.substring(i+1));
+		RightCenter_Label.setText(aStringBuilder.toString());
+	*/
 	}
 
+	/**
+	 * Button_Inquiry_Action
+	 * @param event The event
+	 */
 	@FXML
 	void Button_Inquiry_Action(ActionEvent event) {
 
 	}
 
 	/**
-	 * 
-	 * @param event
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * Button_Return_Action
+	 * @param event The event
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	@FXML
 	void Button_Return_Action(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -181,10 +210,14 @@ public class MainController {
 	}
 	
 	/**
+	 * Button_Return2_Action
 	 * 
 	 * @param event
+	 *            The event
 	 * @throws ClassNotFoundException
+	 *             If fileName not found
 	 * @throws IOException
+	 *             If IO connection failed
 	 */
 	@FXML
 	void Button_Return2_Action(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -205,8 +238,8 @@ public class MainController {
 	 * 
 	 * @param event
 	 *            Mouse input events
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	@FXML
 	void MainListView_MouseClicked(MouseEvent event) throws ClassNotFoundException, IOException {

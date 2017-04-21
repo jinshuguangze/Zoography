@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="." destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" source="1.8" sourcefiles="src/application/UsefulToolkit.java" sourcepath="src" splitindex="true" use="true" version="true">
+            <link href="file:/E:/forge-1.7.10-10.13.4.1614-1.7.10-src/eclipse/Zoography/doc/"/>
+        </javadoc>
+    </target>
+</project>

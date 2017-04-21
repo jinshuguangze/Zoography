@@ -6,16 +6,32 @@ public enum Biology {
 
 	private final int level;
 	private final String localName;
-
+	
+	/**
+	 * Building function
+	 * 
+	 * @param level
+	 *            level
+	 * @param localName
+	 *            localName
+	 */
 	private Biology(int level, String localName) {
 		this.level = level;
 		this.localName = localName;
 	}
-
+	
+	/**
+	 * getLevel
+	 * @return level
+	 */
 	public int getLevel() {
 		return level;
 	}
-
+	
+	/**
+	 * getLocalName
+	 * @return localName
+	 */
 	public String getLocalName() {
 		return localName;
 	}

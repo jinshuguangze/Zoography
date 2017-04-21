@@ -32,7 +32,7 @@
                <children>
                   <ImageView fitHeight="128.0" fitWidth="128.0" pickOnBounds="true" StackPane.alignment="TOP_LEFT">
                      <image>
-                        <Image url="@../textures/head4.png" />
+                        <Image url="@../textures/head3.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="128.0" fitWidth="250.0" pickOnBounds="true">
@@ -40,7 +40,7 @@
                         <Image url="@../textures/headBackground.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="128.0" prefWidth="122.0" text="   姓名:张三丰&#10;   性别:男&#10;   积分:10&#10;   权限:VIP用户" textAlignment="CENTER" textFill="#65d7d7" StackPane.alignment="TOP_RIGHT">
+                  <Label prefHeight="128.0" prefWidth="122.0" text="账号:admin&#10;权限:fullStack" textAlignment="CENTER" textFill="#65d7d7" StackPane.alignment="TOP_RIGHT">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -216,7 +216,7 @@
                            </padding>
                         </Label>
                         <ImageView fx:id="RightCenter_ImageView" fitHeight="350.0" fitWidth="350.0" pickOnBounds="true" VBox.vgrow="NEVER" />
-                        <Label fx:id="RightCenter_Label" alignment="TOP_CENTER" lineSpacing="2.0" onScroll="#RightCenter_Label_Scroll" prefHeight="400.0" snapToPixel="false" textAlignment="JUSTIFY" textFill="#a16128" wrapText="true" VBox.vgrow="ALWAYS">
+                        <Label fx:id="RightCenter_Label" alignment="TOP_CENTER" lineSpacing="2.0" onScroll="#RightCenter_Label_Scroll" prefHeight="400.0" snapToPixel="false" textAlignment="JUSTIFY" textFill="#a16128" textOverrun="WORD_ELLIPSIS" wrapText="true" VBox.vgrow="ALWAYS">
                            <font>
                               <Font name="Microsoft YaHei Light" size="18.0" />
                            </font>

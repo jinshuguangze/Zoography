@@ -13,8 +13,8 @@ public class DataHandle {
 	 * 
 	 * @param fileName
 	 *            Data file name
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public static void createNewDataFile(String fileName) throws ClassNotFoundException, IOException {
 		File file = new File(getFilePath(fileName));
@@ -60,8 +60,8 @@ public class DataHandle {
 	 * @param fileName
 	 *            Data file name
 	 * @return Ture if it exist data;false otherwise
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public static boolean existData(String fileName) throws ClassNotFoundException, IOException {
 		boolean b = getStringData(fileName, 1, 0).equals("") ? false : true;
@@ -74,8 +74,8 @@ public class DataHandle {
 	 * @param fileName
 	 *            Data file name
 	 * @return Ture if it is final data file;false otherwise
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public static boolean finalData(String fileName) throws ClassNotFoundException, IOException {
 		boolean b = getStringData(fileName, 0, 0).equals("") ? true : false;
@@ -88,8 +88,8 @@ public class DataHandle {
 	 * @param fileName
 	 *            Data file name
 	 * @return An arrayList with line read the file
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException If IO connection failed
+	 * @throws ClassNotFoundException If fileName not found
 	 */
 	protected static ArrayList<ArrayList<String>> generalReader(String fileName)
 			throws IOException, ClassNotFoundException {
@@ -122,8 +122,8 @@ public class DataHandle {
 	 * @param fileName
 	 *            Data file name
 	 * @return Two-dimensional string array of target data file
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public static String[][] getAllData(String fileName) throws ClassNotFoundException, IOException {
 		String[][] data = new String[getLineCount(fileName)][getColumnCount(fileName)];
@@ -142,8 +142,8 @@ public class DataHandle {
 	 * @param fileName
 	 *            Data file name
 	 * @return Column of data file
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public static int getColumnCount(String fileName) throws ClassNotFoundException, IOException {
 		ArrayList<ArrayList<String>> tArrayList = generalReader(fileName);
@@ -158,8 +158,8 @@ public class DataHandle {
 	 * @param position
 	 *            Which Column
 	 * @return String array of target columns
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public static String[] getColumnData(String fileName, int position) throws ClassNotFoundException, IOException {
 		String[] aStrings = new String[getLineCount(fileName)];
@@ -180,7 +180,7 @@ public class DataHandle {
 	 * @param fileName
 	 *            Configuration file name
 	 * @return Absolute path
-	 * @throws ClassNotFoundException
+	 * @throws ClassNotFoundException If fileName not found
 	 */
 	protected static String getFilePath(String fileName) throws ClassNotFoundException {
 		String filePath = System.getProperty("user.dir") + "\\resource\\data\\" + fileName;
@@ -193,8 +193,8 @@ public class DataHandle {
 	 * @param fileName
 	 *            Data file name
 	 * @return Line of data file
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public static int getLineCount(String fileName) throws ClassNotFoundException, IOException {
 		ArrayList<ArrayList<String>> tArrayList = generalReader(fileName);
@@ -209,8 +209,8 @@ public class DataHandle {
 	 * @param position
 	 *            Which line
 	 * @return String array of target lines
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public static String[] getLineData(String fileName, int position) throws ClassNotFoundException, IOException {
 		String[] aStrings = new String[getColumnCount(fileName)];
@@ -235,7 +235,9 @@ public class DataHandle {
 	 *            Column
 	 * @return String data
 	 * @throws ClassNotFoundException
+	 *             If fileName not found
 	 * @throws IOException
+	 *             If IO connection failed
 	 */
 	public static String getStringData(String fileName, int line, int column)
 			throws ClassNotFoundException, IOException {

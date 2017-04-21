@@ -36,8 +36,8 @@ public class UsefulToolkit {
 	 * 
 	 * @param fileName
 	 *            Data file Name
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws ClassNotFoundException If fileName not found
+	 * @throws IOException If IO connection failed
 	 */
 	public void autoCreateDataFile(String fileName) throws ClassNotFoundException, IOException {
 		ArrayList<ArrayList<String>> arrayData = DataHandle.generalReader(fileName);
@@ -53,7 +53,7 @@ public class UsefulToolkit {
 			}
 		}
 	}
-
+	
 	/**
 	 * A function of automatic fill interface 一个自动填充界面的函数
 	 * 
@@ -61,10 +61,20 @@ public class UsefulToolkit {
 	 *            Container name
 	 * @param fileName
 	 *            Data file Name
-	 * @param root
-	 *            The root for finding child node
+	 * @param fromNumber
+	 *            From which number of button
+	 * @param textName
+	 *            Text Name
+	 * @param titleName
+	 *            Title Name
+	 * @param imageName
+	 *            Image Name
+	 * @param labelName
+	 *            Label Name
 	 * @throws ClassNotFoundException
+	 *             If fileName not found
 	 * @throws IOException
+	 *             If IO connection failed
 	 */
 	public void autoFillInterface(TilePane paneName, String fileName, int fromNumber, TextField textName,
 			Label titleName, ImageView imageName, Label labelName) throws ClassNotFoundException, IOException {
@@ -75,16 +85,15 @@ public class UsefulToolkit {
 			int lineCount = DataHandle.getLineCount(fileName);
 			String[][] data = DataHandle.getAllData(fileName);
 			int lastNumber = fromNumber;
-			if (fromNumber > lineCount -2) {
-				lastNumber=0;
-			}
-			else if (fromNumber<0) {
-				lastNumber=lineCount -2;
+			if (fromNumber > lineCount - 2) {
+				lastNumber = 0;
+			} else if (fromNumber < 0) {
+				lastNumber = lineCount - 2;
 			}
 
 			for (int i = lastNumber; i < lineCount - 1; i++) {
 				// 预处理
-				int forLambda=i;
+				int forLambda = i;
 				Button aButton = new Button();
 				buttonList.add(aButton);
 				aButton.setPrefSize(210, 210);
@@ -107,7 +116,7 @@ public class UsefulToolkit {
 				aButton.setEffect(aShadow);
 
 				// 添加字体
-				aButton.setText((i+1) + "\r\n" + name + "\r\n" + localName);
+				aButton.setText((i + 1) + "\r\n" + name + "\r\n" + localName);
 				int length = (name.length() - localName.length() > 0) ? name.length() : localName.length();
 				double fontSize = 35.0 - length;
 
@@ -123,7 +132,7 @@ public class UsefulToolkit {
 					imageName.setImage(new Image(
 							"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1492677832108&di=4c050a5e4173d05ddc98b2eff2060887&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F130912%2F240385-1309120JA053.jpg"));
 					labelName.setText(
-							"生物圈（Biosphere）是指地球上所有生态系统的统合整体，是地球的一个外层圈，其范围大约为海平面上下垂直约10公里。它包括地球上有生命存在和由生命过程变化和转变的空气、陆地、岩石圈和水。从地质学的广义角度上来看生物圈是结合所有生物以及它们之间的关系的全球性的生态系统，包括生物与岩石圈、水圈和空气的相互作用。生物圈是一个封闭且能自我调控的系统。地球是整个宇宙中唯一已知的有生物生存的地方。一般认为生物圈是从35亿年前生命起源后演化而来。");
+							"	生物圈（Biosphere）是指地球上所有生态系统的统合整体，是地球的一个外层圈，其范围大约为海平面上下垂直约10公里。它包括地球上有生命存在和由生命过程变化和转变的空气、陆地、岩石圈和水。从地质学的广义角度上来看生物圈是结合所有生物以及它们之间的关系的全球性的生态系统，包括生物与岩石圈、水圈和空气的相互作用。生物圈是一个封闭且能自我调控的系统。地球是整个宇宙中唯一已知的有生物生存的地方。一般认为生物圈是从35亿年前生命起源后演化而来。");
 				}
 
 				// 添加鼠标进入事件
@@ -158,7 +167,7 @@ public class UsefulToolkit {
 				// 添加鼠标离开事件
 				aButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent m) -> {
 					setButtonImage(aButton, image);
-					aButton.setText((forLambda+1) + "\r\n" + name + "\r\n" + localName);
+					aButton.setText((forLambda + 1) + "\r\n" + name + "\r\n" + localName);
 					aButton.setTextAlignment(TextAlignment.CENTER);
 					aButton.setFont(new Font(fontSize).font("BankGothic Md BT", FontWeight.EXTRA_BOLD, fontSize));
 				});
@@ -172,10 +181,10 @@ public class UsefulToolkit {
 							autoFillInterface(paneName, newFileName, 0, textName, titleName, imageName, labelName);
 							titleName.setText(localName + " " + name);
 							imageName.setImage(new Image(image));
-							labelName.setText(introduce);
+							labelName.setText("	" + introduce);
 						} catch (ClassNotFoundException | IOException e) {
 							e.printStackTrace();
-						} 
+						}
 					} else if (m.isSecondaryButtonDown()) {// 右击
 						int aint = fileName.lastIndexOf("_");
 						String newFileName = (aint != -1) ? fileName.substring(0, aint) + ".csv" : "BIOLOGY_CSV";
@@ -195,11 +204,11 @@ public class UsefulToolkit {
 
 			}
 			// 创建一个新进程用于加载图片URL与字体颜色
-			String[] image=new String[lineCount - 1-lastNumber];
+			String[] image = new String[lineCount - 1 - lastNumber];
 			for (int i = lastNumber; i < lineCount - 1; i++) {
-				image[i-lastNumber]=DataHandle.getStringData(fileName, i+1, 2);
+				image[i - lastNumber] = DataHandle.getStringData(fileName, i + 1, 2);
 			}
-			
+
 			setButtonImage(buttonList, image);
 		}
 	}
@@ -342,7 +351,9 @@ public class UsefulToolkit {
 	 *            List as the key of HashMap(integer)
 	 * @return A HashMap that stores an automatically formatted valueList
 	 * @throws ClassNotFoundException
+	 *             If fileName not found
 	 * @throws IOException
+	 *             If IO connection failed If IO connection failed
 	 */
 	public HashMap<Integer, String> autoItemCountConformity(List<?> mainList, List<String> valueList,
 			List<Integer> keyList) throws ClassNotFoundException, IOException {
@@ -413,9 +424,5 @@ public class UsefulToolkit {
 		}
 
 		return hashMap;
-	}
-	
-	public void randomPage(){
-		
 	}
 }
