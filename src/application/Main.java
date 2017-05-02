@@ -4,6 +4,9 @@ import java.io.*;
 import java.net.*;
 import java.text.*;
 import java.util.*;
+
+import com.mysql.fabric.xmlrpc.base.Array;
+
 import javafx.application.*;
 import javafx.beans.*;
 import javafx.beans.property.*;
@@ -59,6 +62,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			String[] aastring=SqlHandle.readData(0);
+			System.out.println(Arrays.toString(aastring));
+			
 			// 开启日志文件
 			LOGNAME_LOG = (new SimpleDateFormat("yyyyMMdd_HH_mm_ss")).format(new Date())+".log";
 			LogHandle.createNewLog(LOGNAME_LOG);
